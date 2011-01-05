@@ -1,0 +1,37 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<p>Here you can renew one of your i-names at us. If you want to renew an i-name
+	at another i-broker, please transfer it to us first before renewing it.</p>
+
+	<img src="images/renew.png" style="float: right">
+
+	<p>This renewal operation will include this i-name and its i-number only. It will not
+	include synonyms of the i-name.</p>
+
+	<p><form wicket:id="form" method="get">
+		<table>
+		<tr><td>I-name:</td><td><span wicket:id="openid">___ openid here ___</span></td></tr>
+		</table>
+		
+		<p>
+		<input wicket:id="request" type="submit" value="Renew">
+		</p>
+	</form></p>
+
+	<p>Note: Your order will be processed by 2CheckOut.com. After your payment has been
+	processed, you will be redirected back to us.</p>
+
+	<br>
+
+	<p><img src="images/logo-2co.gif"></p>
+
+	<p class="small">2CheckOut.com Inc. (Ohio, USA) is an authorized retailer for
+	goods and services provided by us.</p>
+
+</wicket:extend>
+
+</body>
+</html>

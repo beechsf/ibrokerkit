@@ -1,0 +1,23 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<h2>Description</h2>
+
+	<p>This is a standalone Java application that is meant to be run in the background from 
+	time to time, for example once a day. It performs the following maintenance tasks:</p>
+	
+	<ul>
+	<li>It polls all incoming events from the i-broker’s GRS queue using EPP. Examples of such events are approved or rejected i-name transfer requests. ibrokerTask appropriately handles these events.</li>
+	<li>It checks all registered i-names for their expiration date and sends e-mails reminding their owners to renew them.</li>
+	</ul>
+	
+	<h2>Packaging</h2>
+	
+	<p>ibrokerTask is packaged as an executable .JAR file.</p>
+	
+</wicket:extend>
+
+</body>
+</html>

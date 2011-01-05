@@ -1,0 +1,25 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<form wicket:id="editForm">	
+		<table>
+		<tr><td valign="top">ID</td><td><span wicket:id="id"></span></td></tr>
+		<tr><td valign="top">QXRI</td><td><input wicket:id="qxri" type="text"></td></tr>
+		<tr><td valign="top">Name</td><td><input wicket:id="name" type="text"></td></tr>
+		<tr><td valign="top">Enabled</td><td><input wicket:id="enabled" type="checkbox"></td></tr>
+		<tr><td valign="top">Attributes</td><td><div wicket:id="attributes"></div></td></tr>
+		<tr><td valign="top">Indx</td><td><input wicket:id="indx" type="text"></td></tr>
+		<tr><td valign="top">Description</td><td><textarea wicket:id="description" cols="80" rows="4"></textarea></td></tr>
+		<tr><td valign="top">Forward</td><td><input wicket:id="forward" type="text"></td></tr>
+		</table>
+		<p><input wicket:id="submit" type="submit" value="Save"></p>
+	</form>
+
+	<p><a wicket:id="backLink">Back...</a>
+
+</wicket:extend>
+
+</body>
+</html>

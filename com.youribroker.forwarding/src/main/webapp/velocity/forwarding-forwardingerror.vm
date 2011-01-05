@@ -1,0 +1,10 @@
+	<h2>Forwarding Error Page</h2>
+
+	<p>No mapping has been defined for this path: $path</p>
+	<p>Things you can try:</p>
+
+	<ul>
+	<li>Try to access the index page of the XRI: <strong><a href="$hxri-prefix/$qxri/(+index)">$qxri/(+index)</a></strong></li>
+	<li>Try to access the contact page of the XRI: <strong><a href="$hxri-prefix/$qxri/(+contact)">$qxri/(+contact)</a></strong></li>
+	</ul>
+	

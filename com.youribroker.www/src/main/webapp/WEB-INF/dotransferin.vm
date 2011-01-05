@@ -1,0 +1,12 @@
+Congratulations. We have successfully issued a Transfer IN request for your i-name $iname.
+You can at any time configure it using our wizard or advanced configuration panels
+at http://www.youribroker.com.
+
+Your transfer token is $transfertoken
+
+The transfer token is needed to approve the transfer at your old i-broker. After that the transfer is complete.
+
+If you lose your password, you can recover it at
+http://www.youribroker.com/user/ForgotPass
+
+If you need help, contact us at our contact page at http://xri.net/@youribroker/(+contact) or via email support@youribroker.com.

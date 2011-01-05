@@ -1,0 +1,6 @@
+	<title>$providername</title>
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+
+	<meta name="Description" content="$providerdescription">
+	<meta name="Keywords" content="$providerkeywords">
+	<meta name="Copyright" content="$providername">

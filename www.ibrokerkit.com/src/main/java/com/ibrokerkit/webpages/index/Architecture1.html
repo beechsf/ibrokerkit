@@ -1,0 +1,41 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<a href="http://www.inames.net" target="_blank"><img style="float: right; margin-top: -8px" src="images/logo-inames.png"></a>
+
+	<h2>User components</h2>
+	
+	<p>This diagram shows how ibrokerKit provides services to i-name users.</p>
+
+	<p><img class="screenshot" src="images/ibrokerKit1.png"></p>
+
+	<p class="small">
+	(1) The openxri authority resolution server uses the openxri library for reading authorities, 
+	subsegments and descriptors (XRDs).<br>
+	(2) The openxri library accesses the openxri DB.<br>
+	(3) The ibrokerFront web application uses the iname4Java library for registering and
+	managing both top-level and community i-names.<br>
+	(4) The iname4Java library uses the openxri library for working with community i-names.<br>
+	(5) The iname4Java library uses the epptools4Java library for working with top-level i-names.<br>
+	(6) The epptools4Java library accesses the epptools DB.<br>
+	(7) The epptools4Java library uses the NeuStar EPP Toolkit library for communicating with the GRS.<br>
+	(8) The ibrokerFront web application uses the ibrokerStore library for registering and
+	managing users and other core i-broker data.<br>
+	(9) The ibrokerStore library accesses the ibroker DB.<br>
+	(10) The ibrokerFront web application uses the iserviceStore library for registering and managing
+	i-services.<br>
+	(11) The iserviceStore library accesses the iservice DB.<br>
+	(12) The iserviceFront library uses the openxri library for associating i-services with i-names.<br>
+	(13) The iserviceFront web application uses the iserviceStore library for reading i-service data.<br>
+	(14) The oauthFront web application uses the iname4Java library for modifying an i-name's configuration
+	to apply external third party requests.<br>
+	(15) The oauthFront web application uses the ibrokerStore library for authenticating users when
+	an external third party request is made.
+	</p>
+
+</wicket:extend>
+
+</body>
+</html>

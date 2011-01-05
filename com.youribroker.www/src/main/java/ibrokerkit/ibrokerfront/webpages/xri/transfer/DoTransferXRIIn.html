@@ -1,0 +1,22 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<p>Payment successful. Please complete this form to request the transfer of <b><span wicket:id="iname">___ iname here ___</span></b>.</p>
+
+	<form wicket:id="form">
+
+		<table>
+			<tr><td>Your e-mail address:</td><td><input wicket:id="email" type="text"></td></tr>
+			<tr><td>Choose a password:</td><td><input wicket:id="pass" type="password"></td></tr>
+			<tr><td>Repeat password:</td><td><input wicket:id="pass2" type="password"></td></tr>
+		</table>
+
+		<p><input type="submit" value="Complete transfer request!"></p>
+	</form>
+
+</wicket:extend>
+
+</body>
+</html>

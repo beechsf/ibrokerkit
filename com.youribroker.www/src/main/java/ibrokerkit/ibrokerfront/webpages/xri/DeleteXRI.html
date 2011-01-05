@@ -1,0 +1,21 @@
+<html>
+<body>
+
+<wicket:extend>
+	
+	<p>Really delete <strong wicket:id="qxri">___ qxri here ___</strong> including all its configured services?</p>
+	<p>Note #1: Any existing synonyms of this i-name will NOT be affected by this operation.</p>
+	<p>Note #2: If this i-name has community i-names, they will NOT be deleted from your i-name list, but they
+	may stop to be resolvable, and it may be difficult to fix this later.</p>
+
+	<form wicket:id="deleteForm">
+	
+		<input type="submit" value="Yes, delete it.">
+		<input wicket:id="cancelButton" type="submit" value="No. Back to my i-name list.">
+	
+	</form>
+
+</wicket:extend>
+
+</body>
+</html>

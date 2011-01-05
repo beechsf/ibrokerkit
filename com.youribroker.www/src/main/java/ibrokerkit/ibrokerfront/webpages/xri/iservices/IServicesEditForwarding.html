@@ -1,0 +1,39 @@
+<html>
+<body>
+
+<wicket:extend>
+	
+	<h2>Settings for the Forwarding i-service:</h2>
+
+	<form wicket:id="editForm">
+
+		<p>Internal Name: <input wicket:id="name" type="text" size="40"></p>
+
+		<p><input wicket:id="enabled" type="checkbox"> Service is active.</p>
+
+		<p><strong>Mappings:</strong></p>
+		<table class="config"><thead><tr><td>Path</td><td>URI</td><td></td></tr></thead>
+		<tbody wicket:id="mappingsContainer">
+		<tr wicket:id="mappings">
+			<td><input wicket:id="key" type="text" style="width: 100%"></td>
+			<td><input wicket:id="value" type="text" style="width: 100%"></td>
+			<td width="80"><a wicket:id="delete">Delete</a></td>
+		</tr>
+		<tr colspan="2">
+			<td><a wicket:id="addMapping">Add a mapping</a></td>
+		</tr>
+		</tbody>
+		</table>
+
+		<p><input wicket:id="indexPage" type="checkbox"> Allow people to view your index page at (+index).<br>
+		<input wicket:id="errorPage" type="checkbox"> If someone tries to access your forwarding i-service with
+		an undefined path mapping, display an appropriate error page (instead of sending a HTTP 404 status code).</p>
+
+		<input wicket:id="submitButton" type="submit" value="Update">
+
+	</form>
+
+</wicket:extend>
+
+</body>
+</html>

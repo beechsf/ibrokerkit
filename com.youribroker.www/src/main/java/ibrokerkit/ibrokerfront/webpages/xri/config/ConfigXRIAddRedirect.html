@@ -1,0 +1,25 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<p>Here you can add a redirect to your XRI.</p>
+	<p>Note #1: This is for advanced users only who are familiar with XRI resolution.</p>
+
+	<form wicket:id="form">
+
+		<p>
+		<table><tbody>
+		<tr><td><label wicket:id="valueLabel">Redirect: </label></td><td><input size="30" wicket:id="value"></td></tr>
+		<tr><td><label wicket:id="priorityLabel">Priority: </label></td><td><input wicket:id="priority" size="5"></td></tr>
+		<tr><td><label wicket:id="appendLabel">Append: </label></td><td><select wicket:id="append">__ append here __</select></td></tr>
+		</tbody></table>
+		</p>
+
+		<input wicket:id="submitButton" type="submit" value="Add this redirect">
+	</form>
+
+</wicket:extend>
+
+</body>
+</html>

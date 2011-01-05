@@ -1,0 +1,53 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<div wicket:id="intro">___ intro here ___</div>
+
+	<wicket:fragment wicket:id="intro1Fragment">
+		<p>This is a list of service endpoints (SEPs) that are currently associated with the authority of this XRI.</p>
+		<p>Each 'service endpoint' contains one or more URIs and represents a possible outcome when the XRI
+		is resolved. 
+		A service endpoint is usually
+		characterized by a path, as well as sometimes
+		by a so-called Service Type and Media Type. Service endpoints often point to i-services such as
+		a contact page or single-sign-on service.</p>
+	</wicket:fragment>
+
+	<wicket:fragment wicket:id="intro2Fragment">
+		<p>There are currently no service endpoints (SEPs) associated with this XRI.</p>
+	</wicket:fragment>
+
+	<div wicket:id="services" class="border">
+
+		<div class="buttonpanel">
+
+			<input type="button" wicket:id="deleteButton" value="Delete">
+
+		</div>
+		
+		<strong>Service Endpoint #<span wicket:id="nr">___ nr here ___</span></strong> <span wicket:id="priority">___ priority here ___</span><br>
+
+		<span wicket:id="URIs">
+			<strong>URI:</strong> <span wicket:id="uri">___ uri here ___</span><br>
+		</span>
+			
+		<span wicket:id="paths">
+			<strong>Path:</strong> <span wicket:id="path">___ path here ___</span><br>
+		</span>
+			
+		<span wicket:id="types">
+			<strong>Service Type:</strong> <span wicket:id="type">___ type here ___</span><br>
+		</span>
+			
+		<span wicket:id="mediaTypes">
+			<strong>Media Type:</strong> <span wicket:id="mediaType">___ mediaType here ___</span><br>
+		</span>
+		
+	</div>
+							
+</wicket:extend>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<form wicket:id="form" method="post">
+
+		<p>
+		<table>
+			<tr><td>Identifier: </td><td><span wicket:id="identifier">___ identifier here ___</span></td></tr>
+			<tr><td><label wicket:id="passLabel">Password: </label></td><td><input wicket:id="pass" type="password"></td></tr>
+			<tr><td><label wicket:id="pass2Label">Password (again): </label></td><td><input wicket:id="pass2" type="password"></td></tr>
+			<tr><td><label wicket:id="emailLabel">Email: </label></td><td><input wicket:id="email" type="text">&nbsp;(optional)</td></tr>
+		</table>
+		</p>
+
+		<input type="submit" value="Update">
+
+	</form>
+
+</wicket:extend>
+
+</body>
+</html>

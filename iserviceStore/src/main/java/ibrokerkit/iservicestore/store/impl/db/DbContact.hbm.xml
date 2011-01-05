@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="ibrokerkit.iservicestore.store.impl.db.DbContact" table="contact">
+
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+
+        <timestamp name="timestamp" />
+
+        <property name="qxri" index="contact_qxri" />
+
+		<property name="name" />
+
+		<property name="enabled" not-null="true" />
+
+        <map name="attributes" table="contact_attributes" fetch="join" lazy="false" cascade="all-delete-orphan">
+        	<key column="id" />
+        	<map-key column="k" type="string" />
+        	<element column="v" type="text" />
+        </map>
+
+		<property name="indx" index="contact_indx" />
+
+        <property name="description" type="text" />
+
+        <property name="forward" type="text" />
+
+		<query name="All"><![CDATA[
+			FROM DbContact
+		]]></query>
+
+		<query name="AllByQxri"><![CDATA[
+			FROM DbContact as contact
+			WHERE contact.qxri = :qxri
+		]]></query>
+
+		<query name="AllByIndx"><![CDATA[
+			FROM DbContact as contact
+			WHERE contact.indx = :indx
+		]]></query>
+
+		<query name="EnabledByQxri"><![CDATA[
+			FROM DbContact as contact
+			WHERE contact.qxri = :qxri
+			AND contact.enabled = TRUE
+		]]></query>
+
+		<query name="Count"><![CDATA[
+			SELECT COUNT(*)
+			FROM DbContact
+		]]></query>
+
+    </class>
+
+</hibernate-mapping>

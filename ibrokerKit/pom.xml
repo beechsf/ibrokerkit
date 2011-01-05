@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ibrokerkit</groupId>
+	<artifactId>ibrokerKit</artifactId>
+	<packaging>pom</packaging>
+	<name>ibrokerkit</name>
+	<version>0.5</version>
+	<description>
+		ibrokerKit is a software solution for XDI.org accredited
+		i-brokers, as well as community i-name registries. It contains
+		customizable, extensible frontend web applications, libraries,
+		backend database schemas and other components necessary for
+		operating all aspects of an i-broker.
+	</description>
+	<url>http://www.ibrokerkit.com/</url>
+	<scm>
+		<connection>
+			scm:svn:http://ibrokerkit.svnrepository.com/svn/ibrokerkit
+		</connection>
+		<developerConnection>
+			scm:svn:http://ibrokerkit.svnrepository.com/svn/ibrokerkit
+		</developerConnection>
+	</scm>
+	<modules>
+		<module>../epptools4java</module>
+		<module>../ibrokerCert</module>
+		<module>../ibrokerStore</module>
+		<module>../ibrokerTask</module>
+		<module>../iname4java</module>
+		<module>../iserviceAdmin</module>
+		<module>../iserviceFront</module>
+		<module>../iserviceStore</module>
+		<module>../xritools4java</module>
+		<module>../oauthFront</module>
+		<module>../xdiFront</module>
+	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>make-javadoc</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>1.6</source>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<reporting>
+		<outputDirectory>${basedir}/target/site</outputDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+				<version>2.0.1</version>
+				<reportSets>
+					<reportSet></reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

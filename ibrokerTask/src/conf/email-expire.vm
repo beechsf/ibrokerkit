@@ -1,0 +1,8 @@
+Dear Customer,
+
+Your I-Name $iname and/or its corresponding I-Number $inumber are past the expiration date (by $inamedays / $inumberdays days).
+
+You should immediately renew your I-Name at $renewurl, or you risk losing it.
+
+greetings,
+$ibrokername

@@ -1,0 +1,142 @@
+These files are Velocity templates used by the Authentication i-service to render its pages.
+For each file, a short description is provided, as well as a list of variables that are
+set when the template is loaded:
+
+TEMPLATE FILES
+==============
+
+authentication-base.vm:
+-----------------------
+
+This is the "base" template used by all other templates. It should contain elements that you
+want to appear on all "sub-" templates, e.g. your logo, basic design, links to your terms of
+services, etc.
+
+What it must contain at a minimum:
+- A <div wicket:id="velocity"></div> element. This is where the "sub-" templates will be
+inserted.
+
+What variables are set:
+- All variables from your application.properties file.
+- The $encoder utility object.
+
+authentication-head.vm:
+-----------------------
+
+This template is used to render the <head> section of all other templates. It can contain
+<title>, <link>, etc.
+
+What it must contain at a minimum:
+(nothing)
+
+What variables are set:
+- All variables from your application.properties file.
+- The $encoder utility object.
+
+authentication-index.vm:
+------------------------
+
+This template is used when a user accesses your i-service without any path 
+(e.g. http://authn.youribroker.com/). You should use this to explain the service and 
+possibly link to further information.
+
+What it must contain at a minimum:
+(nothing)
+
+What variables are set:
+- All variables from your application.properties file.
+- The $encoder utility object.
+
+authentication-error.vm:
+------------------------
+
+This template is used when a problem occurs in the i-service web application. There are
+different kinds of errors. You should use this to explain to the user what has happened.
+
+What it must contain at a minimum:
+(nothing)
+
+What variables are set:
+- All variables from your application.properties file.
+- The $encoder utility object.
+- One of the following: $exexpired, $exinternal, $exexception
+-- $exexpired means that the session with the user has expired
+-- $exinternal means that an internal error in the web framework has occurred
+-- $exexception means that an exception was raised while running the web application. In
+   this case, additional variables are set:
+   -- $exclass the Java class of the exception
+   -- $extime the timestamp of the exception
+   -- $expath the URI path at which the exception was raised
+   -- $exmessage the human readable message associated with the exception
+   -- $extrace the detailed stack trace of the exception
+
+authentication-authentication.vm:
+---------------------------------
+
+This template is used to render the Authentication page for an i-name, with a form for users 
+to fill out and submit.
+
+What it must contain at a minimum:
+- A <div wicket:id="feedbackPanel"></div> element. This is where feedback to the user will 
+  be inserted, e.g. if they enter a wrong password.
+- A <form wicket:id="authenticationForm"></form> element. This is the actual Authentication
+  form, where users can type their password. This element in turn must contain the following
+  sub-element:
+-- <input wicket:id="pass"> for the user's password.
+
+What variables are set:
+- All variables from your application.properties file.
+- The $encoder utility object.
+- $identity: The identifier which is being authenticated. This is basically the openid.identity
+  parameter, after being HXRI fixed and Unicode fixed.
+- $parameters: The incoming OpenID parameters, e.g. openid.realm, etc.
+- $authentication: The Authentication object from iserviceStore. It has the following fields:
+-- $authentication.id: The internal ID of the i-service.
+-- $authentication.timestamp: The timestamp of the i-service.
+-- $authentication.qxri: The QXRI field of the i-service.
+-- $authentication.indx: The INDX field of the i-service.
+-- $authentication.name: The internal name of the i-service.
+-- $authentication.enabled: The enabled flag of the i-service.
+-- $authentication.attributes: The attributes of the i-service.
+-- $authentication.pass: The hashed password of the Authentication i-service.
+
+authentication-notfound.vm:
+---------------------------
+
+This template is used when
+- An Authentication i-service is requested for an i-name that does not exist.
+- An Authentication i-service is requested for an i-name that exists but has no Authentication
+  i-service.
+- The enabled flag is not set for the requested Authentication i-service.
+ 
+What it must contain at a minimum:
+(nothing)
+
+What variables are set:
+- All variables from your application.properties file.
+- The $encoder utility object.
+- $qxri: The i-name for which the Authentication i-service is being requested.
+
+<custom>.vm:
+------------
+
+You can add arbitrary additional templates and link to them. This can be used for static
+pages such as a Terms of Service page, etc. For example, if you create a file named "tos.vm",
+it will be accessible under /page/name/tos
+
+What it must contain at a minimum:
+(nothing)
+
+What variables are set:
+- All variables from your application.properties file.
+- The $encoder utility object.
+
+UTILITY OBJECTS
+===============
+
+The following utility objects can be used by your templates:
+
+$encoder
+--------
+
+- $encoder.html(string): HTML-encodes a string so that it can be displayed on a web page.

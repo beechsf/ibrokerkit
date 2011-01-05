@@ -1,0 +1,37 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<img style="float: right" src="images/logo-oauth.png">
+
+	<h2>Description</h2>
+
+	<p>oauthFront is a web application that allows external i-service providers to add SEPs
+	(service endpoints) to an i-name's configuration, in order to associate their i-service with
+	an i-name.</p>
+
+	<p>A typical flow looks like this:</p>
+	
+	<ol>
+	<li>A user visits a third party i-service provider.</li>
+	<li>User signs in with their i-name using OpenID.</li>
+	<li>User configures the third party i-service provider.</li>
+	<li>The third party i-service provider makes a request to the i-broker to modify
+	the i-name's configuration in order to point to their service.</li>
+	<li>This request is handled by the oauthFront component. During the process, the user
+	has to authenticate and authorize the process.</li>
+	<li>The i-name configuration is changed appropriately, and a confirmation e-mail is sent
+	to the user.</li>
+	</ol>
+
+	<p>oauthFront contains the web application that handles the above process on the i-broker side.</p> 
+
+	<h2>Packaging</h2>
+	
+	<p>oauthFront is packaged as a .WAR file for deployment at an OAuth endpoint, e.g. <b>oauth.youribroker.com</b>.</p>
+
+</wicket:extend>
+
+</body>
+</html>

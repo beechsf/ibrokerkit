@@ -1,0 +1,40 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<p>Here you can transfer an i-name to us.</p>
+
+	<img src="images/transferin.png" style="float: right">
+
+	<p>This transfer operation will include your i-name, its synonyms, its i-number and all
+	associated settings.</p>
+
+	<p><form wicket:id="form" method="get">
+		<table>
+		<tr><td>I-name:</td><td><span wicket:id="openid">___ openid here ___</span></td></tr>
+		</table>
+		
+		<p>
+		<input wicket:id="request" type="submit" value="Request Transfer">
+		</p>
+	</form></p>
+
+	<p>After this operation is done, we will provide you with a <b>transfer token</b>, which
+	you can use at your current i-broker to approve the transfer request. After that the
+	transfer is complete!</p>
+
+	<p>Note: Your order will be processed by 2CheckOut.com. After your payment has been
+	processed, you will be redirected back to us.</p>
+
+	<br>
+
+	<p><img src="images/logo-2co.gif"></p>
+
+	<p class="small">2CheckOut.com Inc. (Ohio, USA) is an authorized retailer for
+	goods and services provided by us.</p>
+
+</wicket:extend>
+
+</body>
+</html>

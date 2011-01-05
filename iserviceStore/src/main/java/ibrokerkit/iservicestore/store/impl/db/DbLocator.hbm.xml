@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="ibrokerkit.iservicestore.store.impl.db.DbLocator" table="locator">
+
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+
+        <timestamp name="timestamp" />
+
+        <property name="qxri" index="locator_qxri" />
+
+		<property name="name" />
+
+		<property name="enabled" not-null="true" />
+
+        <map name="attributes" table="locator_attributes" fetch="join" lazy="false" cascade="all-delete-orphan">
+        	<key column="id" />
+        	<map-key column="k" type="string" />
+        	<element column="v" type="text" />
+        </map>
+
+		<property name="indx" index="locator_indx" />
+
+        <property name="address" />
+
+        <property name="description" type="text" />
+
+        <property name="lat" />
+
+        <property name="lng" />
+
+        <property name="zoom" />
+
+		<property name="contactLink" not-null="true" />
+
+		<query name="All"><![CDATA[
+			FROM DbLocator
+		]]></query>
+
+		<query name="AllByQxri"><![CDATA[
+			FROM DbLocator as locator
+			WHERE locator.qxri = :qxri
+		]]></query>
+
+		<query name="AllByIndx"><![CDATA[
+			FROM DbLocator as locator
+			WHERE locator.indx = :indx
+		]]></query>
+
+		<query name="EnabledByQxri"><![CDATA[
+			FROM DbLocator as locator
+			WHERE locator.qxri = :qxri
+			AND locator.enabled = TRUE
+		]]></query>
+
+		<query name="Count"><![CDATA[
+			SELECT COUNT(*)
+			FROM DbLocator
+		]]></query>
+
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,299 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<img style="float: right" src="images/logo-xdi.gif">
+
+	<h2>XDI messages understood by xdiFront</h2>
+
+	<h3>Check if an i-name exists already</h3>
+
+	<p>Example XDI message to check if <b>=web*markus</b> is available:</p>
+	
+	<pre class="code">
+$
+	$get$a$xsd$boolean
+		/
+			=web*markus
+=web*markus
+	$is$a
+		=</pre>
+	
+	<p>Example responses:</p>
+	
+	<pre class="code">
+$true</pre>
+	
+	<pre class="code">
+$false</pre>
+	
+	<p>Example code with XDI4j:</p>
+	
+	<pre class="code">
+// data we need for the message
+
+String iname = "=web*markus";
+
+// prepare and send XDI message
+
+XDIClient client = new XDIHttpClient("http://xdi.freexri.com/");
+
+MessageEnvelope envelope = MessageEnvelope.newInstance();
+Message message = envelope.newMessage(new XRI3Segment("$"));
+Operation operation = message.createGetExistsOperation();
+Graph operationGraph = operation.createOperationGraph(null);
+operationGraph.createStatement(new XRI3Segment(iname));
+envelope.getGraph().createStatement(new XRI3Segment(iname), new XRI3Segment("$is$a"), new XRI3Segment("="));
+
+MessageResult result = client.send(envelope, null);
+if (result instanceof ErrorMessageResult) throw new RuntimeException(((ErrorMessageResult) result).getErrorString());
+
+// read result
+
+boolean exists = result.getGraph().containsSubject(MessagingConstants.XRI_TRUE);
+System.out.println(exists);</pre>
+	
+	<h3>Register an i-name</h3>
+	
+	<p>Example XDI message to register <b>=web*markus</b> with password <b>secret</b> and e-mail address <b>markus.sabadello@gmail.com</b>:</p>
+	
+	<pre class="code">
+$
+	$add
+		/
+			=web*markus
+				$password
+					"secret"
+				+email
+					"markus.sabadello@gmail.com"
+=web*markus
+	$is$a
+		=</pre>
+	
+	<p>Example response:</p>
+	
+	<pre class="code">
+=web*markus
+	$is$
+		=!91F2.8153.F600.AE24!695b.2ae6.38c1.777c</pre>
+	
+	<p>Example code:</p>
+	
+	<pre class="code">
+// data we need for the message
+
+String iname = "=web*markus";
+String password = "secret";
+String email = "markus.sabadello@gmail.com";
+
+// prepare and send XDI message
+
+XDIClient client = new XDIHttpClient("http://xdi.freexri.com/");
+
+MessageEnvelope envelope = MessageEnvelope.newInstance();
+Message message = envelope.newMessage(new XRI3Segment("$"));
+Operation operation = message.createAddOperation();
+Graph operationGraph = operation.createOperationGraph(null);
+operationGraph.createStatement(new XRI3Segment(iname), new XRI3Segment("$password"), password);
+operationGraph.createStatement(new XRI3Segment(iname), new XRI3Segment("+email"), email);
+envelope.getGraph().createStatement(new XRI3Segment(iname), new XRI3Segment("$is$a"), new XRI3Segment("="));
+
+MessageResult result = client.send(envelope, null);
+if (result instanceof ErrorMessageResult) throw new RuntimeException(((ErrorMessageResult) result).getErrorString());
+
+// read result
+
+String inumber = Addressing.findReferenceXri(result.getGraph(), new XRI3(iname + "/$is$")).toString();
+System.out.println(inumber);</pre>
+	
+	<h3>Check if a password is correct</h3>
+	
+	<p>Example message to check if password <b>secret</b> is correct for <b>=web*markus</b> and retrieve account i-number:</p>
+	
+	<pre class="code">
+=web*markus
+	$is$a
+		=
+	$password
+		"secret"
+	$get$a$xsd$boolean
+		/
+			=web*markus
+				$password
+	$get
+		/
+			=web*markus
+				$is$</pre>
+	
+	<p>Example responses:</p>
+	
+	<pre class="code">
+$true
+=web*markus
+	$is$
+		=!91F2.8153.F600.AE24!5c85.ae82.f787.9562</pre>
+	
+	<pre class="code">
+$false
+=web*markus
+	$is$
+		=!91F2.8153.F600.AE24!5c85.ae82.f787.9562</pre>
+	
+	<p>Example code with XDI4j:</p>
+	
+	<pre class="code">
+// data we need for the message
+
+String iname = "=web*markus";
+String password = "secret";
+
+// prepare and send XDI message
+
+XDIClient client = new XDIHttpClient("http://xdi.freexri.com/");
+
+MessageEnvelope envelope = MessageEnvelope.newInstance();
+Message message = envelope.newMessage(new XRI3Segment(iname));
+Operation operation = message.createGetExistsOperation();
+Graph operationGraph = operation.createOperationGraph(null);
+operationGraph.createStatement(new XRI3Segment(iname), new XRI3Segment("$password"));
+envelope.getGraph().createStatement(new XRI3Segment(iname), new XRI3Segment("$is$a"), new XRI3Segment("="));
+envelope.getGraph().createStatement(new XRI3Segment(iname), new XRI3Segment("$password"), password);
+Operation operation2 = message.createGetOperation();
+Graph operationGraph2 = operation2.createOperationGraph(null);
+operationGraph2.createStatement(new XRI3Segment(iname), new XRI3Segment("$is$"));
+
+MessageResult result = client.send(envelope, null);
+if (result instanceof ErrorMessageResult) throw new RuntimeException(((ErrorMessageResult) result).getErrorString());
+
+// read result
+
+boolean correct = result.getGraph().containsSubject(MessagingConstants.XRI_TRUE);
+String inumber = Addressing.findReferenceXri(result.getGraph(), new XRI3(iname + "/$is$")).toString();
+System.out.println(correct);
+System.out.println(inumber);</pre>
+	
+	<h3>Retrieve i-name details</h3>
+	
+	<p>Example message to retrieve account details of an i-name:</p>
+	
+	<pre class="code">
+=web*markus
+	$is$a
+		=
+	$password
+		"secret"
+	$get
+		/
+			=web*markus</pre>
+	
+	<p>Example response:</p>
+	
+	<pre class="code">
+$
+	$is$a
+		$$xdi
+=web*markus
+	$password
+		"secret"
+	$is$
+		=!91F2.8153.F600.AE24!5c85.ae82.f787.9562
+	$is$a
+		=
+	$is
+		=web*markus
+	$certificate$x.509
+		"MIID..."
+	$key$public
+		"MIIB..."
+	$key$private
+		"MIIE..."</pre>
+	
+	<p>Example code with XDI4j:</p>
+	
+	<pre class="code">
+	// data we need for the message
+
+	String iname = "=web*markus";
+	String password = "secret";
+
+	// prepare and send XDI message
+
+	XDIClient client = new XDIHttpClient("http://xdi.freexri.com/");
+
+	MessageEnvelope envelope = MessageEnvelope.newInstance();
+	Message message = envelope.newMessage(new XRI3Segment(iname));
+	Operation operation = message.createGetOperation();
+	Graph operationGraph = operation.createOperationGraph(null);
+	operationGraph.createStatement(new XRI3Segment(iname));
+	envelope.getGraph().createStatement(new XRI3Segment(iname), new XRI3Segment("$is$a"), new XRI3Segment("="));
+	envelope.getGraph().createStatement(new XRI3Segment(iname), new XRI3Segment("$password"), password);
+
+	MessageResult result = client.send(envelope, null);
+	if (result instanceof ErrorMessageResult) throw new RuntimeException(((ErrorMessageResult) result).getErrorString());
+
+	// read result
+
+	String inumber = Addressing.findReferenceXri(result.getGraph(), new XRI3(iname + "/$is$")).toString();
+	String certificate = Addressing.findLiteralData(result.getGraph(), new XRI3(iname + "/$certificate$x.509"));
+	String publickey = Addressing.findLiteralData(result.getGraph(), new XRI3(iname + "/$key$public"));
+	String privatekey = Addressing.findLiteralData(result.getGraph(), new XRI3(iname + "/$key$private"));
+	System.out.println(inumber);
+	System.out.println(certificate);
+	System.out.println(publickey);
+	System.out.println(privatekey);</pre>
+
+	<h3>Store arbitrary data in the i-name's XDI context:</h3>
+	
+	<p>Store full name, city and country:</p>
+	
+	<pre class="code">
+=web*markus
+	$is$a
+		=
+	$password
+		"secret"
+	$add
+		/
+			=web*markus
+				+name
+					"Markus Sabadello"
+				+city
+					"Vienna"
+				+country
+					"AT"</pre>
+	
+	<p>Example response:</p>
+	
+	<pre class="code">
+(none if successful)</pre>
+
+	<h3>Retrieve arbitrary data from the i-name's XDI context:</h3>
+	
+	<p>Retrieve city and country:</p>
+	
+	<pre class="code">
+=web*markus
+	$is$a
+		=
+	$password
+		"secret"
+	$get
+		/
+			=web*markus
+				+city
+				+country</pre>
+	
+	<p>Example response:</p>
+	
+	<pre class="code">
+=web*markus
+	+city
+		"Vienna"
+	+country
+		"AT"</pre>
+
+</wicket:extend>
+
+</body>
+</html>

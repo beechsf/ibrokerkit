@@ -1,0 +1,26 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<p>Here you can add an i-service to your XRI. Note that the recommended way to
+	configure i-services is the wizard, which you can access from your XRI list. Adding
+	an i-service manually requires a certain understanding of how XRI resolution and i-services
+	work.</p>
+	
+	<form wicket:id="form">
+	
+	<p>Type of i-service to add:&nbsp;<select wicket:id="iserviceType">___ iserviceType here ___</select></p>
+	<p><input wicket:id="doXriBind" type="checkbox"> Bind the i-service to this specific XRI, instead
+	of its authority. This means that the i-service will not be shared by aliases of this XRI.</p>
+	<p><input wicket:id="doCreateSep" type="checkbox"> Automatically create an appropriate
+	Service Endpoint to access the new i-service.</p>
+	<p><input wicket:id="doEnable" type="checkbox"> Enable the new i-service.</p>
+	<input type="submit" value="Create the i-service now">
+	
+	</form>
+
+</wicket:extend>
+
+</body>
+</html>

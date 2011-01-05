@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<!-- various property files -->
+
+	<util:properties id="applicationProperties" location="/WEB-INF/application.properties" />
+	<util:properties id="velocityProperties" location="/WEB-INF/velocity.properties" />
+	<util:properties id="iserviceStoreProperties" location="/WEB-INF/iservicestore.properties" />
+	<util:properties id="openxriStoreProperties" location="/WEB-INF/openxristore.properties" />
+
+	<!-- WICKET APPLICATION -->
+
+	<bean id="wicketApplication" class="ibrokerkit.iservicefront.forwarding.webapplication.ForwardingApplication">
+		<property name="properties"><ref local="applicationProperties" /></property>
+		<property name="velocityProperties"><ref local="velocityProperties" /></property>
+		<property name="iserviceStore"><ref local="iserviceStore" /></property>
+		<property name="openxriStore"><ref local="openxriStore" /></property>
+	</bean>
+
+	<!-- iserviceStore store -->
+
+	<bean id="iserviceStore" class="ibrokerkit.iservicestore.store.impl.db.DatabaseStore" init-method="init">
+		<constructor-arg><ref local="iserviceStoreProperties" /></constructor-arg>
+	</bean>
+
+	<!-- OpenXRI store -->
+
+	<bean id="openxriStore" class="org.openxri.store.impl.db.DatabaseStore" init-method="init">
+		<constructor-arg><ref local="openxriStoreProperties" /></constructor-arg>
+	</bean>
+
+</beans>

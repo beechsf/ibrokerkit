@@ -1,0 +1,11 @@
+Dear Customer,
+
+This is a reminder regarding your I-Name at $ibrokername.
+
+Your I-Name $iname will expire in $inamedays days.
+Its corresponding I-Number $inumber will expire in $inumberdays days.
+
+Please renew your I-Name at $renewurl.
+
+greetings,
+$ibrokername

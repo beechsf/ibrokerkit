@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="ibrokerkit.iservicestore.store.impl.db.DbForwarding" table="forwarding">
+
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+
+        <timestamp name="timestamp" />
+
+        <property name="qxri" index="forwarding_qxri" />
+
+		<property name="name" />
+
+		<property name="enabled" not-null="true" />
+
+        <map name="attributes" table="forwarding_attributes" fetch="join" lazy="false" cascade="all-delete-orphan">
+        	<key column="id" />
+        	<map-key column="k" type="string" />
+        	<element column="v" type="text" />
+        </map>
+
+		<property name="indx" index="forwarding_indx" />
+
+		<property name="indexPage" not-null="true" />
+
+		<property name="errorPage" not-null="true" />
+
+		<map name="mappings" table="forwarding_mappings" fetch="join" lazy="false" cascade="all-delete-orphan">
+			<key />
+			<map-key column="path" type="string" />
+			<element column="uri" type="string" not-null="true" />
+		</map>
+
+		<query name="All"><![CDATA[
+			FROM DbForwarding
+		]]></query>
+
+		<query name="AllByQxri"><![CDATA[
+			FROM DbForwarding as forwarding
+			WHERE forwarding.qxri = :qxri
+		]]></query>
+
+		<query name="AllByIndx"><![CDATA[
+			FROM DbForwarding as forwarding
+			WHERE forwarding.indx = :indx
+		]]></query>
+
+		<query name="EnabledByQxri"><![CDATA[
+			FROM DbForwarding as forwarding
+			WHERE forwarding.qxri = :qxri
+			AND forwarding.enabled = TRUE
+		]]></query>
+
+		<query name="Count"><![CDATA[
+			SELECT COUNT(*)
+			FROM DbForwarding
+		]]></query>
+
+    </class>
+
+</hibernate-mapping>

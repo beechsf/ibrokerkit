@@ -1,0 +1,39 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<img style="float: right" src="images/logo-xdi.gif">
+
+	<h2>Description</h2>
+
+	<p>xdiFront is an experimental XDI endpoint for i-brokers. It provides external
+	applications with the following functionality:</p>
+	
+	<ul>
+	<li>Check if an i-name's password is correct.</li>
+	<li>Retrieve an i-name's i-number and synonyms (anyone can do this).</li>
+	<li>Retrieve an i-name's private and public keys (only the i-name owner can do this).</li>
+	<li>Store, retrieve and share arbitrary XDI data associated with the i-number.</li>
+	</ul>
+
+	<p>See <a wicket:id="XdiFrontExamplesLink" title="xdiFrontExamples">Examples: xdiFront</a> for
+	some information on how to talk to an xdiFront endpoint.</p>
+
+	<h2>About XDI</h2>
+
+	<p>For more information about XDI, see:</p>
+
+	<ul>	
+	<li><a href="http://en.wikipedia.org/wiki/XDI">XDI on Wikipedia</a></li>
+	<li><a href="http://wiki.oasis-open.org/xdi/">OASIS XDI TC</a></li>
+	</ul>
+
+	<h2>Packaging</h2>
+	
+	<p>xdiFront is packaged as a .WAR file for deployment at an XDI endpoint, e.g. <b>xdi.youribroker.com</b>.</p>
+
+</wicket:extend>
+
+</body>
+</html>

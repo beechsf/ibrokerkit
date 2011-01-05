@@ -1,0 +1,3 @@
+The projects in the SVN root always contain the latest development code.
+
+Stable snapshots (e.g. 0.5) can be found in ibrokerKit/dist.

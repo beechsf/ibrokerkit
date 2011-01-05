@@ -1,0 +1,37 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<a href="http://www.inames.net" target="_blank"><img style="float: right; margin-top: -8px" src="images/logo-inames.png"></a>
+
+	<h2>Maintenance components</h2>
+	
+	<p>The following services are not directly exposed to i-name users, but are still required
+	for proper i-broker operations.</p>
+
+	<p><img class="screenshot" src="images/ibrokerKit2.png"></p>
+
+	<p class="small">
+	(1) The openxri.admin web application uses the openxri library for managing authorities, 
+	subsegments and descriptors (XRDs).<br>
+	(2) The openxri library accesses the openxri DB.<br>
+	(3) The ibrokerTask standalone application uses the iname4Java library for performing maintenance
+	tasks on both top-level and community i-names.<br>
+	(4) The iname4Java library uses the openxri library for working with community i-names.<br>
+	(5) The iname4Java library uses the epptools4Java library for working with top-level i-names.<br>
+	(6) The epptools4Java library accesses the epptools DB.<br>
+	(7) The ibrokerTask standalone application uses the epptools4Java library for polling
+	events from the GRS queue.<br>
+	(8) The epptools4Java library uses the NeuStar EPP Toolkit library for communicating with the GRS.<br>
+	(9) The ibrokerTask standalone application uses the ibrokerStore library for performing maintenance
+	tasks on users and other core i-broker data.<br>
+	(10) The ibrokerStore library accesses the ibroker DB.<br>
+	(11) The iserviceAdmin web application uses the iserviceStore library for managing i-service data.<br>
+	(12) The iserviceStore library accesses the iservice DB.
+	</p>
+
+</wicket:extend>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<img style="float: right" src="images/logo-openxri.png">
+
+	<h2>Description</h2>
+
+	<p>openxri is a core component of ibrokerKit. It performs 
+	the following functions:</p>
+	
+	<ul>
+	<li>It acts as a database of all registered i-names (both top-level and community i-names). For example, if an i-broker registers <b>=yourname</b> in the GRS, then <b>=yourname</b> is also registered as an authority in the OpenXRI authority resolution server’s database.</li>
+	<li>This allows the i-broker to keep a list of all registered i-names, and to associate them with user accounts in the <a wicket:id="IbrokerStoreLink">ibrokerStore</a>.</li>
+	<li>This makes the i-broker compliant with section 3.13 of the I-Broker Agreement of the Global Service Specification at <a href="http://gss.xdi.org/">http://gss.xdi.org/</a>.</li>
+	<li>It allows the i-broker to offer community i-names such as <b>=yourname*something</b> to customers.</li>
+	</ul>
+
+	<p>This is the unmodified version from the
+	open source project at <a href="http://www.openxri.org" target="_blank">http://www.openxri.org/</a>.</p>
+
+	<h2>Packaging</h2>
+	
+	<p>openxri is packaged as a .WAR file for deployment at an XRI authority resolution endpoint, e.g. <b>resolve.youribroker.com</b>.<br>
+	It is also packaged as a .JAR file for use by other components that need to access the OpenXRI Store.</p>
+
+</wicket:extend>
+
+</body>
+</html>

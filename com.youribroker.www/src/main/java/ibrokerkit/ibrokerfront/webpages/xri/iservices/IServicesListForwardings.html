@@ -1,0 +1,39 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<wicket:fragment wicket:id="qxriBoundFragment">
+		<strong>Note:</strong> This i-service is bound to this specific XRI instead of its authority.
+		This means that it will not be shared by aliases of this XRI.
+	</wicket:fragment>
+
+	<p>
+	<span wicket:id="forwardingCount">___ forwardingCount here ___</span> Forwarding i-service(s)<br>
+	</p>
+
+	<div wicket:id="userQxriForwardings" class="border">	
+		
+		<div class="buttonpanel">
+
+			<input type="button" wicket:id="viewButton" value="View">
+			<input type="button" wicket:id="editButton" value="Edit">
+			<input type="button" wicket:id="deleteButton" value="Delete">
+
+		</div>
+
+		<table><tr><td><img src="images/i-forwarding_logo.gif"></td>
+			<td>
+				<p><strong>Forwarding i-service</strong><p>
+				<p>"<span wicket:id="name">___ name here ___</span>"<br>
+				Enabled: <span wicket:id="enabled">___ enabled here ___</span></p>
+				<p wicket:id="qxriBound">___ qxriBound here ___</p>
+			</td>
+		</tr></table>
+
+	</div>
+
+</wicket:extend>
+
+</body>
+</html>

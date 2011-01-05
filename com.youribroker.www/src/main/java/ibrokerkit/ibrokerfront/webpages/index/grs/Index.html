@@ -1,0 +1,37 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<h2>Register an i-name:</h2>
+	
+	<div id="Registration">
+
+		<form wicket:id="form">
+	
+			<img src="images/star.png" id="Star"><select wicket:id="gcs">___ gcs here ___</select>&nbsp;
+			<input wicket:id="iname" type="text">
+			<input type="submit" value="Check for availability" style="width: 180px"><br>
+		
+		</form>
+
+		<div wicket:id="userContainer">
+
+			<form wicket:id="form2">
+	
+				<img src="images/star.png" id="Star"><select wicket:id="parentXri">___ parentXri here ___</select>&nbsp;&nbsp;<b>*</b>&nbsp;&nbsp;
+				<input wicket:id="localName" type="text">
+				<input type="submit" value="Register community i-name" style="width: 180px"><br>
+
+			</form>
+		
+		</div>
+		
+		<span class="small">"=" is for individual i-names (<b>12$</b> / year). "@" is for organizational i-names (<b>55$</b> / year). Community i-names are free.</span>
+
+	</div>
+	
+</wicket:extend>
+
+</body>
+</html>

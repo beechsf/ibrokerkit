@@ -1,0 +1,130 @@
+<html>
+<body>
+
+<wicket:extend>
+
+	<a href="http://www.inames.net" target="_blank"><img style="float: right; margin-top: -8px" src="images/logo-inames.png"></a>
+
+	<p>ibrokerKit is a software solution for <a href="http://xdi.org">XDI.org</a> accredited
+	GRS i-brokers as well as Community i-brokers. It contains customizable,
+	extensible frontend web applications, libraries, backend database schemas and other 
+	components necessary for operating all aspects of an i-broker.</p>
+
+	<ul>
+	<li>Community i-brokers provide i-names with one or more fixed subsegments, e.g. <b>@free*yourcompany</b>, or <b>=web*yourname</b>.</li>
+	<li>GRS i-brokers provide top-level i-names in the central registry, e.g. <b>@yourcompany</b> or <b>=yourname</b>.</li>
+	</ul>
+
+	<h2>Components</h2>
+
+	<p>The following table gives an overview over which ibrokerKit components you need.</p>
+
+	<table style="border: 2px solid black; margin-left: 50px">
+	<tr>
+	<td style="font-weight: bold">Component</td>
+	<td style="font-weight: bold; width: 150px" align="center">Community I-Brokers</td>
+	<td style="font-weight: bold; width: 150px" align="center">GRS I-Brokers</td>
+	</tr>
+	<tr>
+	<td>ibrokerFront</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>ibrokerStore</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>ibrokerTask</td>
+	<td>&nbsp;</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>ibrokerCert</td>
+	<td>&nbsp;</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>openxri</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>openxriAdmin</td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	</tr>
+	<tr>
+	<td>iserviceFront</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>iserviceStore</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>iserviceAdmin</td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	</tr>
+	<tr>
+	<td>oauthFront</td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	</tr>
+	<tr>
+	<td>xdiFront</td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	</tr>
+	<tr>
+	<td>iname4java</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>epptools4java</td>
+	<td>&nbsp;</td>
+	<td align="center"><img src="images/checkgreen.png"></td>
+	</tr>
+	<tr>
+	<td>xritools4java</td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	<td align="center"><img src="images/checkyellow.png"></td>
+	</tr>
+	</table>
+
+	<p><img src="images/checkgreen.png"> = Required&nbsp;&nbsp;
+	<img src="images/checkyellow.png"> = Optional</p>
+
+	<p class="small">The table assumes that you do not implement anything yourself.<br>ibrokerKit is very modular, i.e.
+	you could also only use 1 or 2 components and implement others yourself.</p>
+
+	<h2>Technologies</h2>
+
+	<p>ibrokerKit relates to the following technologies:</p>
+	<ul>
+	<li><strong>OpenXRI:</strong> The OpenXRI server is used to host community i-names. OpenXRI relates to XRI as BIND
+	relates to DNS. If all you need to do is host community i-names, without associated i-services and management tools, then
+	you don't need ibrokerKit; only OpenXRI.</li>
+	<li><strong>NeuStar EPP Toolkit:</strong> If you are an XDI.org accredited GRS I-Broker, you will be given access
+	to this toolkit, which communicates with the central registry. ibrokerKit builds on this toolkit.</li>
+	<li><strong>Apache Wicket Web Framework:</strong> This is used for implementing the frontend web applications in
+	ibrokerKit.</li>
+	<li><strong>Higgins XDI4j:</strong> A general-purpose XDI library used for implementing the xdiFront component.</li>
+	</ul>
+
+	<h2>Further Information</h2>
+
+	<p>See <a href="http://www.inames.net/">http://www.inames.net/</a> for more information on
+	how to become an <a href="http://xdi.org">XDI.org</a> accredited i-broker.<br>
+
+	ibrokerKit is not freely available for download. Please contact us at <a href="http://xri.net/@fullxri*ibrokerkit">@fullxri*ibrokerkit</a> for questions and enquiries.</p>
+
+</wicket:extend>
+
+</body>
+</html>
