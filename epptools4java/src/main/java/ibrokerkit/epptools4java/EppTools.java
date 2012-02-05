@@ -1060,7 +1060,7 @@ public class EppTools implements Serializable {
 
 		// end session first if it's open
 
-		endSessionEqual(i);
+		if (this.eppChannelEqual[i] != null || this.eppSessionEqual[i] != null) endSessionEqual(i);
 
 		// open session and channel
 
@@ -1128,7 +1128,7 @@ public class EppTools implements Serializable {
 
 		// end session first if it's open
 
-		endSessionAt(i);
+		if (this.eppChannelAt[i] != null || this.eppSessionAt[i] != null) endSessionAt(i);
 
 		// open session and channel
 
@@ -1193,17 +1193,27 @@ public class EppTools implements Serializable {
 
 		// shut down channel and session
 
+		/*		log.debug("{=" + " " + i + "} Terminating channel to = server.");
+
 		if (this.eppChannelEqual[i] != null) {
 
 			this.eppChannelEqual[i].terminate();
-			this.eppChannelEqual[i] = null;
-		}
+		}*/
+
+		log.debug("{=" + " " + i + "} Closing session to = server.");
 
 		if (this.eppSessionEqual[i] != null) {
 
-			this.eppSessionEqual[i].close();
-			this.eppSessionEqual[i] = null;
+			try {
+
+				if (((EppSessionTcp) this.eppSessionEqual[i]).getSocket() != null) ((EppSessionTcp) this.eppSessionEqual[i]).getSocket().close();
+			} catch (IOException ex) { }
 		}
+
+		this.eppSessionEqual[i] = null;
+		this.eppChannelEqual[i] = null;
+
+		log.debug("{=" + " " + i + "} Session ended to = server.");
 	}
 
 	/**
@@ -1213,17 +1223,27 @@ public class EppTools implements Serializable {
 
 		// shut down channel and session
 
+		/*		log.debug("{@" + " " + i + "} Terminating channel to @ server.");
+
 		if (this.eppChannelAt[i] != null) {
 
 			this.eppChannelAt[i].terminate();
-			this.eppChannelAt[i] = null;
-		}
+		}*/
+
+		log.debug("{@" + " " + i + "} Closing session to @ server.");
 
 		if (this.eppSessionAt[i] != null) {
 
-			this.eppSessionAt[i].close();
-			this.eppSessionAt[i] = null;
+			try {
+
+				if (((EppSessionTcp) this.eppSessionAt[i]).getSocket() != null) ((EppSessionTcp) this.eppSessionAt[i]).getSocket().close();
+			} catch (IOException ex) { }
 		}
+
+		this.eppSessionAt[i] = null;
+		this.eppChannelAt[i] = null;
+
+		log.debug("{@" + " " + i + "} Session ended to @ server.");
 	}
 
 	/**
@@ -1352,6 +1372,7 @@ public class EppTools implements Serializable {
 		// try to send the command and read the response
 
 		EppResponse eppResponse = null;
+		EppResult eppResult = null;
 
 		synchronized (eppChannel) {
 
@@ -1367,8 +1388,12 @@ public class EppTools implements Serializable {
 				if (eppChannel.getException() != null) throw eppChannel.getException();
 				if (eppResponse == null) throw new IOException("{" + gcs + " " + i + "} No response.");
 
-				log.debug("{" + gcs + " " + i + "} Transaction " + eppCommand.getClientTransactionId() + " sent to " + gcs + " server.");
+				eppResult = (EppResult) eppResponse.getResult().get(0);
+				if (eppResult == null) throw new IOException("{" + gcs + " " + i + "} No result.");
 
+				if (eppResult.getCode() == EppError.CODE_SESSION_LIMIT_EXCEEDED_SERVER_CLOSING_CONNECTION) throw new IOException("{" + gcs + " " + i + "} Session limit exceeded.");
+
+				log.debug("{" + gcs + " " + i + "} Transaction " + eppCommand.getClientTransactionId() + " sent to " + gcs + " server.");
 			} catch (Exception ex) {
 
 				log.warn("{" + gcs + " " + i + "} Channel to " + gcs + " server seems to have gone away: " + ex.getMessage(), ex);
@@ -1415,6 +1440,12 @@ public class EppTools implements Serializable {
 
 							eppResponse = eppChannel.send(eppCommand);
 							if (eppChannel.getException() != null) throw eppChannel.getException();
+							if (eppResponse == null) throw new IOException("{" + gcs + " " + i + "} No response.");
+
+							eppResult = (EppResult) eppResponse.getResult().get(0);
+							if (eppResult == null) throw new IOException("{" + gcs + " " + i + "} No result.");
+
+							if (eppResult.getCode() == EppError.CODE_SESSION_LIMIT_EXCEEDED_SERVER_CLOSING_CONNECTION) throw new IOException("{" + gcs + " " + i + "} Session limit exceeded.");
 
 							log.debug("{" + gcs + " " + i + "} Transaction " + eppCommand.getClientTransactionId() + " sent to " + gcs + " server.");
 
@@ -1458,11 +1489,6 @@ public class EppTools implements Serializable {
 			if (gcs == '@') this.eppBlockedAt[i] = Boolean.FALSE;
 		}
 
-		if (eppResponse == null) {
-
-			throw new EppToolsException("{" + gcs + " " + i + "} No response to transaction " + eppCommand.getClientTransactionId() + " from server " + gcs + ".");
-		}
-
 		// log the successful action
 
 		try {
@@ -1474,11 +1500,8 @@ public class EppTools implements Serializable {
 			log.error("{" + gcs + " " + i + "} Cannot store successful EPP action:" + ex.getMessage(), ex);
 		}
 
-		// check the EPP response and EPP result
+		// check the EPP response
 
-		EppResult eppResult = (EppResult) eppResponse.getResult().get(0);
-
-		if (eppResult == null) throw new EppToolsException("{" + gcs + " " + i + "} No result");
 		if (! (eppResponse.success())) throw makeEppToolsUnsuccessfulException(eppResult);
 		if (eppResponse.getTransactionId() == null || eppResponse.getTransactionId().getClientTransactionId() == null || ! (eppResponse.getTransactionId().getClientTransactionId().equals(eppCommand.getClientTransactionId()))) throw new EppToolsException("Unexpected clTRID: " + eppResponse.getTransactionId().getClientTransactionId() + " (expected " + eppCommand.getClientTransactionId() + ")");
 
