@@ -545,6 +545,12 @@ public class GrsXriStore extends OpenxriXriStore {
 
 		if (xri == null) throw new NullPointerException();
 
+		// delete the xri in OpenXRI first. if this is an OpenXRI xri, we're done.
+
+		super.deleteXri(xri);
+
+		if (xri instanceof OpenxriXri) return;
+
 		// delete i-name
 
 		char gcs = ((GrsXri) xri).getGcs();
@@ -558,10 +564,6 @@ public class GrsXriStore extends OpenxriXriStore {
 			log.error(ex);
 			throw new XriStoreException("Cannot delete in GRS " + iname + ": " + ex.getMessage(), ex);
 		}
-
-		// delete the xri in OpenXRI.
-
-		super.deleteXri(xri);
 	}
 
 	@Override

@@ -30,7 +30,7 @@
 		<module>../iname4java</module>
 		<module>../iserviceAdmin</module>
 		<module>../iserviceFront</module>
-		<module>../iserviceOpenidconnect</module>
+<!-- 		<module>../iserviceOpenidconnect</module> -->
 		<module>../iserviceStore</module>
 		<module>../xritools4java</module>
 		<module>../oauthFront</module>
