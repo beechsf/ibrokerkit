@@ -1,7 +1,10 @@
 package ibrokerkit.ibrokermaintenance;
 
 import ibrokerkit.epptools4java.EppTools;
-import ibrokerkit.ibrokermaintenance.jobs.CheckGrsAuthorityIdJob;
+import ibrokerkit.ibrokermaintenance.jobs.CheckDatesJob;
+import ibrokerkit.ibrokermaintenance.jobs.CheckEmailsJob;
+import ibrokerkit.ibrokermaintenance.jobs.CheckGrsAuthorityJob;
+import ibrokerkit.ibrokermaintenance.jobs.CheckXRDJob;
 import ibrokerkit.ibrokermaintenance.jobs.Job;
 import ibrokerkit.ibrokerstore.store.impl.db.DatabaseStore;
 import ibrokerkit.iname4java.store.impl.grs.GrsXriStore;
@@ -28,8 +31,8 @@ public class IbrokerMaintenance {
 	public static ibrokerkit.ibrokerstore.store.Store ibrokerStore;
 	public static ibrokerkit.iname4java.store.XriStore xriStore;
 
-	public static Job job = new CheckGrsAuthorityIdJob();
-	
+	public static Job[] jobs = new Job[] { new CheckGrsAuthorityJob(false), new CheckDatesJob(true), new CheckEmailsJob(false), new CheckXRDJob(false) };
+
 	private static void init() throws Exception {
 
 		// init properties
@@ -68,7 +71,7 @@ public class IbrokerMaintenance {
 		ibrokerStore.close();
 		eppTools.close();
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 
 		// initialize everything
@@ -88,9 +91,12 @@ public class IbrokerMaintenance {
 
 		try {
 
-			log.info("----- START JOB");
-			job.run();
-			log.info("----- DONE JOB");
+			for (Job job : jobs) {
+
+				log.info("----- START JOB " + job.getClass().getSimpleName());
+				job.run();
+				log.info("----- DONE JOB");
+			}
 		} catch (Exception ex) {
 
 			log.error("Job", ex);
