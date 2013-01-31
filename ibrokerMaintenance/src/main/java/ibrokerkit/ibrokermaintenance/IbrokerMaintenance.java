@@ -31,7 +31,7 @@ public class IbrokerMaintenance {
 	public static ibrokerkit.ibrokerstore.store.Store ibrokerStore;
 	public static ibrokerkit.iname4java.store.XriStore xriStore;
 
-	public static Job[] jobs = new Job[] { new CheckGrsAuthorityJob(false), new CheckDatesJob(true), new CheckEmailsJob(false), new CheckXRDJob(false) };
+	public static Job[] jobs = new Job[] { new CheckGrsAuthorityJob(true), new CheckDatesJob(true), new CheckEmailsJob(true), new CheckXRDJob(true) };
 
 	private static void init() throws Exception {
 

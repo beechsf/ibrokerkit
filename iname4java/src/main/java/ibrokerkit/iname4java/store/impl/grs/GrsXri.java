@@ -320,7 +320,7 @@ public class GrsXri extends OpenxriXri {
 	@Override
 	public void setCanonicalID(CanonicalID canonicalID) throws XriStoreException {
 
-		throw new XriStoreException("Cannot set canonical ID in GRS.");
+		super.setCanonicalID(canonicalID);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.openxri.xml.CanonicalID;
 
 import com.neulevel.epp.xri.EppXriAuthority;
 import com.neulevel.epp.xri.EppXriName;
+import com.neulevel.epp.xri.EppXriNumberAttribute;
 
 public class CheckXRDJob implements Job {
 
@@ -33,14 +34,14 @@ public class CheckXRDJob implements Job {
 
 				if (! (xri instanceof GrsXri)) continue;
 
-				String canonicalID = xri.getCanonicalID().toString();
+				String canonicalID = xri.getCanonicalID().getValue();
 
 				EppXriName infoName = IbrokerMaintenance.eppTools.infoIname(xri.getFullName().charAt(0), xri.getFullName());
 				if (infoName == null) { log.info("iname not found. SKIPPING!"); continue; }
 				EppXriAuthority infoAuthority = IbrokerMaintenance.eppTools.infoAuthority(xri.getFullName().charAt(0), infoName.getAuthorityId(), true);
 				if (infoAuthority == null) { log.info("authority not found. SKIPPING!"); continue; }
 
-				String realCanonicalID = (String) infoAuthority.getINumber().get(0);
+				String realCanonicalID = ((EppXriNumberAttribute) infoAuthority.getINumber().get(0)).getINumber();
 
 				log.info("CanonicalID: " + canonicalID + ", real CanonicalID: " + realCanonicalID + (realCanonicalID.equals(canonicalID) ? "" : ", MISMATCH!"));
 

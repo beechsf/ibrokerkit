@@ -49,14 +49,34 @@ public class CheckEmailsJob implements Job {
 
 				if (this.fix) {
 
-					if (! realEmail.equals(email)) {
+					if (email == null || email.isEmpty()) {
 
 						email = realEmail;
 						user.setEmail(email);
 						IbrokerMaintenance.ibrokerStore.updateObject(user);
+					} else {
 
-						log.info("FIXED email");
+						realEmail = email;
+						IbrokerMaintenance.eppTools.setSocialData(
+								xri.getFullName().charAt(0), 
+								infoAuthority.getAuthorityId(),
+								infoAuthority.getAuthInfo().getValue(), 
+								infoAuthority.getSocialData().getPostalInfo().getAddress().getStreet(), 
+								infoAuthority.getSocialData().getPostalInfo().getAddress().getCity(), 
+								infoAuthority.getSocialData().getPostalInfo().getAddress().getState(), 
+								infoAuthority.getSocialData().getPostalInfo().getAddress().getPostalCode(), 
+								infoAuthority.getSocialData().getPostalInfo().getAddress().getCountryCode(),
+								infoAuthority.getSocialData().getPostalInfo().getName(),
+								infoAuthority.getSocialData().getPostalInfo().getOrganization(),
+								infoAuthority.getSocialData().getPrimaryEmail(),
+								infoAuthority.getSocialData().getSecondaryEmail(),
+								infoAuthority.getSocialData().getFax().toString(),
+								realEmail,
+								infoAuthority.getSocialData().getSecondaryEmail(),
+								infoAuthority.getSocialData().getPager().toString());
 					}
+
+					log.info("FIXED email");
 				}
 			} catch (Exception ex) {
 
