@@ -15,9 +15,11 @@ public class CheckGrsAuthorityIdJob implements Job {
 
 		for (Xri xri : IbrokerMaintenance.xriStore.listXris()) {
 
+			log.info("XRI: " + xri.getFullName());
+
 			String grsAuthorityId = xri.getAuthorityAttribute("grs-authorityid");
 
-			if (grsAuthorityId == null) log.warn("No grs-authorityid: ");
+			if (grsAuthorityId == null) log.warn("No grs-authorityid: " + xri.getFullName());
 		}
 	}
 }

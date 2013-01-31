@@ -1,8 +1,9 @@
 package ibrokerkit.ibrokermaintenance;
 
 import ibrokerkit.epptools4java.EppTools;
+import ibrokerkit.ibrokermaintenance.jobs.CheckGrsAuthorityIdJob;
+import ibrokerkit.ibrokermaintenance.jobs.Job;
 import ibrokerkit.ibrokerstore.store.impl.db.DatabaseStore;
-import ibrokerkit.iname4java.store.Xri;
 import ibrokerkit.iname4java.store.impl.grs.GrsXriStore;
 
 import java.io.File;
@@ -27,7 +28,7 @@ public class IbrokerMaintenance {
 	public static ibrokerkit.ibrokerstore.store.Store ibrokerStore;
 	public static ibrokerkit.iname4java.store.XriStore xriStore;
 
-	public static Job job;
+	public static Job job = new CheckGrsAuthorityIdJob();
 	
 	private static void init() throws Exception {
 
