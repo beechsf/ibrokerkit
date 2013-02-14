@@ -25,7 +25,7 @@ public class CreateInumberJob implements Job {
 
 		GrsXriData grsXriData = new GrsXriData();
 		grsXriData.setTrusteeEscrowAgent("@");
-		grsXriData.setTrusteeContactAgent("@!(!!1003!1) ");
+		grsXriData.setTrusteeContactAgent("@!(!!1003!1)");
 		grsXriData.setName("Markus");
 		grsXriData.setPrimaryEmail("markus.sabadello@gmail.com");
 		grsXriData.setCountryCode("AT");
@@ -33,7 +33,7 @@ public class CreateInumberJob implements Job {
 		grsXriData.setCity("Vienna");
 		grsXriData.setStreet(new String[] { "Untere Augartenstrasse 34/24" });
 
-		String authorityId = "44783";
+		String authorityId = "44784";
 
 		// build the GRS data
 
@@ -44,7 +44,7 @@ public class CreateInumberJob implements Job {
 		String trusteeEscrowAgent = grsXriData.getTrusteeEscrowAgent();
 		String trusteeContactAgent = grsXriData.getTrusteeContactAgent();
 
-		// create authority and i-number i-name
+		// create authority and i-number and i-name
 
 		EppResponseDataCreateXriAuthority eppResponseDataCreateXriAuthority; 
 		EppResponseDataCreateXriNumber eppResponseDataCreateXriNumber;
