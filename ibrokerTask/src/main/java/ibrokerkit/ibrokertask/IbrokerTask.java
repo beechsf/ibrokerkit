@@ -33,7 +33,7 @@ public class IbrokerTask {
 		// init properties
 
 		properties = new Properties();
-		properties.load(new FileInputStream(new File("conf/application.properties")));
+		properties.load(new FileInputStream(new File("application.properties")));
 
 		// init Velocity
 
@@ -42,21 +42,21 @@ public class IbrokerTask {
 		// init eppTools
 
 		Properties eppToolsProperties = new Properties();
-		eppToolsProperties.load(new FileInputStream(new File("conf/epptools.properties")));
+		eppToolsProperties.load(new FileInputStream(new File("epptools.properties")));
 		eppTools = new EppTools(eppToolsProperties);
 		eppTools.init();
 
 		// init ibrokerStore
 
 		Properties ibrokerStoreProperties = new Properties();
-		ibrokerStoreProperties.load(new FileInputStream(new File("conf/ibrokerstore.properties")));
+		ibrokerStoreProperties.load(new FileInputStream(new File("ibrokerstore.properties")));
 		ibrokerStore = new DatabaseStore(ibrokerStoreProperties);
 		ibrokerStore.init();
 
 		// init OpenXRI ServetConfig and xriStore
 
 		Properties openxriStoreProperties = new Properties();
-		openxriStoreProperties.setProperty(XMLServerConfig.SERVER_CONFIG_FILE, "conf/server.xml");
+		openxriStoreProperties.setProperty(XMLServerConfig.SERVER_CONFIG_FILE, "server.xml");
 		ServerConfig openxriServerConfig = ServerConfigFactory.initSingleton(null, openxriStoreProperties);
 		xriStore = new GrsXriStore(((Store) openxriServerConfig.getComponentRegistry().getComponent(Store.class)), eppTools);
 	}

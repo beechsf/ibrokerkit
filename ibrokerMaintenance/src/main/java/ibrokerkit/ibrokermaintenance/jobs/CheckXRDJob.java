@@ -34,7 +34,7 @@ public class CheckXRDJob implements Job {
 
 				if (! (xri instanceof GrsXri)) continue;
 
-				String canonicalID = xri.getCanonicalID().getValue();
+				String canonicalID = xri.getCanonicalID() == null ? null : xri.getCanonicalID().getValue();
 
 				EppXriName infoName = IbrokerMaintenance.eppTools.infoIname(xri.getFullName().charAt(0), xri.getFullName());
 				if (infoName == null) { log.info("iname not found. SKIPPING!"); continue; }

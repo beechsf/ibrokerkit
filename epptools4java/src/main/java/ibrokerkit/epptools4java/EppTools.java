@@ -684,15 +684,22 @@ public class EppTools implements Serializable {
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void setSocialData(char gcs, String authId, String password, String[] street, String city, String state, String postalCode, String countryCode, String name, String organization, String primaryVoice, String secondaryVoice, String fax, String primaryEmail, String secondaryEmail, String pager) throws EppToolsException {
+	public void setSocialData(char gcs, String authId, String password, EppXriSocialData eppXriSocialData) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		eppCommandUpdate.setNewSocialData(makeEppXriSocialData(street, city, state, postalCode, countryCode, name, organization, primaryVoice, secondaryVoice, fax, primaryEmail, secondaryEmail, pager));
+		eppCommandUpdate.setNewSocialData(eppXriSocialData);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
+	}
+
+	public void setSocialData(char gcs, String authId, String password, String[] street, String city, String state, String postalCode, String countryCode, String name, String organization, String primaryVoice, String secondaryVoice, String fax, String primaryEmail, String secondaryEmail, String pager) throws EppToolsException {
+
+		EppXriSocialData eppXriSocialData = makeEppXriSocialData(street, city, state, postalCode, countryCode, name, organization, primaryVoice, secondaryVoice, fax, primaryEmail, secondaryEmail, pager);
+
+		this.setSocialData(gcs, authId, password, eppXriSocialData);
 	}
 
 	public void setCanonicalEquivID(char gcs, String authId, String password, CanonicalEquivID canonicalEquivID) throws EppToolsException {

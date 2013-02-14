@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.neulevel.epp.xri.EppXriAuthority;
 import com.neulevel.epp.xri.EppXriName;
+import com.neulevel.epp.xri.EppXriSocialData;
 
 public class CheckEmailsJob implements Job {
 
@@ -54,29 +55,32 @@ public class CheckEmailsJob implements Job {
 						email = realEmail;
 						user.setEmail(email);
 						IbrokerMaintenance.ibrokerStore.updateObject(user);
-					} else {
+
+						log.info("FIXED email");
+					} else if (! realEmail.equals(email)) {
 
 						realEmail = email;
-						IbrokerMaintenance.eppTools.setSocialData(
-								xri.getFullName().charAt(0), 
-								infoAuthority.getAuthorityId(),
-								infoAuthority.getAuthInfo().getValue(), 
-								infoAuthority.getSocialData().getPostalInfo().getAddress().getStreet(), 
-								infoAuthority.getSocialData().getPostalInfo().getAddress().getCity(), 
-								infoAuthority.getSocialData().getPostalInfo().getAddress().getState(), 
-								infoAuthority.getSocialData().getPostalInfo().getAddress().getPostalCode(), 
-								infoAuthority.getSocialData().getPostalInfo().getAddress().getCountryCode(),
-								infoAuthority.getSocialData().getPostalInfo().getName(),
-								infoAuthority.getSocialData().getPostalInfo().getOrganization(),
-								infoAuthority.getSocialData().getPrimaryEmail(),
-								infoAuthority.getSocialData().getSecondaryEmail(),
-								infoAuthority.getSocialData().getFax().toString(),
-								realEmail,
-								infoAuthority.getSocialData().getSecondaryEmail(),
-								infoAuthority.getSocialData().getPager().toString());
-					}
+						EppXriSocialData socialData = infoAuthority.getSocialData();
+						socialData.setPrimaryEmail(realEmail);
+						socialData.setSecondaryEmail(null);
+						IbrokerMaintenance.eppTools.setSocialData(xri.getFullName().charAt(0), infoAuthority.getAuthorityId(), infoAuthority.getAuthInfo().getValue(), socialData);
 
-					log.info("FIXED email");
+						/*infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPostalInfo() == null || infoAuthority.getSocialData().getPostalInfo().getAddress() == null ? null : infoAuthority.getSocialData().getPostalInfo().getAddress().getStreet(), 
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPostalInfo() == null || infoAuthority.getSocialData().getPostalInfo().getAddress() == null ? null : infoAuthority.getSocialData().getPostalInfo().getAddress().getCity(), 
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPostalInfo() == null || infoAuthority.getSocialData().getPostalInfo().getAddress() == null ? null : infoAuthority.getSocialData().getPostalInfo().getAddress().getState(), 
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPostalInfo() == null || infoAuthority.getSocialData().getPostalInfo().getAddress() == null ? null : infoAuthority.getSocialData().getPostalInfo().getAddress().getPostalCode(), 
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPostalInfo() == null || infoAuthority.getSocialData().getPostalInfo().getAddress() == null ? "XX" : infoAuthority.getSocialData().getPostalInfo().getAddress().getCountryCode(),
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPostalInfo() == null ? null : infoAuthority.getSocialData().getPostalInfo().getName(),
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPostalInfo() == null ? null : infoAuthority.getSocialData().getPostalInfo().getOrganization(),
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPrimaryVoice() == null ? "+1.0000000" : infoAuthority.getSocialData().getPrimaryVoice().getNumber(),
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getSecondaryVoice() == null ? "+1.0000000" : infoAuthority.getSocialData().getSecondaryVoice().getNumber(),
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getFax() == null ? "+1.0000000" : infoAuthority.getSocialData().getFax().getNumber(),
+						realEmail,
+						infoAuthority.getSocialData() == null ? "noemail@noemail.com" : infoAuthority.getSocialData().getSecondaryEmail(),
+						infoAuthority.getSocialData() == null || infoAuthority.getSocialData().getPager() == null ? "+1.0000000" : infoAuthority.getSocialData().getPager().getNumber());*/
+
+						log.info("FIXED email");
+					}
 				}
 			} catch (Exception ex) {
 
