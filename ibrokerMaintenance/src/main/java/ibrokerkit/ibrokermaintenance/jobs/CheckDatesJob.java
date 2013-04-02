@@ -22,6 +22,11 @@ public class CheckDatesJob implements Job {
 	}
 
 	@Override
+	public void args(String[] args) {
+		
+	}
+	
+	@Override
 	public void run() throws Exception {
 
 		for (Xri xri : IbrokerMaintenance.xriStore.listXris()) {

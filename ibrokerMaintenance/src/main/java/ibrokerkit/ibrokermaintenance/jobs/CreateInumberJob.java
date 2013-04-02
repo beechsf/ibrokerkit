@@ -21,6 +21,11 @@ public class CreateInumberJob implements Job {
 	}
 
 	@Override
+	public void args(String[] args) {
+		
+	}
+
+	@Override
 	public void run() throws Exception {
 
 		GrsXriData grsXriData = new GrsXriData();
