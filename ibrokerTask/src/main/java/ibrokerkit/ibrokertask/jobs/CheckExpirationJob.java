@@ -50,6 +50,7 @@ public class CheckExpirationJob {
 
 				log.info("Attempting info on i-name " + iname);
 				EppXriName eppXriName = IbrokerTask.eppTools.infoIname(iname.charAt(0), iname);
+				if (eppXriName == null) throw new RuntimeException("I-Name not found");
 				Calendar dateExpiredName = eppXriName.getDateExpired();
 				long daysName = (dateExpiredName.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / MILLIS_PER_DAY;
 				log.info(eppXriName.getIName() + " expires in " + daysName + " days.");
@@ -58,6 +59,7 @@ public class CheckExpirationJob {
 
 				log.info("Attempting info on i-number " + inumber);
 				EppXriNumber eppXriNumber = IbrokerTask.eppTools.infoInumber(inumber.charAt(0), inumber);
+				if (eppXriNumber == null) throw new RuntimeException("I-Number not found");
 				Calendar dateExpiredNumber = eppXriNumber.getDateExpired();
 				long daysNumber = (dateExpiredNumber.getTimeInMillis() - Calendar.getInstance().getTimeInMillis()) / MILLIS_PER_DAY;
 				log.info(eppXriNumber.getINumber() + " expires in " + daysNumber + " days.");
@@ -114,7 +116,7 @@ public class CheckExpirationJob {
 						context.put("inumber", inumber);
 						context.put("inamedays", daysName);
 						context.put("inumberdays", daysNumber);
-						Template template = velocity.getTemplate("conf/email-remind.vm");
+						Template template = velocity.getTemplate("email-remind.vm");
 						template.merge(context, writer);
 						buffer = writer.getBuffer();
 						email.println(buffer.toString());
@@ -148,7 +150,7 @@ public class CheckExpirationJob {
 						context.put("inumber", inumber);
 						context.put("inamedays", daysName);
 						context.put("inumberdays", daysNumber);
-						Template template = velocity.getTemplate("conf/email-expire.vm");
+						Template template = velocity.getTemplate("email-expire.vm");
 						template.merge(context, writer);
 						buffer = writer.getBuffer();
 						email.println(buffer.toString());
@@ -185,7 +187,7 @@ public class CheckExpirationJob {
 						context.put("inumber", inumber);
 						context.put("inamedays", daysName);
 						context.put("inumberdays", daysNumber);
-						Template template = velocity.getTemplate("conf/email-delete.vm");
+						Template template = velocity.getTemplate("email-delete.vm");
 						template.merge(context, writer);
 						buffer = writer.getBuffer();
 						email.println(buffer.toString());

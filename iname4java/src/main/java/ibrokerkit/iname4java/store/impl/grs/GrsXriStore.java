@@ -545,11 +545,11 @@ public class GrsXriStore extends OpenxriXriStore {
 
 		if (xri == null) throw new NullPointerException();
 
-		// delete the xri in OpenXRI first. if this is an OpenXRI xri, we're done.
+		// delete the xri in OpenXRI first. if this is not a GrsXRI xri, we're done.
 
 		super.deleteXri(xri);
 
-		if (xri instanceof OpenxriXri) return;
+		if (! (xri instanceof GrsXri)) return;
 
 		// delete i-name
 

@@ -33,7 +33,7 @@ public class CreateInumberJob implements Job {
 		grsXriData.setCity("Vienna");
 		grsXriData.setStreet(new String[] { "Untere Augartenstrasse 34/24" });
 
-		String authorityId = "44784";
+		String authorityId = "5948.3594.5872";
 
 		// build the GRS data
 
