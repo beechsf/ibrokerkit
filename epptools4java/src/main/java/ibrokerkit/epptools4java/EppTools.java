@@ -1097,7 +1097,7 @@ public class EppTools implements Serializable {
 
 			this.eppSessionEqual[i] = null;
 			this.eppChannelEqual[i] = null;
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw ex;
 		}
 
@@ -1120,7 +1120,7 @@ public class EppTools implements Serializable {
 
 			this.eppSessionEqual = null;
 			this.eppChannelEqual = null;
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw ex;
 		}
 	}
