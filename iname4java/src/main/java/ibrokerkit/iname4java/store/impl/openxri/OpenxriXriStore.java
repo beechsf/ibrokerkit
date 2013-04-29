@@ -129,7 +129,7 @@ public class OpenxriXriStore implements XriStore {
 
 		if (parentXri != null && ! (parentXri instanceof OpenxriXri)) throw new IllegalArgumentException("XRI " + parentXri.toString() + " is not from this store.");
 		if (xri != null && ! (xri instanceof OpenxriXri)) throw new IllegalArgumentException("XRI " + xri.toString() + " is not from this store.");
-		if (xriData == null || ! xriData.isCompleteForRegister()) throw new IllegalArgumentException("Incomplete XRI data.");
+		if (xriData == null || ! xriData.isCompleteForRegisterSynonym()) throw new IllegalArgumentException("Incomplete XRI data.");
 		if (! (xriData instanceof OpenxriXriData)) throw new IllegalArgumentException("Invalid XRI data.");
 
 		OpenxriXriData openxriXriData = ((OpenxriXriData) xriData);
