@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.security.Security;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
@@ -108,6 +109,8 @@ public class EppTools implements Serializable {
 	private transient EppChannel[] eppChannelEqual, eppChannelAt;
 	private Boolean[] eppBlockedEqual, eppBlockedAt;
 
+	private final List<EppListener> eppListeners;
+
 	static {
 
 		xmlDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
@@ -127,6 +130,8 @@ public class EppTools implements Serializable {
 		this.eppChannelAt = new EppChannel[NUM_SESSIONS];
 		this.eppBlockedEqual = new Boolean[NUM_SESSIONS];
 		this.eppBlockedAt = new Boolean[NUM_SESSIONS];
+
+		this.eppListeners = new ArrayList<EppListener> ();
 	}
 
 	/**
@@ -1501,11 +1506,17 @@ public class EppTools implements Serializable {
 		try {
 
 			if (this.store == null) this.initStore();
-			this.store.createAction(new Character(gcs), eppCommand.getClientTransactionId(), eppCommand.toString(), eppResponse.toString());
+			this.store.createAction(Character.valueOf(gcs), eppCommand.getClientTransactionId(), eppCommand.toString(), eppResponse.toString());
 		} catch (StoreException ex) {
 
 			log.error("{" + gcs + " " + i + "} Cannot store successful EPP action:" + ex.getMessage(), ex);
 		}
+
+		// event
+
+		EppEvent eppEvent = new EppEvent(this, Character.valueOf(gcs), eppCommand.getClientTransactionId(), eppCommand, eppResponse);
+
+		this.fireEppEvent(eppEvent);
 
 		// check the EPP response
 
@@ -1584,5 +1595,25 @@ public class EppTools implements Serializable {
 	public String getLastTransactionId() {
 
 		return(this.lastTransactionId);
+	}
+
+	/*
+	 * Events
+	 */
+
+	public void addEppListener(EppListener eppListener) {
+
+		if (this.eppListeners.contains(eppListener)) return;
+		this.eppListeners.add(eppListener);
+	}
+
+	public void removeEppListener(EppListener eppListener) {
+
+		this.eppListeners.remove(eppListener);
+	}
+
+	public void fireEppEvent(EppEvent eppEvent) {
+
+		for (EppListener eppListener : this.eppListeners) eppListener.onSend(eppEvent);
 	}
 }
