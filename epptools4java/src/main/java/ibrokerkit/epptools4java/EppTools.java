@@ -11,6 +11,7 @@ import java.security.Security;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -1336,6 +1337,10 @@ public class EppTools implements Serializable {
 
 		if (gcs != '=' && gcs != '@') throw new IllegalArgumentException("GCS must be = or @.");
 
+		// timestamp
+		
+		Date beginTimestamp = new Date();
+		
 		// make sure our store is still alive
 
 		try {
@@ -1512,9 +1517,13 @@ public class EppTools implements Serializable {
 			log.error("{" + gcs + " " + i + "} Cannot store successful EPP action:" + ex.getMessage(), ex);
 		}
 
+		// timestamp
+		
+		Date endTimestamp = new Date();
+		
 		// event
 
-		EppEvent eppEvent = new EppEvent(this, Character.valueOf(gcs), eppCommand.getClientTransactionId(), eppCommand, eppResponse);
+		EppEvent eppEvent = new EppEvent(this, Character.valueOf(gcs), beginTimestamp, endTimestamp, eppChannel, eppCommand, eppResponse);
 
 		this.fireEppEvent(eppEvent);
 
