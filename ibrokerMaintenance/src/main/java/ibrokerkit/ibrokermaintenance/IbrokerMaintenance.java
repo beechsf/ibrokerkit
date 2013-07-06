@@ -1,10 +1,8 @@
 package ibrokerkit.ibrokermaintenance;
 
 import ibrokerkit.epptools4java.EppTools;
-import ibrokerkit.ibrokermaintenance.jobs.DeleteInameJob;
+import ibrokerkit.ibrokermaintenance.jobs.CheckAuthenticationPasswordsJob;
 import ibrokerkit.ibrokermaintenance.jobs.Job;
-import ibrokerkit.ibrokerstore.store.impl.db.DatabaseStore;
-import ibrokerkit.iname4java.store.impl.grs.GrsXriStore;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,10 +24,13 @@ public class IbrokerMaintenance {
 	public static Properties properties;
 	public static EppTools eppTools;
 	public static ibrokerkit.ibrokerstore.store.Store ibrokerStore;
+	public static org.openxri.store.Store openxriStore;
 	public static ibrokerkit.iname4java.store.XriStore xriStore;
+	public static ibrokerkit.iservicestore.store.Store iserviceStore;
 
-//	public static Job[] jobs = new Job[] { new CheckGrsAuthorityJob(true), new CheckDatesJob(true), new CheckEmailsJob(true), new CheckXRDJob(true) };
-	public static Job[] jobs = new Job[] { new DeleteInameJob() };
+	//	public static Job[] jobs = new Job[] { new CheckGrsAuthorityJob(true), new CheckDatesJob(true), new CheckEmailsJob(true), new CheckXRDJob(true) };
+	//	public static Job[] jobs = new Job[] { new DeleteInameJob() };
+	public static Job[] jobs = new Job[] { new CheckAuthenticationPasswordsJob(true) };
 
 	private static void init() throws Exception {
 
@@ -53,21 +54,31 @@ public class IbrokerMaintenance {
 
 		Properties ibrokerStoreProperties = new Properties();
 		ibrokerStoreProperties.load(new FileInputStream(new File("ibrokerstore.properties")));
-		ibrokerStore = new DatabaseStore(ibrokerStoreProperties);
+		ibrokerStore = new ibrokerkit.ibrokerstore.store.impl.db.DatabaseStore(ibrokerStoreProperties);
 		ibrokerStore.init();
 
-		// init OpenXRI ServetConfig and xriStore
+		// init OpenXRI ServetConfig and OpenXRI store and xriStore
 
 		Properties openxriStoreProperties = new Properties();
 		openxriStoreProperties.setProperty(XMLServerConfig.SERVER_CONFIG_FILE, "server.xml");
 		ServerConfig openxriServerConfig = ServerConfigFactory.initSingleton(null, openxriStoreProperties);
-		xriStore = new GrsXriStore(((Store) openxriServerConfig.getComponentRegistry().getComponent(Store.class)), eppTools);
+		openxriStore = ((Store) openxriServerConfig.getComponentRegistry().getComponent(Store.class));
+		xriStore = new ibrokerkit.iname4java.store.impl.grs.GrsXriStore(openxriStore, eppTools);
+
+		// init iserviceStore
+
+		Properties iserviceStoreProperties = new Properties();
+		iserviceStoreProperties.load(new FileInputStream(new File("iservicestore.properties")));
+		iserviceStore = new ibrokerkit.iservicestore.store.impl.db.DatabaseStore(iserviceStoreProperties);
+		iserviceStore.init();
 	}
 
 	private static void shutdown() throws Exception {
 
 		ibrokerStore.close();
 		eppTools.close();
+		openxriStore.close();
+		iserviceStore.close();
 	}
 
 	public static void main(String[] args) throws IOException {

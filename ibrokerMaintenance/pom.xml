@@ -7,10 +7,8 @@
 		<version>0.5</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ibrokerkit</groupId>
 	<artifactId>ibrokerMaintenance</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5</version>
 	<name>ibrokerMaintenance</name>
 	<url>http://www.ibrokerkit.com/</url>
 	<pluginRepositories>
@@ -129,6 +127,12 @@
 		<dependency>
 			<groupId>ibrokerkit</groupId>
 			<artifactId>ibrokerStore</artifactId>
+			<version>0.5</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ibrokerkit</groupId>
+			<artifactId>iserviceStore</artifactId>
 			<version>0.5</version>
 			<scope>compile</scope>
 		</dependency>

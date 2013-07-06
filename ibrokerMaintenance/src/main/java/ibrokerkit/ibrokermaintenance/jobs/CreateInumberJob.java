@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.neulevel.epp.xri.EppXriSocialData;
 import com.neulevel.epp.xri.response.EppResponseDataCreateXriAuthority;
-import com.neulevel.epp.xri.response.EppResponseDataCreateXriName;
 import com.neulevel.epp.xri.response.EppResponseDataCreateXriNumber;
 
 public class CreateInumberJob implements Job {
@@ -53,11 +52,12 @@ public class CreateInumberJob implements Job {
 
 		EppResponseDataCreateXriAuthority eppResponseDataCreateXriAuthority; 
 		EppResponseDataCreateXriNumber eppResponseDataCreateXriNumber;
-		EppResponseDataCreateXriName eppResponseDataCreateXriName;
 
 		eppResponseDataCreateXriAuthority = IbrokerMaintenance.eppTools.createAuthority(gcs, grsAuthorityId, grsAuthorityPassword, eppXriSocialData, trusteeEscrowAgent, trusteeContactAgent);
 		eppResponseDataCreateXriNumber = IbrokerMaintenance.eppTools.createInumber(gcs, grsAuthorityId, grsAuthorityId, 1);
 
 		log.info("I-Number: " + eppResponseDataCreateXriNumber.getINumber());
+		log.trace("Authority Response Data: " + eppResponseDataCreateXriAuthority);
+		log.trace("Number Response Data: " + eppResponseDataCreateXriNumber);
 	}
 }
