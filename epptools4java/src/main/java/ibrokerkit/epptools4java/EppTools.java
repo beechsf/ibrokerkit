@@ -1639,4 +1639,18 @@ public class EppTools implements Serializable {
 
 		for (EppListener eppListener : this.eppListeners) eppListener.onSend(eppEvent);
 	}
+
+	/*
+	 * Getters and Setters
+	 */
+
+	public Store getStore() {
+
+		return store;
+	}
+
+	public void setStore(Store store) {
+		
+		this.store = store;
+	}
 }
