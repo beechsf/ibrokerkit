@@ -225,6 +225,20 @@ public class EppTools implements Serializable {
 		return(buffer.toString());
 	}
 
+	public String makeGrsAuthorityId(char gcs) {
+
+		StringBuffer buffer = new StringBuffer();
+		for (int i=0; i<4; i++) buffer.append(Integer.toString(random.nextInt(10)));
+		buffer.append(".");
+		for (int i=0; i<4; i++) buffer.append(Integer.toString(random.nextInt(10)));
+		buffer.append(".");
+		for (int i=0; i<4; i++) buffer.append(Integer.toString(random.nextInt(10)));
+		for (int i=0; i<4; i++) buffer.append(Integer.toString(random.nextInt(10)));
+		buffer.append(".");
+
+		return makeGrsAuthorityId(gcs, buffer.toString());
+	}
+
 	private static final String GRS_AUTHORITYPASSWORD_PREFIX = "";
 	private static final String GRS_AUTHORITYPASSWORD_CHARS = "12345678901234567890abcdefghijklmnopqrstuvwxyz";
 	private static final int GRS_AUTHORITYPASSWORD_LENGTH = 16;
@@ -1338,9 +1352,9 @@ public class EppTools implements Serializable {
 		if (gcs != '=' && gcs != '@') throw new IllegalArgumentException("GCS must be = or @.");
 
 		// timestamp
-		
+
 		Date beginTimestamp = new Date();
-		
+
 		// make sure our store is still alive
 
 		try {
@@ -1518,9 +1532,9 @@ public class EppTools implements Serializable {
 		}
 
 		// timestamp
-		
+
 		Date endTimestamp = new Date();
-		
+
 		// event
 
 		EppEvent eppEvent = new EppEvent(this, Character.valueOf(gcs), beginTimestamp, endTimestamp, eppChannel, eppCommand, eppResponse);
