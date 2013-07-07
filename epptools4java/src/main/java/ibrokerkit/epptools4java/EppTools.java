@@ -164,10 +164,7 @@ public class EppTools implements Serializable {
 
 		// init store
 
-		if (this.store == null) {
-		
-			this.initStore();
-		}
+		this.initStore();
 
 		log.trace("Done.");
 	}
@@ -1070,7 +1067,9 @@ public class EppTools implements Serializable {
 
 	private synchronized void initStore() throws StoreException {
 
-		if (this.store != null) this.store.close();
+		if (this.store != null) return;
+		
+		this.store.close();
 
 		this.store = new DatabaseStore(this.properties);
 		this.store.init();
