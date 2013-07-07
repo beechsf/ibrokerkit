@@ -164,7 +164,10 @@ public class EppTools implements Serializable {
 
 		// init store
 
-		this.initStore();
+		if (this.store == null) {
+		
+			this.initStore();
+		}
 
 		log.trace("Done.");
 	}
