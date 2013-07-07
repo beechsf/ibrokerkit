@@ -233,8 +233,8 @@ public class EppTools implements Serializable {
 		for (int i=0; i<4; i++) buffer.append(Integer.toString(random.nextInt(10)));
 		buffer.append(".");
 		for (int i=0; i<4; i++) buffer.append(Integer.toString(random.nextInt(10)));
-		for (int i=0; i<4; i++) buffer.append(Integer.toString(random.nextInt(10)));
 		buffer.append(".");
+		for (int i=0; i<4; i++) buffer.append(Integer.toString(random.nextInt(10)));
 
 		return makeGrsAuthorityId(gcs, buffer.toString());
 	}
