@@ -7,8 +7,11 @@ import ibrokerkit.epptools4java.store.StoreException;
 
 import java.util.Properties;
 
-
 public class NullStore implements Store {
+
+	public NullStore() {
+
+	}
 
 	public NullStore(Properties properties) {
 
