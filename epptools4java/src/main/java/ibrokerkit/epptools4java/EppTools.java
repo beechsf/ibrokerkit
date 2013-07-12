@@ -87,7 +87,6 @@ import com.neulevel.epp.xri.response.EppResponseDataRenewXriNumber;
 import com.neulevel.epp.xri.response.EppResponseDataTransferXriAuthority;
 import com.neulevel.epp.xri.response.EppResponseDataTransferXriName;
 
-
 public class EppTools implements Serializable {
 
 	private static final long serialVersionUID = 3837202598036526233L;
@@ -164,7 +163,11 @@ public class EppTools implements Serializable {
 
 		// init store
 
-		this.initStore();
+		if (this.store == null) {
+
+			this.store = new DatabaseStore(this.properties);
+			this.store.init();
+		}
 
 		log.trace("Done.");
 	}
@@ -539,7 +542,6 @@ public class EppTools implements Serializable {
 
 			try {
 
-				if (this.store == null) this.initStore();
 				this.store.createPoll(new Character(gcs), eppResponse.getTransactionId().getClientTransactionId(), eppResponse.toString());
 			} catch (StoreException ex2) {
 
@@ -1062,20 +1064,6 @@ public class EppTools implements Serializable {
 	}
 
 	/*
-	 * Helper method for setting up the store
-	 */
-
-	private synchronized void initStore() throws StoreException {
-
-		if (this.store != null) return;
-		
-		this.store.close();
-
-		this.store = new DatabaseStore(this.properties);
-		this.store.init();
-	}
-
-	/*
 	 * Helper methods for maintaining the session
 	 */
 
@@ -1357,16 +1345,6 @@ public class EppTools implements Serializable {
 
 		Date beginTimestamp = new Date();
 
-		// make sure our store is still alive
-
-		try {
-
-			if (this.store == null) this.initStore();
-		} catch (StoreException ex) {
-
-			throw new EppToolsException("Cannot initialize store: " + ex.getMessage(), ex);
-		}
-
 		// make sure our session and channel are still alive
 
 		EppChannel eppChannel = null;
@@ -1502,7 +1480,6 @@ public class EppTools implements Serializable {
 
 					try {
 
-						if (this.store == null) this.initStore();
 						this.store.createAction(new Character(gcs), eppCommand.getClientTransactionId(), eppCommand.toString(), ex.getMessage());
 					} catch (StoreException ex2) {
 
@@ -1526,7 +1503,6 @@ public class EppTools implements Serializable {
 
 		try {
 
-			if (this.store == null) this.initStore();
 			this.store.createAction(Character.valueOf(gcs), eppCommand.getClientTransactionId(), eppCommand.toString(), eppResponse.toString());
 		} catch (StoreException ex) {
 
@@ -1652,7 +1628,7 @@ public class EppTools implements Serializable {
 	}
 
 	public void setStore(Store store) {
-		
+
 		this.store = store;
 	}
 }
