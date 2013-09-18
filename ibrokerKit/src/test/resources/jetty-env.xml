@@ -2,7 +2,7 @@
 <!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
 <Configure class="org.mortbay.jetty.webapp.WebAppContext">
 	<New class="org.mortbay.jetty.plus.naming.Resource">
-		<Arg>jdbc/ibroker_ibroker</Arg>
+		<Arg>java:comp/env/jdbc/ibroker_ibroker</Arg>
 		<Arg>
 			<New class="org.apache.commons.dbcp.BasicDataSource">
 				<Set name="maxActive">20</Set>
@@ -25,7 +25,7 @@
 		</Arg>
 	</New>
 	<New class="org.mortbay.jetty.plus.naming.Resource">
-		<Arg>jdbc/ibroker_openxri</Arg>
+		<Arg>java:comp/env/jdbc/ibroker_openxri</Arg>
 		<Arg>
 			<New class="org.apache.commons.dbcp.BasicDataSource">
 				<Set name="maxActive">20</Set>
@@ -48,7 +48,7 @@
 		</Arg>
 	</New>
 	<New class="org.mortbay.jetty.plus.naming.Resource">
-		<Arg>jdbc/ibroker_iservice</Arg>
+		<Arg>java:comp/env/jdbc/ibroker_iservice</Arg>
 		<Arg>
 			<New class="org.apache.commons.dbcp.BasicDataSource">
 				<Set name="maxActive">20</Set>
@@ -71,7 +71,7 @@
 		</Arg>
 	</New>
 	<New class="org.mortbay.jetty.plus.naming.Resource">
-		<Arg>jdbc/ibroker_epptools</Arg>
+		<Arg>java:comp/env/jdbc/ibroker_epptools</Arg>
 		<Arg>
 			<New class="org.apache.commons.dbcp.BasicDataSource">
 				<Set name="maxActive">20</Set>

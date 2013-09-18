@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <beans 
 	xmlns="http://www.springframework.org/schema/beans"
@@ -17,7 +16,7 @@
 
 	<!-- WICKET APPLICATION -->
 
-	<bean id="wicketApplication" class="ibrokerkit.iservicefront.authentication.webapplication.AuthenticationApplication">
+	<bean id="wicketApplication" class="ibrokerkit.iservicefront.iservice.webapplication.IserviceApplication">
 		<property name="properties"><ref local="applicationProperties" /></property>
 		<property name="velocityProperties"><ref local="velocityProperties" /></property>
 		<property name="iserviceStore"><ref local="iserviceStore" /></property>

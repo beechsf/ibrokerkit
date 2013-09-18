@@ -16,7 +16,7 @@
 
 	<!-- WICKET APPLICATION -->
 
-	<bean id="wicketApplication" class="ibrokerkit.iservicefront.locator.webapplication.LocatorApplication">
+	<bean id="wicketApplication" class="ibrokerkit.iservicefront.iservice.webapplication.IserviceApplication">
 		<property name="properties"><ref local="applicationProperties" /></property>
 		<property name="velocityProperties"><ref local="velocityProperties" /></property>
 		<property name="iserviceStore"><ref local="iserviceStore" /></property>

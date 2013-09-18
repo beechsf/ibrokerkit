@@ -1,14 +1,7 @@
 package ibrokerkit.iservicefront.forwarding.webapplication;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.protocol.http.WebSession;
+import ibrokerkit.iservicefront.IserviceSession;
 
-public class ForwardingSession extends WebSession {
+public interface ForwardingSession extends IserviceSession {
 
-	private static final long serialVersionUID = -5669746479827302910L;
-
-	public ForwardingSession(Request request) {
-		
-		super(request);
-	}
 }

@@ -1,8 +1,8 @@
 package ibrokerkit.iservicefront.authentication.webpages;
 
-import ibrokerkit.iservicefront.authentication.webapplication.AuthenticationApplication;
 import ibrokerkit.iservicefront.components.MyVelocityContributor;
 import ibrokerkit.iservicefront.components.MyVelocityPanel;
+import ibrokerkit.iservicefront.authentication.webapplication.AuthenticationApplication;
 import ibrokerkit.iservicefront.velocity.Encoder;
 
 import java.io.File;

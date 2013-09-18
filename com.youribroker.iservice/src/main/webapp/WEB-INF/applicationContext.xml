@@ -16,11 +16,12 @@
 
 	<!-- WICKET APPLICATION -->
 
-	<bean id="wicketApplication" class="ibrokerkit.iservicefront.forwarding.webapplication.ForwardingApplication">
+	<bean id="wicketApplication" class="ibrokerkit.iservicefront.IserviceApplication">
 		<property name="properties"><ref local="applicationProperties" /></property>
 		<property name="velocityProperties"><ref local="velocityProperties" /></property>
 		<property name="iserviceStore"><ref local="iserviceStore" /></property>
 		<property name="openxriStore"><ref local="openxriStore" /></property>
+		<property name="serverManager"><ref local="serverManager" /></property>
 	</bean>
 
 	<!-- iserviceStore store -->
@@ -34,5 +35,9 @@
 	<bean id="openxriStore" class="org.openxri.store.impl.db.DatabaseStore" init-method="init">
 		<constructor-arg><ref local="openxriStoreProperties" /></constructor-arg>
 	</bean>
+
+	<!-- OpenID Server Manager -->
+
+	<bean id="serverManager" class="org.openid4java.server.ServerManager" />
 
 </beans>

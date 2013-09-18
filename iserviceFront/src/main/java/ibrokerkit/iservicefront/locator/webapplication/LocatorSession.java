@@ -1,14 +1,7 @@
 package ibrokerkit.iservicefront.locator.webapplication;
 
-import org.apache.wicket.Request;
-import org.apache.wicket.protocol.http.WebSession;
+import ibrokerkit.iservicefront.IserviceSession;
 
-public class LocatorSession extends WebSession {
+public interface LocatorSession extends IserviceSession {
 
-	private static final long serialVersionUID = -5669746479827302910L;
-
-	public LocatorSession(Request request) {
-		
-		super(request);
-	}
 }
