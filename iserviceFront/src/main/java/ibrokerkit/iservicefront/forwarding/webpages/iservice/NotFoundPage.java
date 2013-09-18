@@ -1,13 +1,13 @@
 package ibrokerkit.iservicefront.forwarding.webpages.iservice;
 
 import ibrokerkit.iservicefront.components.MyVelocityPanel;
-import ibrokerkit.iservicefront.forwarding.webpages.BasePage;
+import ibrokerkit.iservicefront.forwarding.webpages.ForwardingBasePage;
 
 import org.apache.wicket.model.Model;
 import org.openxri.XRI;
 
 
-public class NotFoundPage extends BasePage {
+public class NotFoundPage extends ForwardingBasePage {
 
 	private static final long serialVersionUID = 2356737581478887832L;
 
@@ -17,7 +17,7 @@ public class NotFoundPage extends BasePage {
 
 		this.velocityMap.put("qxri", qxri.getAuthorityPath().toString());
 
-		this.addVelocity(new MyVelocityPanel("velocity", Model.valueOf(this.velocityMap)) {
+		this.addVelocity(new MyVelocityPanel("velocity", Model.of(this.velocityMap)) {
 
 			private static final long serialVersionUID = 2387469837463456L;
 

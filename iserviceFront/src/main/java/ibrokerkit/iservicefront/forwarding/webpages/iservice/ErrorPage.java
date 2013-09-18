@@ -1,24 +1,25 @@
 package ibrokerkit.iservicefront.forwarding.webpages.iservice;
 
+import ibrokerkit.iservicefront.IserviceApplication;
 import ibrokerkit.iservicefront.components.MyVelocityPanel;
-import ibrokerkit.iservicefront.forwarding.webapplication.ForwardingApplication;
-import ibrokerkit.iservicefront.forwarding.webpages.BasePage;
+import ibrokerkit.iservicefront.forwarding.webpages.ForwardingBasePage;
 import ibrokerkit.iservicestore.store.Forwarding;
 
 import java.util.Properties;
 import java.util.Vector;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.http.WebResponse;
 import org.openxri.XRI;
 import org.openxri.xml.AuthenticationService;
 import org.openxri.xml.Service;
 import org.openxri.xml.XRD;
 
-public class ErrorPage extends BasePage implements IHeaderContributor {
+public class ErrorPage extends ForwardingBasePage implements IHeaderContributor {
 
 	private static final long serialVersionUID = 9070328342622786981L;
 
@@ -43,7 +44,7 @@ public class ErrorPage extends BasePage implements IHeaderContributor {
 		if (this.xrd != null && this.xrd.getCanonicalID() != null)
 			this.velocityMap.put("inumber", xrd.getCanonicalID().getValue());
 
-		this.addVelocity(new MyVelocityPanel("velocity", Model.valueOf(this.velocityMap)) {
+		this.addVelocity(new MyVelocityPanel("velocity", Model.of(this.velocityMap)) {
 
 			private static final long serialVersionUID = 2387469837463456L;
 
@@ -80,7 +81,7 @@ public class ErrorPage extends BasePage implements IHeaderContributor {
 	@Override
 	public void renderHead(IHeaderResponse response) {
 
-		Properties properties = ((ForwardingApplication) Application.get()).getProperties();
+		Properties properties = ((IserviceApplication) Application.get()).getProperties();
 
 		// check OpenID delegation
 
@@ -107,10 +108,10 @@ public class ErrorPage extends BasePage implements IHeaderContributor {
 
 		// insert OpenID delegation tags
 
-		response.renderString("<title>" + this.qxri.getAuthorityPath().toString() + "</title>\n");
-		response.renderString("<link rel=\"openid.server\" href=\"" + openidServer + "\" />\n");
-		response.renderString("<link rel=\"openid2.provider\" href=\"" + openidServer + "\" />\n");
-		response.renderString("<link rel=\"openid.delegate\" href=\"http://xri.net/" + openidDelegate + "\" />\n");
-		response.renderString("<link rel=\"openid2.local_id\" href=\"http://xri.net/" + openidDelegate + "\" />\n");
+		response.render(new StringHeaderItem("<title>" + this.qxri.getAuthorityPath().toString() + "</title>\n"));
+		response.render(new StringHeaderItem("<link rel=\"openid.server\" href=\"" + openidServer + "\" />\n"));
+		response.render(new StringHeaderItem("<link rel=\"openid2.provider\" href=\"" + openidServer + "\" />\n"));
+		response.render(new StringHeaderItem("<link rel=\"openid.delegate\" href=\"http://xri.net/" + openidDelegate + "\" />\n"));
+		response.render(new StringHeaderItem("<link rel=\"openid2.local_id\" href=\"http://xri.net/" + openidDelegate + "\" />\n"));
 	}
 }

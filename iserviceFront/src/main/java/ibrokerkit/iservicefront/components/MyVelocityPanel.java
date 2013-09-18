@@ -1,11 +1,12 @@
 package ibrokerkit.iservicefront.components;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.util.Map;
+import java.util.HashMap;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -18,8 +19,6 @@ import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.util.resource.AbstractResourceStream;
-import org.apache.wicket.util.resource.FileResourceStream;
 import org.apache.wicket.util.resource.IResourceStream;
 import org.apache.wicket.util.resource.StringResourceStream;
 import org.apache.wicket.util.string.Strings;
@@ -31,7 +30,7 @@ public abstract class MyVelocityPanel extends Panel implements IMarkupResourceSt
 	private transient String stackTraceAsString;
 	private transient String evaluatedTemplate;
 
-	public MyVelocityPanel(String id, IModel model) {
+	public MyVelocityPanel(String id, IModel<HashMap<String, Object>> model) {
 
 		super(id, model);
 
@@ -40,7 +39,7 @@ public abstract class MyVelocityPanel extends Panel implements IMarkupResourceSt
 		this.addComponents();
 	}
 
-	protected void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
+	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
 
 		if (! Strings.isEmpty(stackTraceAsString)) {
 
@@ -70,11 +69,12 @@ public abstract class MyVelocityPanel extends Panel implements IMarkupResourceSt
 		return(false);
 	}
 
+	@SuppressWarnings("unchecked")
 	private String evaluateVelocityTemplate(Reader templateReader) {
 
 		if (evaluatedTemplate == null) {
 
-			final Map<?, ?> map = (Map<?, ?>)getModelObject();
+			final HashMap<String, Object> map = (HashMap<String, Object>) this.getDefaultModelObject();
 
 			final VelocityContext ctx = new VelocityContext(map);
 
@@ -85,7 +85,7 @@ public abstract class MyVelocityPanel extends Panel implements IMarkupResourceSt
 			try {
 
 				Velocity.evaluate(ctx, writer, logTag, templateReader);
-				
+
 				evaluatedTemplate = writer.toString();
 				if (escapeHtml()) evaluatedTemplate = Strings.escapeMarkup(evaluatedTemplate).toString();
 
@@ -101,30 +101,37 @@ public abstract class MyVelocityPanel extends Panel implements IMarkupResourceSt
 		return(evaluatedTemplate);
 	}
 
-	@SuppressWarnings("unchecked")
-	public final IResourceStream getMarkupResourceStream(MarkupContainer container, Class containerClass) {
+	public final IResourceStream getMarkupResourceStream(MarkupContainer container, Class<?> containerClass) {
 
-		AbstractResourceStream templateStream = this.getTemplateStream();
-		
-		Reader reader = new StringReader(templateStream.asString());
-		if (reader == null) throw new WicketRuntimeException("could not find velocity template for panel: " + this);
+		Reader templateReader;
+		StringBuffer buffer;
 
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<wicket:panel>");
-		buffer.append(evaluateVelocityTemplate(reader));
-		buffer.append("</wicket:panel>");
+		try {
+
+			templateReader = this.getTemplateReader();
+
+			buffer = new StringBuffer();
+			buffer.append("<wicket:panel>");
+			buffer.append(evaluateVelocityTemplate(templateReader));
+			buffer.append("</wicket:panel>");
+		} catch (Exception ex) {
+
+			throw new RuntimeException(ex);
+		}
 
 		StringResourceStream markupStream = new StringResourceStream(buffer.toString());
 		markupStream.setCharset(Charset.forName((String) Velocity.getProperty("output.encoding")));
+
 		return(markupStream);
 	}
 
-	@SuppressWarnings("unchecked")
-	public final String getCacheKey(MarkupContainer container, Class containerClass) {
+	@Override
+	public final String getCacheKey(MarkupContainer container, Class<?> containerClass) {
 
 		return(null);
 	}
 
+	@Override
 	protected void onDetach() {
 
 		super.onDetach();
@@ -142,13 +149,15 @@ public abstract class MyVelocityPanel extends Panel implements IMarkupResourceSt
 		return(false);
 	}
 
-	protected AbstractResourceStream getTemplateStream() {
+	protected Reader getTemplateReader() throws IOException {
 
-		String filename = this.getFilename();
-		String path = ((WebApplication) this.getApplication()).getWicketFilter().getFilterConfig().getServletContext().getRealPath(filename);
-		FileResourceStream templateStream = new FileResourceStream(new File(path));
-		templateStream.setCharset(Charset.forName((String) Velocity.getProperty("input.encoding")));
-		return(templateStream);
+		String file = this.getFilename();
+		if (file == null) throw new NullPointerException();
+
+		String path = ((WebApplication) this.getApplication()).getWicketFilter().getFilterConfig().getServletContext().getRealPath(file);
+		if (path == null) throw new NullPointerException();
+
+		return(new FileReader(new File(path)));
 	}
 
 	protected abstract void addComponents();

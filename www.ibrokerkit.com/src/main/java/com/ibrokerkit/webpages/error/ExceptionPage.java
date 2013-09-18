@@ -4,11 +4,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import com.ibrokerkit.webpages.BasePage;
 
@@ -34,7 +34,7 @@ public class ExceptionPage extends BasePage {
 
 		this.exClassLabel = new Label("exClass", ex.getClass().getSimpleName());
 		this.exTimeLabel = new Label("exTime", new Date(requestCycle.getStartTime()).toString());
-		this.exPathLabel = new Label("exPath", requestCycle.getRequest().getPath());
+		this.exPathLabel = new Label("exPath", requestCycle.getRequest().getUrl());
 		this.exMessageContainer = new WebMarkupContainer("exMessageContainer");
 		this.exMessageContainer.setVisible(ex.getMessage() != null && ex.getMessage().trim().length() > 0);
 		this.exMessageLabel = new Label("exMessage", ex.getMessage());
@@ -52,7 +52,7 @@ public class ExceptionPage extends BasePage {
 		this.add(this.exPathLabel);
 		this.add(this.exMessageContainer);
 		this.add(this.exTraceContainer);
-		this.add(new AjaxFallbackLink("showTraceLink") {
+		this.add(new AjaxFallbackLink<String> ("showTraceLink") {
 
 			private static final long serialVersionUID = 596150019852780008L;
 
@@ -61,7 +61,7 @@ public class ExceptionPage extends BasePage {
 
 				ExceptionPage.this.exTraceLabel.setVisible(! ExceptionPage.this.exTraceLabel.isVisible());
 
-				if (target != null) target.addComponent(ExceptionPage.this.exTraceContainer);
+				if (target != null) target.add(ExceptionPage.this.exTraceContainer);
 			}
 		});
 	}

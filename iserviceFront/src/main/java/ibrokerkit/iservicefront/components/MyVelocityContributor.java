@@ -1,27 +1,28 @@
 package ibrokerkit.iservicefront.components;
 
+import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.behavior.AbstractBehavior;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.resource.IStringResourceStream;
+import org.apache.wicket.request.cycle.RequestCycle;
 
-public abstract class MyVelocityContributor extends AbstractBehavior {
+public abstract class MyVelocityContributor extends Behavior {
 
 	private static final long serialVersionUID = -4251182453305948352L;
 
-	private final IModel model;
+	private final IModel<HashMap<String, Object>> model;
 
-	public MyVelocityContributor(IModel model) {
+	public MyVelocityContributor(IModel<HashMap<String, Object>> model) {
 
 		super();
 
@@ -29,19 +30,20 @@ public abstract class MyVelocityContributor extends AbstractBehavior {
 	}
 
 	@Override
-	public void renderHead(IHeaderResponse response) {
+	public void renderHead(Component component, IHeaderResponse headerResponse) {
 
-		Map<?, ?> map = (Map<?, ?>) this.model.getObject();
-		IStringResourceStream stringResourceStream = this.getTemplateResource();
-		String string = stringResourceStream.asString();
-		Reader reader = new StringReader(string);
+		super.renderHead(component, headerResponse);
+
+		HashMap<String, Object> map = this.model.getObject();
 		StringWriter writer = new StringWriter();
 
 		final VelocityContext velocityContext = new VelocityContext(map);
 
 		try {
 
-			Velocity.evaluate(velocityContext, writer, this.getClass().getName(), reader);
+			Reader templateReader = this.getTemplateReader();
+
+			Velocity.evaluate(velocityContext, writer, this.getClass().getName(), templateReader);
 		} catch (Exception ex) {
 
 			throw new RuntimeException(ex);
@@ -61,7 +63,7 @@ public abstract class MyVelocityContributor extends AbstractBehavior {
 
 		matcher.appendTail(buffer);
 
-		response.renderString(buffer.toString());
+		headerResponse.render(new StringHeaderItem(buffer.toString()));
 	}
 
 	private static final String returnRelativePath(String location) {
@@ -71,9 +73,9 @@ public abstract class MyVelocityContributor extends AbstractBehavior {
 			return(location);
 		} else {
 
-			return(RequestCycle.get().getRequest().getRelativePathPrefixToContextRoot() + location);
+			return(RequestCycle.get().getRequest().getPrefixToContextPath() + location);
 		}
 	}
 
-	protected abstract IStringResourceStream getTemplateResource();
+	protected abstract Reader getTemplateReader() throws IOException;
 }

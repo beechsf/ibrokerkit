@@ -1,21 +1,19 @@
-package ibrokerkit.iservicefront.contact.webpages.iservice;
+package ibrokerkit.iservicefront.iservice.webpages.error;
 
 import ibrokerkit.iservicefront.components.MyVelocityPanel;
-import ibrokerkit.iservicefront.contact.webpages.ContactBasePage;
+import ibrokerkit.iservicefront.iservice.webpages.BasePage;
 
 import org.apache.wicket.model.Model;
-import org.openxri.XRI;
 
+public class PageExpiredPage extends BasePage {
 
-public class NotFoundPage extends ContactBasePage {
+	private static final long serialVersionUID = 128147889278304791L;
 
-	private static final long serialVersionUID = 2356737581478887832L;
-
-	public NotFoundPage(XRI qxri) {
+	public PageExpiredPage() {
 
 		// extend velocity map
 
-		this.velocityMap.put("qxri", qxri.getAuthorityPath().toString());
+		this.velocityMap.put("exexpired", "1");
 
 		this.addVelocity(new MyVelocityPanel("velocity", Model.of(this.velocityMap)) {
 
@@ -29,8 +27,14 @@ public class NotFoundPage extends ContactBasePage {
 			@Override
 			protected String getFilename() {
 
-				return("velocity/contact-notfound.vm");
+				return("velocity/iservice-error.vm");
 			}
 		});
+	}
+
+	@Override
+	public boolean isErrorPage() {
+		
+		return(true);
 	}
 }

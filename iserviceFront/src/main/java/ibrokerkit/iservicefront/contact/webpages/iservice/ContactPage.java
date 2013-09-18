@@ -1,11 +1,11 @@
 package ibrokerkit.iservicefront.contact.webpages.iservice;
 
+import ibrokerkit.iservicefront.IserviceApplication;
 import ibrokerkit.iservicefront.behaviors.DefaultFocusBehavior;
 import ibrokerkit.iservicefront.components.MyVelocityPanel;
 import ibrokerkit.iservicefront.components.openid.OpenIDPanel;
 import ibrokerkit.iservicefront.contact.email.Email;
-import ibrokerkit.iservicefront.contact.webapplication.ContactApplication;
-import ibrokerkit.iservicefront.contact.webpages.BasePage;
+import ibrokerkit.iservicefront.contact.webpages.ContactBasePage;
 import ibrokerkit.iservicestore.store.Contact;
 
 import java.util.Properties;
@@ -14,8 +14,9 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.StringHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
@@ -23,13 +24,13 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.request.http.WebResponse;
 import org.openxri.XRI;
 import org.openxri.xml.AuthenticationService;
 import org.openxri.xml.Service;
 import org.openxri.xml.XRD;
 
-public class ContactPage extends BasePage implements IHeaderContributor {
+public class ContactPage extends ContactBasePage implements IHeaderContributor {
 
 	private static final long serialVersionUID = 896701525596879770L;
 
@@ -53,7 +54,7 @@ public class ContactPage extends BasePage implements IHeaderContributor {
 		if (this.xrd != null && this.xrd.getCanonicalID() != null)
 			this.velocityMap.put("inumber", xrd.getCanonicalID().getValue());
 
-		this.addVelocity(new MyVelocityPanel("velocity", Model.valueOf(this.velocityMap)) {
+		this.addVelocity(new MyVelocityPanel("velocity", Model.of(this.velocityMap)) {
 
 			private static final long serialVersionUID = 2387469837463456L;
 
@@ -92,7 +93,7 @@ public class ContactPage extends BasePage implements IHeaderContributor {
 	@Override
 	public void renderHead(IHeaderResponse response) {
 
-		Properties properties = ((ContactApplication) Application.get()).getProperties();
+		Properties properties = ((IserviceApplication) Application.get()).getProperties();
 
 		// check OpenID delegation
 
@@ -119,14 +120,14 @@ public class ContactPage extends BasePage implements IHeaderContributor {
 
 		// insert OpenID delegation tags
 
-		response.renderString("<title>" + this.qxri.getAuthorityPath().toString() + "</title>\n");
-		response.renderString("<link rel=\"openid.server\" href=\"" + openidServer + "\" />\n");
-		response.renderString("<link rel=\"openid2.provider\" href=\"" + openidServer + "\" />\n");
-		response.renderString("<link rel=\"openid.delegate\" href=\"http://xri.net/" + openidDelegate + "\" />\n");
-		response.renderString("<link rel=\"openid2.local_id\" href=\"http://xri.net/" + openidDelegate + "\" />\n");
+		response.render(new StringHeaderItem("<title>" + this.qxri.getAuthorityPath().toString() + "</title>\n"));
+		response.render(new StringHeaderItem("<link rel=\"openid.server\" href=\"" + openidServer + "\" />\n"));
+		response.render(new StringHeaderItem("<link rel=\"openid2.provider\" href=\"" + openidServer + "\" />\n"));
+		response.render(new StringHeaderItem("<link rel=\"openid.delegate\" href=\"http://xri.net/" + openidDelegate + "\" />\n"));
+		response.render(new StringHeaderItem("<link rel=\"openid2.local_id\" href=\"http://xri.net/" + openidDelegate + "\" />\n"));
 	}
 
-	private class ContactForm extends Form {
+	private class ContactForm extends Form<ContactForm> {
 
 		private static final long serialVersionUID = -6751587043037991248L;
 
@@ -135,29 +136,29 @@ public class ContactPage extends BasePage implements IHeaderContributor {
 		private String senderEmail;
 		private String message;
 
-		private TextField senderTextField;
+		private TextField<String> senderTextField;
 		private OpenIDPanel openidPanel;
-		private TextField senderEmailTextField;
-		private TextArea messageTextArea;
+		private TextField<String> senderEmailTextField;
+		private TextArea<String> messageTextArea;
 		private Button sendButton;
 
 		private ContactForm(String id) {
 
 			super(id);
 
-			this.setModel(new CompoundPropertyModel(this));
+			this.setModel(new CompoundPropertyModel<ContactForm> (this));
 
 			// create components
 
-			this.senderTextField = new TextField("sender");
-			this.senderTextField.setLabel(new Model("Sender"));
+			this.senderTextField = new TextField<String> ("sender");
+			this.senderTextField.setLabel(new Model<String> ("Sender"));
 			this.senderTextField.setRequired(true);
 			this.senderTextField.add(new DefaultFocusBehavior());
 			this.openidPanel = new OpenIDPanel("openid");
-			this.senderEmailTextField = new TextField("senderEmail");
-			this.senderEmailTextField.setLabel(new Model("E-Mail"));
-			this.messageTextArea = new TextArea("message");
-			this.messageTextArea.setLabel(new Model("Message"));
+			this.senderEmailTextField = new TextField<String> ("senderEmail");
+			this.senderEmailTextField.setLabel(new Model<String> ("E-Mail"));
+			this.messageTextArea = new TextArea<String> ("message");
+			this.messageTextArea.setLabel(new Model<String> ("Message"));
 			this.sendButton = new SendButton("sendButton");
 
 			// add components
@@ -191,7 +192,7 @@ public class ContactPage extends BasePage implements IHeaderContributor {
 
 				// send mail
 
-				Properties properties = ((ContactApplication) Application.get()).getProperties();
+				Properties properties = ((IserviceApplication) Application.get()).getProperties();
 
 				String subject = "Contact Page: Message from " + ContactForm.this.sender;
 				String from = ContactForm.this.senderEmail != null ? ContactForm.this.senderEmail : properties.getProperty("contact-from");

@@ -35,26 +35,26 @@ public class BasePageSidePanel extends Panel {
 
 		// create and add components
 		
-		this.add(new BookmarkablePageLink("HomeLink", Index.class));
-		this.add(new BookmarkablePageLink("ScreenshotsLink", Screenshots.class));
-		this.add(new BookmarkablePageLink("Architecture1Link", Architecture1.class));
-		this.add(new BookmarkablePageLink("Architecture2Link", Architecture2.class));
-		this.add(new BookmarkablePageLink("ReferencesLink", References.class));
-		this.add(new BookmarkablePageLink("IbrokerStoreLink", IbrokerStore.class));
-		this.add(new BookmarkablePageLink("IbrokerFrontLink", IbrokerFront.class));
-		this.add(new BookmarkablePageLink("IbrokerTaskLink", IbrokerTask.class));
-		this.add(new BookmarkablePageLink("IbrokerCertLink", IbrokerCert.class));
-		this.add(new BookmarkablePageLink("OpenxriLink", Openxri.class));
-		this.add(new BookmarkablePageLink("OpenxriAdminLink", OpenxriAdmin.class));
-		this.add(new BookmarkablePageLink("IserviceFrontLink", IserviceFront.class));
-		this.add(new BookmarkablePageLink("IserviceStoreLink", IserviceStore.class));
-		this.add(new BookmarkablePageLink("IserviceAdminLink", IserviceAdmin.class));
-		this.add(new BookmarkablePageLink("OauthFrontLink", OauthFront.class));
-		this.add(new BookmarkablePageLink("XdiFrontLink", XdiFront.class));
-		this.add(new BookmarkablePageLink("Iname4JavaLink", Iname4Java.class));
-		this.add(new BookmarkablePageLink("Epptools4JavaLink", Epptools4Java.class));
-		this.add(new BookmarkablePageLink("Xritools4JavaLink", Xritools4Java.class));
-		this.add(new BookmarkablePageLink("InstallationLink", Installation.class));
-		this.add(new BookmarkablePageLink("HowtosLink", Howtos.class));
+		this.add(new BookmarkablePageLink<String> ("HomeLink", Index.class));
+		this.add(new BookmarkablePageLink<String> ("ScreenshotsLink", Screenshots.class));
+		this.add(new BookmarkablePageLink<String> ("Architecture1Link", Architecture1.class));
+		this.add(new BookmarkablePageLink<String> ("Architecture2Link", Architecture2.class));
+		this.add(new BookmarkablePageLink<String> ("ReferencesLink", References.class));
+		this.add(new BookmarkablePageLink<String> ("IbrokerStoreLink", IbrokerStore.class));
+		this.add(new BookmarkablePageLink<String> ("IbrokerFrontLink", IbrokerFront.class));
+		this.add(new BookmarkablePageLink<String> ("IbrokerTaskLink", IbrokerTask.class));
+		this.add(new BookmarkablePageLink<String> ("IbrokerCertLink", IbrokerCert.class));
+		this.add(new BookmarkablePageLink<String> ("OpenxriLink", Openxri.class));
+		this.add(new BookmarkablePageLink<String> ("OpenxriAdminLink", OpenxriAdmin.class));
+		this.add(new BookmarkablePageLink<String> ("IserviceFrontLink", IserviceFront.class));
+		this.add(new BookmarkablePageLink<String> ("IserviceStoreLink", IserviceStore.class));
+		this.add(new BookmarkablePageLink<String> ("IserviceAdminLink", IserviceAdmin.class));
+		this.add(new BookmarkablePageLink<String> ("OauthFrontLink", OauthFront.class));
+		this.add(new BookmarkablePageLink<String> ("XdiFrontLink", XdiFront.class));
+		this.add(new BookmarkablePageLink<String> ("Iname4JavaLink", Iname4Java.class));
+		this.add(new BookmarkablePageLink<String> ("Epptools4JavaLink", Epptools4Java.class));
+		this.add(new BookmarkablePageLink<String> ("Xritools4JavaLink", Xritools4Java.class));
+		this.add(new BookmarkablePageLink<String> ("InstallationLink", Installation.class));
+		this.add(new BookmarkablePageLink<String> ("HowtosLink", Howtos.class));
 	}
 }

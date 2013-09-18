@@ -29,7 +29,7 @@ public class CustomElement extends WebComponent {
 	}
 
 	@Override
-	protected void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
+	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
 
 		if (this.content != null) this.replaceComponentTagBody(markupStream, openTag, this.content);
 	}

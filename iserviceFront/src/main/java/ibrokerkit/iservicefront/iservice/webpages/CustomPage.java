@@ -1,21 +1,23 @@
-package ibrokerkit.iservicefront.contact.webpages.iservice;
+package ibrokerkit.iservicefront.iservice.webpages;
 
 import ibrokerkit.iservicefront.components.MyVelocityPanel;
 import ibrokerkit.iservicefront.contact.webpages.ContactBasePage;
 
 import org.apache.wicket.model.Model;
-import org.openxri.XRI;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 
-public class NotFoundPage extends ContactBasePage {
+public class CustomPage extends ContactBasePage {
 
 	private static final long serialVersionUID = 2356737581478887832L;
 
-	public NotFoundPage(XRI qxri) {
+	private String name;
 
-		// extend velocity map
+	public CustomPage(PageParameters pageParameters) {
 
-		this.velocityMap.put("qxri", qxri.getAuthorityPath().toString());
+		// read custom velocity name from page parameters
+
+		this.name = pageParameters.get("name").toString();
 
 		this.addVelocity(new MyVelocityPanel("velocity", Model.of(this.velocityMap)) {
 
@@ -29,7 +31,7 @@ public class NotFoundPage extends ContactBasePage {
 			@Override
 			protected String getFilename() {
 
-				return("velocity/contact-notfound.vm");
+				return("velocity/" + CustomPage.this.name + ".vm");
 			}
 		});
 	}

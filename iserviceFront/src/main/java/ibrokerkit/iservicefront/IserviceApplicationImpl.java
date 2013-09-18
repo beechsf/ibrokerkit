@@ -1,26 +1,25 @@
 package ibrokerkit.iservicefront;
 
-import ibrokerkit.iservicefront.authentication.webapplication.AuthenticationApplication;
-import ibrokerkit.iservicefront.authentication.webpages.error.InternalError;
-import ibrokerkit.iservicefront.authentication.webpages.error.PageExpired;
-import ibrokerkit.iservicefront.authentication.webpages.index.Index;
-import ibrokerkit.iservicefront.authentication.webpages.iservice.CustomPage;
-import ibrokerkit.iservicefront.contact.webapplication.ContactApplication;
-import ibrokerkit.iservicefront.forwarding.webapplication.ForwardingApplication;
-import ibrokerkit.iservicefront.locator.webapplication.LocatorApplication;
+import ibrokerkit.iservicefront.iservice.webpages.CustomPage;
+import ibrokerkit.iservicefront.iservice.webpages.error.InternalErrorPage;
+import ibrokerkit.iservicefront.iservice.webpages.error.PageExpiredPage;
+import ibrokerkit.iservicefront.iservice.webpages.index.Index;
 
 import java.util.Properties;
 
 import org.apache.velocity.app.Velocity;
-import org.apache.wicket.Request;
-import org.apache.wicket.Response;
+import org.apache.wicket.Page;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
-import org.apache.wicket.request.IRequestCycleProcessor;
-import org.apache.wicket.settings.IExceptionSettings;
-import org.apache.wicket.spring.SpringWebApplication;
+import org.apache.wicket.core.request.mapper.MountedMapper;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.mapper.mount.MountMapper;
+import org.apache.wicket.request.mapper.parameter.UrlPathPageParametersEncoder;
 import org.openid4java.server.ServerManager;
 
-public class IserviceApplicationImpl extends SpringWebApplication implements IserviceApplication, AuthenticationApplication, ContactApplication, ForwardingApplication, LocatorApplication {
+public class IserviceApplicationImpl extends WebApplication implements IserviceApplication {
 
 	protected Properties properties;
 	protected Properties velocityProperties;
@@ -33,19 +32,20 @@ public class IserviceApplicationImpl extends SpringWebApplication implements Ise
 
 		// set up page mounting
 
-		this.mountBookmarkablePage("/page", CustomPage.class);
-		this.mount(new ibrokerkit.iservicefront.authentication.webpages.iservice.EndpointStrategy(this.properties.getProperty("authentication-endpoint-path")));
-		this.mount(new ibrokerkit.iservicefront.contact.webpages.iservice.EndpointStrategy(this.properties.getProperty("contact-endpoint-path")));
-		this.mount(new ibrokerkit.iservicefront.forwarding.webpages.iservice.EndpointStrategy(this.properties.getProperty("forwarding-endpoint-path")));
-		this.mount(new ibrokerkit.iservicefront.locator.webpages.iservice.EndpointStrategy(this.properties.getProperty("locator-endpoint-path")));
+		this.mount(new MountedMapper("/page", CustomPage.class, new UrlPathPageParametersEncoder()));
+		this.mount(new MountMapper(this.properties.getProperty("authentication-endpoint-path"), new ibrokerkit.iservicefront.authentication.webpages.iservice.Endpoint()));
+		this.mount(new MountMapper(this.properties.getProperty("contact-endpoint-path"), new ibrokerkit.iservicefront.contact.webpages.iservice.Endpoint()));
+		this.mount(new MountMapper(this.properties.getProperty("forwarding-endpoint-path"), new ibrokerkit.iservicefront.forwarding.webpages.iservice.Endpoint()));
 
 		// set up various wicket parameters
 
-		this.getApplicationSettings().setClassResolver(new IserviceClassResolver());
-		this.getApplicationSettings().setInternalErrorPage(InternalError.class);
-		this.getApplicationSettings().setPageExpiredErrorPage(PageExpired.class);
-		this.getMarkupSettings().setStripXmlDeclarationFromOutput(false);
+		this.getApplicationSettings().setInternalErrorPage(InternalErrorPage.class);
+		this.getApplicationSettings().setPageExpiredErrorPage(PageExpiredPage.class);
 		this.getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
+		this.getMarkupSettings().setStripComments(true);
+		this.getMarkupSettings().setStripWicketTags(true);
+		this.getMarkupSettings().setCompressWhitespace(true);
+		this.getRequestCycleListeners().add(new IserviceRequestCycleListener());
 
 		// DEVELOPMENT
 
@@ -54,7 +54,7 @@ public class IserviceApplicationImpl extends SpringWebApplication implements Ise
 		this.getResourceSettings().setResourcePollFrequency(Duration.ONE_SECOND);
 		this.getDebugSettings().setComponentUseCheck(true);
 		this.getDebugSettings().setAjaxDebugModeEnabled(true);
-		this.getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_EXCEPTION_PAGE);*/
+		this.getRequestCycleListeners().add(new FullXRIRequestCycleListener());*/
 
 		// DEPLOYMENT
 
@@ -63,7 +63,6 @@ public class IserviceApplicationImpl extends SpringWebApplication implements Ise
 		this.getResourceSettings().setResourcePollFrequency(null);
 		this.getDebugSettings().setComponentUseCheck(false);
 		this.getDebugSettings().setAjaxDebugModeEnabled(false);
-		this.getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
 
 		// init velocity
 
@@ -77,21 +76,15 @@ public class IserviceApplicationImpl extends SpringWebApplication implements Ise
 	}
 
 	@Override
-	public Class<?> getHomePage() {
+	public Class<? extends Page> getHomePage() {
 
 		return(Index.class);
 	}
 
 	@Override
-	protected IRequestCycleProcessor newRequestCycleProcessor() {
+	public RuntimeConfigurationType getConfigurationType() {
 
-		return(new IserviceRequestCycleProcessor());
-	}
-
-	@Override
-	public String getConfigurationType() {
-		
-		return("DEPLOYMENT");
+		return RuntimeConfigurationType.DEPLOYMENT;
 	}
 
 	@Override

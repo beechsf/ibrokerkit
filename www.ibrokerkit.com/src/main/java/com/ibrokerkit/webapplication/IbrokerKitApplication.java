@@ -1,8 +1,8 @@
 package com.ibrokerkit.webapplication;
 
-import org.apache.wicket.request.IRequestCycleProcessor;
-import org.apache.wicket.spring.SpringWebApplication;
-import org.apache.wicket.util.lang.PackageName;
+import org.apache.wicket.Page;
+import org.apache.wicket.RuntimeConfigurationType;
+import org.apache.wicket.protocol.http.WebApplication;
 
 import com.ibrokerkit.webpages.components.Openxri;
 import com.ibrokerkit.webpages.error.InternalError;
@@ -10,25 +10,26 @@ import com.ibrokerkit.webpages.error.PageExpired;
 import com.ibrokerkit.webpages.index.Index;
 import com.ibrokerkit.webpages.installation.Installation;
 
-public class IbrokerKitApplication extends SpringWebApplication {
+public class IbrokerKitApplication extends WebApplication {
 
 	@Override
 	public void init() {
 
 		// set up page mounting
 
-		this.mount("/home", PackageName.forClass(Index.class));
-		this.mount("/components", PackageName.forClass(Openxri.class));
-		this.mount("/installation", PackageName.forClass(Installation.class));
+		this.mountPackage("/home", Index.class);
+		this.mountPackage("/components", Openxri.class);
+		this.mountPackage("/installation", Installation.class);
 
 		// set up various wicket parameters
 
-		this.getApplicationSettings().setClassResolver(new IbrokerKitClassResolver());
 		this.getApplicationSettings().setInternalErrorPage(InternalError.class);
 		this.getApplicationSettings().setPageExpiredErrorPage(PageExpired.class);
-		this.getMarkupSettings().setStripXmlDeclarationFromOutput(false);
 		this.getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
-		this.getPageSettings().setAutomaticMultiWindowSupport(false);
+		this.getMarkupSettings().setStripComments(true);
+		this.getMarkupSettings().setStripWicketTags(true);
+		this.getMarkupSettings().setCompressWhitespace(true);
+		this.getRequestCycleListeners().add(new IbrokerKitRequestCycleListener());
 
 		// DEPLOYMENT
 
@@ -40,20 +41,14 @@ public class IbrokerKitApplication extends SpringWebApplication {
 	}
 
 	@Override
-	public Class<?> getHomePage() {
+	public Class<? extends Page> getHomePage() {
 
 		return(Index.class);
 	}
 
 	@Override
-	protected IRequestCycleProcessor newRequestCycleProcessor() {
+	public RuntimeConfigurationType getConfigurationType() {
 
-		return(new IbrokerKitRequestCycleProcessor());
-	}
-
-	@Override
-	public String getConfigurationType() {
-
-		return("DEPLOYMENT");
+		return RuntimeConfigurationType.DEPLOYMENT;
 	}
 }

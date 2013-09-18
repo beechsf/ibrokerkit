@@ -1,11 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ibrokerkit</groupId>
 	<artifactId>ibrokerKit</artifactId>
 	<packaging>pom</packaging>
 	<name>ibrokerkit</name>
 	<version>0.5</version>
+
 	<description>
 		ibrokerKit is a software solution for XDI.org accredited
 		i-brokers, as well as community i-name registries. It contains
@@ -13,7 +15,9 @@
 		backend database schemas and other components necessary for
 		operating all aspects of an i-broker.
 	</description>
+
 	<url>http://www.ibrokerkit.com/</url>
+
 	<scm>
 		<connection>
 			scm:svn:http://ibrokerkit.svnrepository.com/svn/ibrokerkit
@@ -22,6 +26,22 @@
 			scm:svn:http://ibrokerkit.svnrepository.com/svn/ibrokerkit
 		</developerConnection>
 	</scm>
+
+	<reporting>
+		<outputDirectory>${basedir}/target/site</outputDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+				<version>2.0.1</version>
+				<reportSets>
+					<reportSet></reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+
 	<modules>
 		<module>../epptools4java</module>
 		<module>../ibrokerCert</module>
@@ -29,14 +49,16 @@
 		<module>../ibrokerTask</module>
 		<module>../ibrokerMaintenance</module>
 		<module>../iname4java</module>
-		<module>../iserviceAdmin</module>
+		<!--  <module>../iserviceAdmin</module> -->
 		<module>../iserviceFront</module>
 		<module>../iserviceStore</module>
 		<module>../xritools4java</module>
-		<module>../oauthFront</module>
-		<module>../xdiFront</module>
+		<!--  <module>../oauthFront</module> -->
+		<!--  <module>../xdiFront</module> -->
 	</modules>
+
 	<build>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -119,27 +141,42 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
 	</build>
+
 	<dependencies>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.1</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.7.1</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.1</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
-	<reporting>
-		<outputDirectory>${basedir}/target/site</outputDirectory>
-		<plugins>
-			<plugin>
-				<artifactId>
-					maven-project-info-reports-plugin
-				</artifactId>
-				<version>2.0.1</version>
-				<reportSets>
-					<reportSet></reportSet>
-				</reportSets>
-			</plugin>
-		</plugins>
-	</reporting>
+
 </project>

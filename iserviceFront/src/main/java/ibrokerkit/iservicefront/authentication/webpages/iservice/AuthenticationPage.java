@@ -1,8 +1,8 @@
 package ibrokerkit.iservicefront.authentication.webpages.iservice;
 
-import ibrokerkit.iservicefront.authentication.webapplication.AuthenticationApplication;
-import ibrokerkit.iservicefront.authentication.webapplication.AuthenticationSession;
-import ibrokerkit.iservicefront.authentication.webpages.BasePage;
+import ibrokerkit.iservicefront.IserviceApplication;
+import ibrokerkit.iservicefront.IserviceSession;
+import ibrokerkit.iservicefront.authentication.webpages.AuthenticationBasePage;
 import ibrokerkit.iservicefront.behaviors.DefaultFocusBehavior;
 import ibrokerkit.iservicefront.components.MyVelocityPanel;
 import ibrokerkit.iservicestore.store.Authentication;
@@ -11,7 +11,6 @@ import ibrokerkit.iservicestore.store.StoreUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
-import org.apache.wicket.RequestCycle;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -21,7 +20,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.target.basic.RedirectRequestTarget;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.openid4java.message.AuthSuccess;
 import org.openid4java.message.DirectError;
 import org.openid4java.message.Message;
@@ -31,7 +31,7 @@ import org.openxri.XRI;
 import org.openxri.XRIAuthority;
 import org.openxri.store.Authority;
 
-public class AuthenticationPage extends BasePage {
+public class AuthenticationPage extends AuthenticationBasePage {
 
 	private static final long serialVersionUID = 6746092032675507969L;
 
@@ -53,7 +53,7 @@ public class AuthenticationPage extends BasePage {
 		this.velocityMap.put("parameters", this.parameters);
 		this.velocityMap.put("identity", this.identity);
 
-		this.addVelocity(new MyVelocityPanel("velocity", Model.valueOf(this.velocityMap)) {
+		this.addVelocity(new MyVelocityPanel("velocity", Model.of(this.velocityMap)) {
 
 			private static final long serialVersionUID = 2387469837463456L;
 
@@ -72,7 +72,7 @@ public class AuthenticationPage extends BasePage {
 		});
 	}
 
-	private class AuthenticationForm extends Form {
+	private class AuthenticationForm extends Form<AuthenticationForm> {
 
 		private static final long serialVersionUID = -1944754353721888791L;
 
@@ -81,7 +81,7 @@ public class AuthenticationPage extends BasePage {
 		private Boolean staySignedIn = Boolean.FALSE;
 
 		private WebMarkupContainer inameWebMarkupContainer;
-		private TextField inameTextField;
+		private TextField<String> inameTextField;
 		private PasswordTextField passTextField;
 		private CheckBox staySignedInCheckBox;
 		private AuthenticateButton authenticateButton;
@@ -91,17 +91,17 @@ public class AuthenticationPage extends BasePage {
 
 			super(id);
 
-			this.setModel(new CompoundPropertyModel(this));
+			this.setModel(new CompoundPropertyModel<AuthenticationForm> (this));
 
 			// create and add components
 
 			this.inameWebMarkupContainer = new WebMarkupContainer("inameContainer");
 			this.inameWebMarkupContainer.setVisible(OpenIDUtil.isDirectedIdentity(AuthenticationPage.this.identity));
-			this.inameTextField = new TextField("iname");
-			this.inameTextField.setLabel(new Model("I-Name"));
+			this.inameTextField = new TextField<String> ("iname");
+			this.inameTextField.setLabel(new Model<String> ("I-Name"));
 			this.inameTextField.setRequired(OpenIDUtil.isDirectedIdentity(AuthenticationPage.this.identity));
 			this.passTextField = new PasswordTextField("pass");
-			this.passTextField.setLabel(new Model("Password"));
+			this.passTextField.setLabel(new Model<String> ("Password"));
 			this.passTextField.setRequired(true);
 			this.staySignedInCheckBox = new CheckBox("staySignedIn");
 			this.authenticateButton = new AuthenticateButton("authenticate");
@@ -133,10 +133,10 @@ public class AuthenticationPage extends BasePage {
 			@Override
 			public void onSubmit() {
 
-				ibrokerkit.iservicestore.store.Store iserviceStore = ((AuthenticationApplication) Application.get()).getIserviceStore();
-				org.openxri.store.Store openxriStore = ((AuthenticationApplication) Application.get()).getOpenxriStore();
+				ibrokerkit.iservicestore.store.Store iserviceStore = ((IserviceApplication) Application.get()).getIserviceStore();
+				org.openxri.store.Store openxriStore = ((IserviceApplication) Application.get()).getOpenxriStore();
 
-				ServerManager serverManager = ((AuthenticationApplication) Application.get()).getServerManager();
+				ServerManager serverManager = ((IserviceApplication) Application.get()).getServerManager();
 
 				// check directed identity
 
@@ -204,12 +204,12 @@ public class AuthenticationPage extends BasePage {
 
 					AuthenticationPage.log.debug("Signing in user...");
 
-					((AuthenticationSession) this.getSession()).loginUser(outIdentity);
+					((IserviceSession) this.getSession()).loginUser(outIdentity);
 				}
 
 				// create OpenID response
 
-				String endpointUrl = ((AuthenticationApplication) this.getApplication()).getProperties().getProperty("authentication-endpoint-url");
+				String endpointUrl = ((IserviceApplication) this.getApplication()).getProperties().getProperty("authentication-endpoint-url");
 				serverManager.setOPEndpointUrl(endpointUrl);
 
 				Message message;
@@ -282,7 +282,7 @@ public class AuthenticationPage extends BasePage {
 
 				String redirectUrl = message.getDestinationUrl(true);
 				log.info("Redirecting message: " + redirectUrl);
-				RequestCycle.get().setRequestTarget(new RedirectRequestTarget(redirectUrl));
+				RequestCycle.get().scheduleRequestHandlerAfterCurrent(new RedirectRequestHandler(redirectUrl));
 
 				// option2: HTML FORM redirect
 
@@ -305,11 +305,11 @@ public class AuthenticationPage extends BasePage {
 			@Override
 			public void onSubmit() {
 
-				ServerManager serverManager = ((AuthenticationApplication) Application.get()).getServerManager();
+				ServerManager serverManager = ((IserviceApplication) Application.get()).getServerManager();
 
 				// create OpenID response
 
-				String endpointUrl = ((AuthenticationApplication) this.getApplication()).getProperties().getProperty("authentication-endpoint-url");
+				String endpointUrl = ((IserviceApplication) this.getApplication()).getProperties().getProperty("authentication-endpoint-url");
 				serverManager.setOPEndpointUrl(endpointUrl);
 
 				AuthenticationPage.log.debug("Creating negative authentication response...");
@@ -332,7 +332,7 @@ public class AuthenticationPage extends BasePage {
 
 				String redirectUrl = message.getDestinationUrl(true);
 				log.info("Redirecting message: " + redirectUrl);
-				RequestCycle.get().setRequestTarget(new RedirectRequestTarget(redirectUrl));
+				RequestCycle.get().scheduleRequestHandlerAfterCurrent(new RedirectRequestHandler(redirectUrl));
 
 				// option2: HTML FORM redirect
 

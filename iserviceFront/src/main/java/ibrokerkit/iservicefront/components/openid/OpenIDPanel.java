@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
-import org.apache.wicket.IRequestTarget;
 import org.apache.wicket.Page;
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.TextField;
@@ -17,10 +17,11 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.protocol.http.WebRequest;
-import org.apache.wicket.request.RequestParameters;
-import org.apache.wicket.request.target.basic.RedirectRequestTarget;
-import org.apache.wicket.request.target.coding.IRequestTargetUrlCodingStrategy;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
+import org.apache.wicket.request.IRequestCycle;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.http.handler.RedirectRequestHandler;
+import org.apache.wicket.request.mapper.mount.MountMapper;
 import org.openid4java.consumer.ConsumerException;
 import org.openid4java.consumer.ConsumerManager;
 import org.openid4java.consumer.InMemoryConsumerAssociationStore;
@@ -39,7 +40,7 @@ public class OpenIDPanel extends Panel {
 
 	private static final String OPENID_MOUNT_PATH = "OpenIDCallback";
 
-	private TextField openidTextField;
+	private TextField<String> openidTextField;
 	private Button authenticateButton;
 	private Label openidAuthenticatedLabel;
 
@@ -47,7 +48,7 @@ public class OpenIDPanel extends Panel {
 
 	private DiscoveryInformation discoveryInformation;
 
-	public OpenIDPanel(String id, IModel model) {
+	public OpenIDPanel(String id, IModel<String> model) {
 
 		super(id, model);
 
@@ -55,8 +56,8 @@ public class OpenIDPanel extends Panel {
 
 		// create components
 
-		this.openidTextField = new TextField("openid", model);
-		this.openidTextField.setLabel(new Model("OpenID"));
+		this.openidTextField = new TextField<String> ("openid", model);
+		this.openidTextField.setLabel(new Model<String> ("OpenID"));
 		this.authenticateButton = new AuthenticateButton("authenticateButton");
 		this.authenticateButton.setDefaultFormProcessing(false);
 		this.openidAuthenticatedLabel = new Label("openidAuthenticated", "");
@@ -68,6 +69,7 @@ public class OpenIDPanel extends Panel {
 		this.add(this.openidAuthenticatedLabel);
 	}
 
+	@SuppressWarnings("unchecked")
 	public OpenIDPanel(String id) {
 
 		super(id);
@@ -76,8 +78,8 @@ public class OpenIDPanel extends Panel {
 
 		// create components
 
-		this.openidTextField = new TextField("openid", this.getModel());
-		this.openidTextField.setLabel(new Model("OpenID"));
+		this.openidTextField = new TextField<String> ("openid", (IModel<String>) this.getDefaultModel());
+		this.openidTextField.setLabel(new Model<String> ("OpenID"));
 		this.authenticateButton = new AuthenticateButton("authenticateButton");
 		this.authenticateButton.setDefaultFormProcessing(false);
 		this.openidAuthenticatedLabel = new Label("openidAuthenticated", "");
@@ -96,7 +98,7 @@ public class OpenIDPanel extends Panel {
 
 		this.openidTextField.setVisible(! this.authenticated);
 		this.authenticateButton.setVisible(! this.authenticated);
-		this.openidAuthenticatedLabel.setModelObject(this.getModelObjectAsString() + " (Authenticated)");
+		this.openidAuthenticatedLabel.setDefaultModelObject(this.getDefaultModelObjectAsString() + " (Authenticated)");
 		this.openidAuthenticatedLabel.setVisible(this.authenticated);
 	}
 
@@ -132,7 +134,7 @@ public class OpenIDPanel extends Panel {
 			// determine realm and return_to URL where we will receive
 			// the authentication responses from the OpenID provider
 
-			String realm = ((WebRequest) OpenIDPanel.this.getRequestCycle().getRequest()).getHttpServletRequest().getRequestURL().toString();
+			String realm = ((ServletWebRequest) OpenIDPanel.this.getRequestCycle().getRequest()).getContainerRequest().getRequestURL().toString();
 			if (realm.indexOf('/', 8) > 0) realm = realm.substring(0, realm.indexOf('/', 8));
 			realm += ((WebApplication) OpenIDPanel.this.getApplication()).getWicketFilter().getFilterConfig().getServletContext().getContextPath();
 
@@ -143,12 +145,12 @@ public class OpenIDPanel extends Panel {
 			// mount endpoint
 
 			((WebApplication) Application.get()).unmount(OPENID_MOUNT_PATH);
-			((WebApplication) Application.get()).mount(new OpenIDEndpointStrategy(OPENID_MOUNT_PATH));
+			((WebApplication) Application.get()).mount(new MountMapper(OPENID_MOUNT_PATH, new OpenIDEndpoint()));
 
 			// perform discovery on the user-supplied identifier
 
 			String identifier = OpenIDPanel.this.openidTextField.getInput();
-			OpenIDPanel.this.setModelObject(identifier);
+			OpenIDPanel.this.setDefaultModelObject(identifier);
 
 			OpenIDPanel.log.debug("Performing discovery on " + identifier);
 
@@ -212,55 +214,8 @@ public class OpenIDPanel extends Panel {
 			// perform the authentication request by redirecting to the IdP endpoint
 
 			String url = authReq.getDestinationUrl(true);
-			this.getRequestCycle().setRequestTarget(new RedirectRequestTarget(url));
+			this.getRequestCycle().scheduleRequestHandlerAfterCurrent(new RedirectRequestHandler(url));
 			return;
-		}
-	}
-
-	/*
-	 * The OpenID endpoint strategy
-	 */
-
-	private class OpenIDEndpointStrategy implements IRequestTargetUrlCodingStrategy {
-
-		private String mountPath;
-
-		private OpenIDEndpointStrategy(String mountPath) {
-
-			this.mountPath = mountPath;
-		}
-
-		public IRequestTarget decode(RequestParameters requestParameters) {
-
-			// return an endpoint that can answer the request
-
-			return(new OpenIDEndpoint());
-		}
-
-		public CharSequence encode(IRequestTarget requestTarget) {
-
-			// construct an URI from an endpoint
-
-			if (! (requestTarget instanceof OpenIDEndpoint)) return(null);
-
-			String endpointPath = this.getMountPath();
-
-			return(endpointPath);
-		}
-
-		public String getMountPath() {
-
-			return(this.mountPath);
-		}
-
-		public boolean matches(IRequestTarget requestTarget) {
-
-			return(requestTarget instanceof OpenIDEndpoint);
-		}
-
-		public boolean matches(String path) {
-
-			return(path.indexOf(this.getMountPath()) == 0);
 		}
 	}
 
@@ -269,16 +224,20 @@ public class OpenIDPanel extends Panel {
 	 */
 
 
-	public class OpenIDEndpoint implements IRequestTarget {
+	public class OpenIDEndpoint implements IRequestHandler {
 
-		public void respond(RequestCycle requestCycle) {
+		@Override
+		public void detach(IRequestCycle requestCycle) {
 
-			WebRequest request = (WebRequest) requestCycle.getRequest();
+		}
+
+		@Override
+		public void respond(IRequestCycle requestCycle) {
 
 			// extract the parameters from the authentication response
 			// (which comes in as a HTTP request from the OpenID provider)
 
-			ParameterList parameters = new ParameterList(request.getParameterMap());
+			ParameterList parameters = new ParameterList(((ServletWebRequest) requestCycle.getRequest()).getContainerRequest().getParameterMap());
 
 			// retrieve the page our OpenID panel is on
 
@@ -286,7 +245,7 @@ public class OpenIDPanel extends Panel {
 
 			// extract the receiving URL from the HTTP request
 
-			HttpServletRequest httpReq = ((WebRequest) requestCycle.getRequest()).getHttpServletRequest();
+			HttpServletRequest httpReq = ((ServletWebRequest) requestCycle.getRequest()).getContainerRequest();
 
 			StringBuffer receivingURL = httpReq.getRequestURL();
 			String queryString = httpReq.getQueryString();
@@ -323,8 +282,7 @@ public class OpenIDPanel extends Panel {
 
 				// send user back to page
 
-				requestCycle.setResponsePage(page);
-				requestCycle.setRedirect(true);
+				requestCycle.scheduleRequestHandlerAfterCurrent(new RenderPageRequestHandler(new PageProvider(page)));
 				return;
 			}
 
@@ -333,18 +291,8 @@ public class OpenIDPanel extends Panel {
 			// user is authenticated now
 
 			OpenIDPanel.this.setAuthenticated(true);
-			requestCycle.setResponsePage(page);
-			requestCycle.setRedirect(true);
+			requestCycle.scheduleRequestHandlerAfterCurrent(new RenderPageRequestHandler(new PageProvider(page)));
 			return;
-		}
-
-		public void detach(RequestCycle requestCycle) {
-
-		}
-
-		public Object getLock(RequestCycle arg0) {
-
-			return(null);
 		}
 	}
 

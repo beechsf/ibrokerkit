@@ -1,38 +1,46 @@
 package ibrokerkit.iservicefront.contact.webpages.iservice;
 
-import ibrokerkit.iservicefront.contact.webapplication.ContactApplication;
+import ibrokerkit.iservicefront.IserviceApplication;
 import ibrokerkit.iservicestore.store.Contact;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
-import org.apache.wicket.IRequestTarget;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.protocol.http.WebRequest;
+import org.apache.wicket.Page;
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
+import org.apache.wicket.request.IRequestCycle;
+import org.apache.wicket.request.IRequestHandler;
+import org.openxri.IRIUtils;
 import org.openxri.XRI;
 import org.openxri.XRIAuthority;
 import org.openxri.store.Authority;
 import org.openxri.xml.ContactService;
 
-public class Endpoint implements IRequestTarget {
+public class Endpoint implements IRequestHandler {
 
 	private static Log log = LogFactory.getLog(Endpoint.class.getName());
 
-	private XRI qxri;
+	public Endpoint() {
 
-	public Endpoint(XRI qxri) {
-
-		this.qxri = qxri;
 	}
 
+	@Override
+	public void detach(IRequestCycle requestCycle) {
+
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
-	public void respond(RequestCycle requestCycle) {
+	public void respond(IRequestCycle requestCycle) {
 
 		// handle the "Accept: uri-list" case
 
-		Enumeration<String> e = ((WebRequest) requestCycle.getRequest()).getHttpServletRequest().getHeaders("Accept");
+		Enumeration<String> e = ((ServletWebRequest) requestCycle.getRequest()).getContainerRequest().getHeaders("Accept");
 
 		while (e.hasMoreElements()) {
 
@@ -41,7 +49,7 @@ public class Endpoint implements IRequestTarget {
 
 				log.info("Processing uri-list request: " + ContactService.SERVICE_TYPE);
 
-				requestCycle.getResponse().println(ContactService.SERVICE_TYPE);
+				requestCycle.getResponse().write(ContactService.SERVICE_TYPE + "\n");
 				requestCycle.getResponse().close();
 				return;
 			}
@@ -49,9 +57,11 @@ public class Endpoint implements IRequestTarget {
 
 		// process the request
 
+		XRI qxri = this.qxri(requestCycle);
+
 		try {
 
-			this.processRequest(requestCycle);
+			this.processRequest(requestCycle, qxri);
 		} catch (Exception ex) {
 
 			log.fatal("Failed.", ex);
@@ -59,16 +69,40 @@ public class Endpoint implements IRequestTarget {
 		}
 	}
 
-	public void processRequest(RequestCycle requestCycle) throws Exception {
+	private XRI qxri(IRequestCycle requestCycle) {
 
-		ibrokerkit.iservicestore.store.Store iserviceStore = ((ContactApplication) Application.get()).getIserviceStore();
-		org.openxri.store.Store openxriStore = ((ContactApplication) Application.get()).getOpenxriStore();
+		String query = requestCycle.getRequest().getUrl().toString();
+		query = query.substring(query.indexOf("/"));
+		query = query.substring(query.indexOf("/"));
+		query = query.substring(1);
+
+		// construct an XRI from the query
+
+		XRI qxri;
+
+		try {
+
+			qxri = new XRI(IRIUtils.IRItoXRI(IRIUtils.URItoIRI(query)));
+		} catch (UnsupportedEncodingException ex) {
+
+			throw new RuntimeException(ex);
+		}
+
+		log.info("Got request for XRI: " + qxri.toString());
+
+		return qxri;
+	}
+
+	public void processRequest(IRequestCycle requestCycle, XRI qxri) throws Exception {
+
+		ibrokerkit.iservicestore.store.Store iserviceStore = ((IserviceApplication) Application.get()).getIserviceStore();
+		org.openxri.store.Store openxriStore = ((IserviceApplication) Application.get()).getOpenxriStore();
 
 		// check qxri
 
-		log.info("Processing request: Qxri=" + this.qxri.toString());
+		log.info("Processing request: Qxri=" + qxri.toString());
 
-		if (! (this.qxri.getAuthorityPath() instanceof XRIAuthority)) {
+		if (! (qxri.getAuthorityPath() instanceof XRIAuthority)) {
 
 			log.error("Can only work with GCS and XRef XRIs");
 			return;
@@ -76,8 +110,8 @@ public class Endpoint implements IRequestTarget {
 
 		// find a matching contact i-service
 
-		Contact contact = iserviceStore.findContact(this.qxri.getAuthorityPath().toString());
-		Authority authority = openxriStore.localLookup((XRIAuthority) this.qxri.getAuthorityPath());
+		Contact contact = iserviceStore.findContact(qxri.getAuthorityPath().toString());
+		Authority authority = openxriStore.localLookup((XRIAuthority) qxri.getAuthorityPath());
 
 		// if we found none for the qxri, look for one for the authority id
 
@@ -95,24 +129,16 @@ public class Endpoint implements IRequestTarget {
 
 			// display not-found page
 
-			requestCycle.setResponsePage(new NotFoundPage(this.qxri));
+			Page page = new NotFoundPage(qxri);
+
+			requestCycle.scheduleRequestHandlerAfterCurrent(new RenderPageRequestHandler(new PageProvider(page), RenderPageRequestHandler.RedirectPolicy.NEVER_REDIRECT));
 			return;
 		}
 
 		// display contact page
 
-		requestCycle.setResponsePage(new ContactPage(contact, this.qxri, authority == null ? null : authority.getXrd()));
-	}
+		Page page = new ContactPage(contact, qxri, authority == null ? null : authority.getXrd());
 
-	public XRI getQxri() {
-		return (this.qxri);
-	}
-
-	public void setQxri(XRI qxri) {
-		this.qxri = qxri;
-	}
-
-	public void detach(RequestCycle requestCycle) {
-
+		requestCycle.scheduleRequestHandlerAfterCurrent(new RenderPageRequestHandler(new PageProvider(page), RenderPageRequestHandler.RedirectPolicy.NEVER_REDIRECT));
 	}
 }

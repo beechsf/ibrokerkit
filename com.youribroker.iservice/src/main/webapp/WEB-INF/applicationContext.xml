@@ -33,7 +33,8 @@
 	<!-- OpenXRI store -->
 
 	<bean id="openxriStore" class="org.openxri.store.impl.db.DatabaseStore" init-method="init">
-		<constructor-arg><ref local="openxriStoreProperties" /></constructor-arg>
+		<constructor-arg><null /></constructor-arg>
+		<constructor-arg ref="openxriStoreProperties" />
 	</bean>
 
 	<!-- OpenID Server Manager -->

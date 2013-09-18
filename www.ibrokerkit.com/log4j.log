@@ -1,0 +1,1104 @@
+21:34:19,442 -  INFO [org.mortbay.log] - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+21:34:19,442 -  INFO [org.mortbay.log] - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+21:34:19,514 -  INFO [org.mortbay.log] - jetty-6.1.26
+21:34:19,514 -  INFO [org.mortbay.log] - jetty-6.1.26
+21:34:19,670 -  INFO [org.mortbay.log] - No Transaction manager found - if your webapp requires one, please configure one.
+21:34:19,670 -  INFO [org.mortbay.log] - No Transaction manager found - if your webapp requires one, please configure one.
+21:34:19,867 -  INFO [/] - Initializing Spring root WebApplicationContext
+21:34:19,867 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization started
+21:34:19,867 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization started
+21:34:19,952 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Refreshing Root WebApplicationContext: startup date [Wed Sep 18 21:34:19 CEST 2013]; root of context hierarchy
+21:34:19,952 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Refreshing Root WebApplicationContext: startup date [Wed Sep 18 21:34:19 CEST 2013]; root of context hierarchy
+21:34:20,005 -  INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+21:34:20,005 -  INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+21:34:20,144 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2143ed74: defining beans [wicketApplication]; root of factory hierarchy
+21:34:20,144 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2143ed74: defining beans [wicketApplication]; root of factory hierarchy
+21:34:20,225 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 357 ms
+21:34:20,225 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 357 ms
+21:34:20,243 -  INFO [org.apache.wicket.util.file.WebXmlFile] - web.xml: url mapping found for filter with name WicketFilter: [/*]
+21:34:20,355 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket core library initializer
+21:34:20,358 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IBehaviorListener, method=public abstract void org.apache.wicket.behavior.IBehaviorListener.onRequest()]
+21:34:20,359 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IFormSubmitListener, method=public abstract void org.apache.wicket.markup.html.form.IFormSubmitListener.onFormSubmitted()]
+21:34:20,359 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=ILinkListener, method=public abstract void org.apache.wicket.markup.html.link.ILinkListener.onLinkClicked()]
+21:34:20,360 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IOnChangeListener, method=public abstract void org.apache.wicket.markup.html.form.IOnChangeListener.onSelectionChanged()]
+21:34:20,361 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IRedirectListener, method=public abstract void org.apache.wicket.IRedirectListener.onRedirect()]
+21:34:20,362 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IResourceListener, method=public abstract void org.apache.wicket.IResourceListener.onResourceRequested()]
+21:34:20,362 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket extensions initializer
+21:34:20,395 -  INFO [org.apache.wicket.protocol.http.WebApplication] - [WicketFilter] Started Wicket version 6.10.0 in DEVELOPMENT mode
+21:34:20,470 -  INFO [org.mortbay.log] - Started SelectChannelConnector@0.0.0.0:8080
+21:34:20,470 -  INFO [org.mortbay.log] - Started SelectChannelConnector@0.0.0.0:8080
+21:34:28,978 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/www.ibrokerkit.com/home/Index'
+21:34:28,989 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/www.ibrokerkit.com/home/Index'
+21:34:28,990 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/www.ibrokerkit.com/home/Index'
+21:34:28,993 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - No compatible mapper found for URL 'www.ibrokerkit.com/home/Index'
+21:34:28,993 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/www.ibrokerkit.com/home/Index'
+21:34:28,994 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/www.ibrokerkit.com/home/Index'
+21:34:28,995 - DEBUG [org.apache.wicket.request.cycle.RequestCycle] - No suitable handler found for URL www.ibrokerkit.com/home/Index, falling back to container to process this request
+21:34:31,539 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,540 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,541 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,541 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - No compatible mapper found for URL ''
+21:34:31,542 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,542 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,550 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,556 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,559 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,560 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,560 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,560 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/'
+21:34:31,568 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,568 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,569 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,569 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - One compatible mapper found for URL 'home/Index' -> 'Mapper: org.apache.wicket.request.mapper.mount.MountMapper; Score: 1'
+21:34:31,570 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,592 - DEBUG [org.apache.wicket.page.PageAccessSynchronizer] - '121165166@qtp-1146025520-0' attempting to acquire lock to page with id '0'
+21:34:31,593 - DEBUG [org.apache.wicket.page.PageAccessSynchronizer] - 121165166@qtp-1146025520-0 acquired lock to page 0
+21:34:31,595 - DEBUG [org.apache.wicket.MarkupContainer] - Add homePageLink to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 0]
+21:34:31,597 - DEBUG [org.apache.wicket.MarkupContainer] - Add HomeLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,597 - DEBUG [org.apache.wicket.MarkupContainer] - Add ScreenshotsLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,599 - DEBUG [org.apache.wicket.MarkupContainer] - Add Architecture1Link to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,600 - DEBUG [org.apache.wicket.MarkupContainer] - Add Architecture2Link to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,601 - DEBUG [org.apache.wicket.MarkupContainer] - Add ReferencesLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,601 - DEBUG [org.apache.wicket.MarkupContainer] - Add IbrokerStoreLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,602 - DEBUG [org.apache.wicket.MarkupContainer] - Add IbrokerFrontLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,603 - DEBUG [org.apache.wicket.MarkupContainer] - Add IbrokerTaskLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,603 - DEBUG [org.apache.wicket.MarkupContainer] - Add IbrokerCertLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,604 - DEBUG [org.apache.wicket.MarkupContainer] - Add OpenxriLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,604 - DEBUG [org.apache.wicket.MarkupContainer] - Add OpenxriAdminLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,605 - DEBUG [org.apache.wicket.MarkupContainer] - Add IserviceFrontLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,605 - DEBUG [org.apache.wicket.MarkupContainer] - Add IserviceStoreLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,606 - DEBUG [org.apache.wicket.MarkupContainer] - Add IserviceAdminLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,607 - DEBUG [org.apache.wicket.MarkupContainer] - Add OauthFrontLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,607 - DEBUG [org.apache.wicket.MarkupContainer] - Add XdiFrontLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,608 - DEBUG [org.apache.wicket.MarkupContainer] - Add Iname4JavaLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,609 - DEBUG [org.apache.wicket.MarkupContainer] - Add Epptools4JavaLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,609 - DEBUG [org.apache.wicket.MarkupContainer] - Add Xritools4JavaLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,610 - DEBUG [org.apache.wicket.MarkupContainer] - Add InstallationLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,610 - DEBUG [org.apache.wicket.MarkupContainer] - Add HowtosLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,611 - DEBUG [org.apache.wicket.MarkupContainer] - Add sidePanel to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 0]
+21:34:31,611 - DEBUG [org.apache.wicket.MarkupContainer] - Add titleLabel to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 0]
+21:34:31,613 - DEBUG [org.apache.wicket.MarkupContainer] - Add feedbackul to [FeedbackPanel [Component id = feedbackPanel]]
+21:34:31,617 - DEBUG [org.apache.wicket.MarkupContainer] - Add messages to [WebMarkupContainer [Component id = feedbackul]]
+21:34:31,618 - DEBUG [org.apache.wicket.MarkupContainer] - Add feedbackPanel to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 0]
+21:34:31,620 - DEBUG [org.apache.wicket.Localizer] - Locate property: key: 'title'; Component: '[Index [Component id = 0]]'
+21:34:31,633 - DEBUG [org.apache.wicket.resource.loader.ComponentStringResourceLoader] - component: '[Index [Component id = 0]]'; key: 'title'
+21:34:31,634 - DEBUG [org.apache.wicket.resource.loader.ComponentStringResourceLoader] - key: 'title'; class: 'com.ibrokerkit.webpages.index.Index'; locale: 'en_US'; Style: 'null'; Variation: 'null'
+21:34:31,643 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.properties' using finder'[classpath]'
+21:34:31,645 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.properties' using finder'[webapppath: /]'
+21:34:31,645 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.properties' using finder'[classpath: META-INF/resources/]'
+21:34:31,648 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.utf8.properties' using finder'[classpath]'
+21:34:31,650 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.utf8.properties' using finder'[webapppath: /]'
+21:34:31,650 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.utf8.properties' using finder'[classpath: META-INF/resources/]'
+21:34:31,652 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.properties.xml' using finder'[classpath]'
+21:34:31,654 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.properties.xml' using finder'[webapppath: /]'
+21:34:31,654 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.properties.xml' using finder'[classpath: META-INF/resources/]'
+21:34:31,658 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.properties' using finder'[classpath]'
+21:34:31,661 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.properties' using finder'[webapppath: /]'
+21:34:31,662 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.properties' using finder'[classpath: META-INF/resources/]'
+21:34:31,664 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.utf8.properties' using finder'[classpath]'
+21:34:31,665 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.utf8.properties' using finder'[webapppath: /]'
+21:34:31,666 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.utf8.properties' using finder'[classpath: META-INF/resources/]'
+21:34:31,668 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.properties.xml' using finder'[classpath]'
+21:34:31,669 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.properties.xml' using finder'[webapppath: /]'
+21:34:31,670 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.properties.xml' using finder'[classpath: META-INF/resources/]'
+21:34:31,672 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index.properties' using finder'[classpath]'
+21:34:31,675 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@683a3e1b
+21:34:31,696 - DEBUG [org.apache.wicket.markup.MarkupCache] - Load markup: cacheKey=com.ibrokerkit.webpages.index.Index_en_US.html
+21:34:31,700 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.html' using finder'[classpath]'
+21:34:31,701 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.html' using finder'[webapppath: /]'
+21:34:31,702 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en_US.html' using finder'[classpath: META-INF/resources/]'
+21:34:31,704 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.html' using finder'[classpath]'
+21:34:31,706 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.html' using finder'[webapppath: /]'
+21:34:31,706 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index_en.html' using finder'[classpath: META-INF/resources/]'
+21:34:31,708 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/index/Index.html' using finder'[classpath]'
+21:34:31,710 - DEBUG [org.apache.wicket.markup.MarkupCache] - Loading markup from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.html
+21:34:31,792 - DEBUG [org.apache.wicket.markup.MarkupCache] - Load markup: cacheKey=com.ibrokerkit.webpages.BasePage_en_US.html
+21:34:31,793 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePage_en_US.html' using finder'[classpath]'
+21:34:31,794 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePage_en_US.html' using finder'[webapppath: /]'
+21:34:31,795 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePage_en_US.html' using finder'[classpath: META-INF/resources/]'
+21:34:31,797 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePage_en.html' using finder'[classpath]'
+21:34:31,799 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePage_en.html' using finder'[webapppath: /]'
+21:34:31,799 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePage_en.html' using finder'[classpath: META-INF/resources/]'
+21:34:31,801 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePage.html' using finder'[classpath]'
+21:34:31,801 - DEBUG [org.apache.wicket.markup.MarkupCache] - Loading markup from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/BasePage.html
+21:34:31,817 - DEBUG [org.apache.wicket.markup.MergedMarkup] - Merge markup: derived markup: Index.html; base markup: BasePage.html
+21:34:31,819 - DEBUG [org.apache.wicket.markup.MergedMarkup] - Merge markup: file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.html
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="Description" content="Software for i-brokers.">
+<meta name="Keywords" content="xri, i-names, i-number, i-broker">
+<meta name="Designed By" content="ChristinaChun.com">
+<meta name="Language" content="English">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<title>ibrokerKit</title>
+</head>
+<body>
+<div id="Page">
+<div id="BodyTop"></div>
+<div id="Body"><div id="BodyBorder">
+<div id="PageHeaderPad">
+<div id="NamespacesImage"></div>
+<div id="PageHeader"><a wicket:id="homePageLink"><img src="images/tool.png"><img src="images/title.png"></a></div>
+</div>
+<div wicket:id="sidePanel">___ sidePanel here ___</div>
+<div id="Content">
+<div class="pad">
+<h1 wicket:id="titleLabel">___ titleLabel here ___</h1>
+<div wicket:id="feedbackPanel">___ feedbackPanel here ___</div>
+<wicket:child><wicket:extend>
+<a href="http://www.inames.net" target="_blank"><img style="float: right; margin-top: -8px" src="images/logo-inames.png"></a>
+<p>ibrokerKit is a software solution for <a href="http://xdi.org">XDI.org</a> accredited
+GRS i-brokers as well as Community i-brokers. It contains customizable,
+extensible frontend web applications, libraries, backend database schemas and other
+components necessary for operating all aspects of an i-broker.</p>
+<ul>
+<li>Community i-brokers provide i-names with one or more fixed subsegments, e.g. <b>@free*yourcompany</b>, or <b>=web*yourname</b>.</li>
+<li>GRS i-brokers provide top-level i-names in the central registry, e.g. <b>@yourcompany</b> or <b>=yourname</b>.</li>
+</ul>
+<h2>Components</h2>
+<p>The following table gives an overview over which ibrokerKit components you need.</p>
+<table style="border: 2px solid black; margin-left: 50px">
+<tr>
+<td style="font-weight: bold">Component</td>
+<td style="font-weight: bold; width: 150px" align="center">Community I-Brokers</td>
+<td style="font-weight: bold; width: 150px" align="center">GRS I-Brokers</td>
+</tr>
+<tr>
+<td>ibrokerFront</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>ibrokerStore</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>ibrokerTask</td>
+<td>&nbsp;</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>ibrokerCert</td>
+<td>&nbsp;</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>openxri</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>openxriAdmin</td>
+<td align="center"><img src="images/checkyellow.png"></td>
+<td align="center"><img src="images/checkyellow.png"></td>
+</tr>
+<tr>
+<td>iserviceFront</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>iserviceStore</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>iserviceAdmin</td>
+<td align="center"><img src="images/checkyellow.png"></td>
+<td align="center"><img src="images/checkyellow.png"></td>
+</tr>
+<tr>
+<td>oauthFront</td>
+<td align="center"><img src="images/checkyellow.png"></td>
+<td align="center"><img src="images/checkyellow.png"></td>
+</tr>
+<tr>
+<td>xdiFront</td>
+<td align="center"><img src="images/checkyellow.png"></td>
+<td align="center"><img src="images/checkyellow.png"></td>
+</tr>
+<tr>
+<td>iname4java</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>epptools4java</td>
+<td>&nbsp;</td>
+<td align="center"><img src="images/checkgreen.png"></td>
+</tr>
+<tr>
+<td>xritools4java</td>
+<td align="center"><img src="images/checkyellow.png"></td>
+<td align="center"><img src="images/checkyellow.png"></td>
+</tr>
+</table>
+<p><img src="images/checkgreen.png"> = Required&nbsp;&nbsp;
+<img src="images/checkyellow.png"> = Optional</p>
+<p class="small">The table assumes that you do not implement anything yourself.<br>ibrokerKit is very modular, i.e.
+you could also only use 1 or 2 components and implement others yourself.</p>
+<h2>Technologies</h2>
+<p>ibrokerKit relates to the following technologies:</p>
+<ul>
+<li><strong>OpenXRI:</strong> The OpenXRI server is used to host community i-names. OpenXRI relates to XRI as BIND
+relates to DNS. If all you need to do is host community i-names, without associated i-services and management tools, then
+you don't need ibrokerKit; only OpenXRI.</li>
+<li><strong>NeuStar EPP Toolkit:</strong> If you are an XDI.org accredited GRS I-Broker, you will be given access
+to this toolkit, which communicates with the central registry. ibrokerKit builds on this toolkit.</li>
+<li><strong>Apache Wicket Web Framework:</strong> This is used for implementing the frontend web applications in
+ibrokerKit.</li>
+<li><strong>Higgins XDI4j:</strong> A general-purpose XDI library used for implementing the xdiFront component.</li>
+</ul>
+<h2>Further Information</h2>
+<p>See <a href="http://www.inames.net/">http://www.inames.net/</a> for more information on
+how to become an <a href="http://xdi.org">XDI.org</a> accredited i-broker.<br>
+ibrokerKit is not freely available for download. Please contact us at <a href="http://xri.net/@fullxri*ibrokerkit">@fullxri*ibrokerkit</a> for questions and enquiries.</p>
+</wicket:extend></wicket:child>
+</div>
+</div>
+<div class="clear"></div>
+</div></div>
+<div id="BodyBottom">
+<div id="BodyBottomLeft"><div id="BodyBottomRight"></div></div>
+</div>
+<br>
+</div>
+</body>
+</html>
+
+21:34:31,821 - DEBUG [org.apache.wicket.Component] - Begin render [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1]
+21:34:31,826 - DEBUG [org.apache.wicket.MarkupContainer] - Add _header_0 to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1]
+21:34:31,826 - DEBUG [org.apache.wicket.Component] - Begin render [HtmlHeaderContainer [Component id = _header_0]]
+21:34:31,836 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = homePageLink]]
+21:34:31,836 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = HomeLink]]
+21:34:31,836 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = ScreenshotsLink]]
+21:34:31,836 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Architecture1Link]]
+21:34:31,837 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Architecture2Link]]
+21:34:31,837 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = ReferencesLink]]
+21:34:31,837 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IbrokerStoreLink]]
+21:34:31,837 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IbrokerFrontLink]]
+21:34:31,838 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IbrokerTaskLink]]
+21:34:31,838 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IbrokerCertLink]]
+21:34:31,838 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = OpenxriLink]]
+21:34:31,838 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = OpenxriAdminLink]]
+21:34:31,838 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IserviceFrontLink]]
+21:34:31,838 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IserviceStoreLink]]
+21:34:31,839 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IserviceAdminLink]]
+21:34:31,839 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = OauthFrontLink]]
+21:34:31,839 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = XdiFrontLink]]
+21:34:31,839 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Iname4JavaLink]]
+21:34:31,839 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Epptools4JavaLink]]
+21:34:31,840 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Xritools4JavaLink]]
+21:34:31,840 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = InstallationLink]]
+21:34:31,840 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = HowtosLink]]
+21:34:31,840 - DEBUG [org.apache.wicket.Component] - renderHead: [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,842 - DEBUG [org.apache.wicket.markup.MarkupCache] - Load markup: cacheKey=com.ibrokerkit.webpages.BasePageSidePanel_en_US.html
+21:34:31,842 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePageSidePanel_en_US.html' using finder'[classpath]'
+21:34:31,844 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePageSidePanel_en_US.html' using finder'[webapppath: /]'
+21:34:31,845 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePageSidePanel_en_US.html' using finder'[classpath: META-INF/resources/]'
+21:34:31,846 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePageSidePanel_en.html' using finder'[classpath]'
+21:34:31,848 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePageSidePanel_en.html' using finder'[webapppath: /]'
+21:34:31,849 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePageSidePanel_en.html' using finder'[classpath: META-INF/resources/]'
+21:34:31,851 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'com/ibrokerkit/webpages/BasePageSidePanel.html' using finder'[classpath]'
+21:34:31,851 - DEBUG [org.apache.wicket.markup.MarkupCache] - Loading markup from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/BasePageSidePanel.html
+21:34:31,873 - DEBUG [org.apache.wicket.Component] - renderHead: [Component id = titleLabel]
+21:34:31,873 - DEBUG [org.apache.wicket.Component] - renderHead: [FeedbackPanel [Component id = feedbackPanel]]
+21:34:31,873 - DEBUG [org.apache.wicket.markup.MarkupCache] - Load markup: cacheKey=org.apache.wicket.markup.html.panel.FeedbackPanel_en_US.html
+21:34:31,873 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'org/apache/wicket/markup/html/panel/FeedbackPanel_en_US.html' using finder'[classpath]'
+21:34:31,876 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'org/apache/wicket/markup/html/panel/FeedbackPanel_en_US.html' using finder'[webapppath: /]'
+21:34:31,876 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'org/apache/wicket/markup/html/panel/FeedbackPanel_en_US.html' using finder'[classpath: META-INF/resources/]'
+21:34:31,878 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'org/apache/wicket/markup/html/panel/FeedbackPanel_en.html' using finder'[classpath]'
+21:34:31,880 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'org/apache/wicket/markup/html/panel/FeedbackPanel_en.html' using finder'[webapppath: /]'
+21:34:31,881 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'org/apache/wicket/markup/html/panel/FeedbackPanel_en.html' using finder'[classpath: META-INF/resources/]'
+21:34:31,883 - DEBUG [org.apache.wicket.core.util.resource.locator.ResourceStreamLocator] - Attempting to locate resource 'org/apache/wicket/markup/html/panel/FeedbackPanel.html' using finder'[classpath]'
+21:34:31,883 - DEBUG [org.apache.wicket.markup.MarkupCache] - Loading markup from jar:file:/C:/Users/markus/.m2/repository/org/apache/wicket/wicket-core/6.10.0/wicket-core-6.10.0.jar!/org/apache/wicket/markup/html/panel/FeedbackPanel.html
+21:34:31,891 - DEBUG [org.apache.wicket.Component] - renderHead: [HtmlHeaderContainer [Component id = _header_0]]
+21:34:31,891 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_1 to [HtmlHeaderContainer [Component id = _header_0]]
+21:34:31,892 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_1]]
+21:34:31,893 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_1]]
+21:34:31,894 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_2 to [HtmlHeaderContainer [Component id = _header_0]]
+21:34:31,894 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_2]]
+21:34:31,894 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_2]]
+21:34:31,896 - DEBUG [org.apache.wicket.Component] - renderHead: [Index [Component id = 0]]
+21:34:31,897 - DEBUG [org.apache.wicket.Component] - End render [HtmlHeaderContainer [Component id = _header_0]]
+21:34:31,897 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = homePageLink]]
+21:34:31,898 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,899 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,899 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,899 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,900 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_3 to [BookmarkablePageLink [Component id = homePageLink]]
+21:34:31,900 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_3]]
+21:34:31,901 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_3]]
+21:34:31,901 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_4 to [BookmarkablePageLink [Component id = homePageLink]]
+21:34:31,901 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_4]]
+21:34:31,901 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_4]]
+21:34:31,902 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = homePageLink]]
+21:34:31,902 - DEBUG [org.apache.wicket.Component] - Begin render [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,903 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = HomeLink]]
+21:34:31,903 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,903 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,904 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,904 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,904 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = HomeLink]]
+21:34:31,905 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = ScreenshotsLink]]
+21:34:31,905 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,905 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,906 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,906 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,906 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = ScreenshotsLink]]
+21:34:31,906 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Architecture1Link]]
+21:34:31,907 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,907 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,907 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,908 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,908 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Architecture1Link]]
+21:34:31,908 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Architecture2Link]]
+21:34:31,909 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,909 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,909 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,909 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,910 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Architecture2Link]]
+21:34:31,910 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = ReferencesLink]]
+21:34:31,910 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,911 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,911 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,911 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,912 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = ReferencesLink]]
+21:34:31,912 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IbrokerFrontLink]]
+21:34:31,912 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,913 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,913 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,913 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,914 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IbrokerFrontLink]]
+21:34:31,914 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IbrokerStoreLink]]
+21:34:31,914 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,915 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,915 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,915 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,915 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IbrokerStoreLink]]
+21:34:31,916 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IbrokerTaskLink]]
+21:34:31,916 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,916 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,917 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,917 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,917 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IbrokerTaskLink]]
+21:34:31,918 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IbrokerCertLink]]
+21:34:31,918 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,918 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,918 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,919 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,919 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IbrokerCertLink]]
+21:34:31,919 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = OpenxriLink]]
+21:34:31,920 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,920 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,920 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,921 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,921 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = OpenxriLink]]
+21:34:31,921 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = OpenxriAdminLink]]
+21:34:31,922 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,922 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,922 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,923 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,923 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = OpenxriAdminLink]]
+21:34:31,923 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IserviceFrontLink]]
+21:34:31,923 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,924 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,924 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,924 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,925 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IserviceFrontLink]]
+21:34:31,925 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IserviceStoreLink]]
+21:34:31,925 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,926 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,926 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,927 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,927 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IserviceStoreLink]]
+21:34:31,928 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IserviceAdminLink]]
+21:34:31,928 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,928 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,929 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,929 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,929 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IserviceAdminLink]]
+21:34:31,930 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = OauthFrontLink]]
+21:34:31,930 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,930 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,931 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,931 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,931 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = OauthFrontLink]]
+21:34:31,932 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = XdiFrontLink]]
+21:34:31,932 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,932 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,933 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,933 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,933 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = XdiFrontLink]]
+21:34:31,934 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Iname4JavaLink]]
+21:34:31,934 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,934 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,934 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,935 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,935 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Iname4JavaLink]]
+21:34:31,935 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Epptools4JavaLink]]
+21:34:31,936 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,936 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,936 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,937 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,937 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Epptools4JavaLink]]
+21:34:31,937 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Xritools4JavaLink]]
+21:34:31,938 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,938 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,938 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,939 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,939 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Xritools4JavaLink]]
+21:34:31,940 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = InstallationLink]]
+21:34:31,940 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,940 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,940 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,941 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,941 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = InstallationLink]]
+21:34:31,942 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = HowtosLink]]
+21:34:31,942 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,942 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,943 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,943 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:31,943 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = HowtosLink]]
+21:34:31,944 - DEBUG [org.apache.wicket.Component] - End render [BasePageSidePanel [Component id = sidePanel]]
+21:34:31,944 - DEBUG [org.apache.wicket.Component] - Begin render [Component id = titleLabel]
+21:34:31,945 - DEBUG [org.apache.wicket.Component] - End render [Component id = titleLabel]
+21:34:31,945 - DEBUG [org.apache.wicket.Component] - Begin render [FeedbackPanel [Component id = feedbackPanel]]
+21:34:31,946 - DEBUG [org.apache.wicket.Component] - End render [FeedbackPanel [Component id = feedbackPanel]]
+21:34:31,946 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_child5 to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1]
+21:34:31,946 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_child5]]
+21:34:31,946 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_extend6 to [TransparentWebMarkupContainer [Component id = wicket_child5]]
+21:34:31,947 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,947 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_7 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,947 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_7]]
+21:34:31,948 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_7]]
+21:34:31,948 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_8 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,948 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_8]]
+21:34:31,948 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_8]]
+21:34:31,949 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_9 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,949 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_9]]
+21:34:31,949 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_9]]
+21:34:31,949 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_10 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,950 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_10]]
+21:34:31,950 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_10]]
+21:34:31,950 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_11 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,951 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_11]]
+21:34:31,951 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_11]]
+21:34:31,951 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_12 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,951 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_12]]
+21:34:31,952 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_12]]
+21:34:31,952 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_13 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,952 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_13]]
+21:34:31,953 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_13]]
+21:34:31,953 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_14 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,953 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_14]]
+21:34:31,953 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_14]]
+21:34:31,954 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_15 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,954 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_15]]
+21:34:31,954 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_15]]
+21:34:31,954 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_16 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,955 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_16]]
+21:34:31,955 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_16]]
+21:34:31,955 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_17 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,955 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_17]]
+21:34:31,956 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_17]]
+21:34:31,956 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_18 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,956 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_18]]
+21:34:31,956 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_18]]
+21:34:31,957 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_19 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,957 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_19]]
+21:34:31,957 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_19]]
+21:34:31,958 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_20 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,958 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_20]]
+21:34:31,958 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_20]]
+21:34:31,958 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_21 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,959 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_21]]
+21:34:31,959 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_21]]
+21:34:31,959 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_22 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,960 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_22]]
+21:34:31,960 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_22]]
+21:34:31,960 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_23 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,960 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_23]]
+21:34:31,961 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_23]]
+21:34:31,961 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_24 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,961 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_24]]
+21:34:31,962 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_24]]
+21:34:31,962 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_25 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,962 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_25]]
+21:34:31,962 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_25]]
+21:34:31,963 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_26 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,963 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_26]]
+21:34:31,963 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_26]]
+21:34:31,964 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_27 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,964 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_27]]
+21:34:31,964 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_27]]
+21:34:31,964 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_28 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,965 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_28]]
+21:34:31,965 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_28]]
+21:34:31,965 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_29 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,965 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_29]]
+21:34:31,966 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_29]]
+21:34:31,966 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_30 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,966 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_30]]
+21:34:31,967 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_30]]
+21:34:31,967 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_31 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,967 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_31]]
+21:34:31,967 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_31]]
+21:34:31,968 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_32 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,968 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_32]]
+21:34:31,968 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_32]]
+21:34:31,968 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_33 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,969 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_33]]
+21:34:31,969 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_33]]
+21:34:31,969 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_34 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,970 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_34]]
+21:34:31,970 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_34]]
+21:34:31,970 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:31,971 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_child5]]
+21:34:31,971 - DEBUG [org.apache.wicket.Component] - End render [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1]
+21:34:31,977 - DEBUG [org.apache.wicket.Page] - ending request for page [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1], request org.apache.wicket.protocol.http.servlet.ServletWebRequest@1b3dc4d5
+21:34:31,978 - DEBUG [org.apache.wicket.Page] - ending request for page [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1], request org.apache.wicket.protocol.http.servlet.ServletWebRequest@1b3dc4d5
+21:34:31,978 - DEBUG [org.apache.wicket.page.PageAccessSynchronizer] - '121165166@qtp-1146025520-0' released lock to page with id '0'
+21:34:31,979 - DEBUG [org.apache.wicket.page.PageAccessSynchronizer] - '121165166@qtp-1146025520-0' notifying blocked threads
+21:34:32,081 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/tool.png'
+21:34:32,082 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/tool.png'
+21:34:32,083 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/tool.png'
+21:34:32,083 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - No compatible mapper found for URL 'images/tool.png'
+21:34:32,084 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/tool.png'
+21:34:32,084 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/tool.png'
+21:34:32,085 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/title.png'
+21:34:32,085 - DEBUG [org.apache.wicket.request.cycle.RequestCycle] - No suitable handler found for URL images/tool.png, falling back to container to process this request
+21:34:32,085 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/title.png'
+21:34:32,086 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkgreen.png'
+21:34:32,085 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/logo-inames.png'
+21:34:32,086 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkgreen.png'
+21:34:32,087 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/logo-inames.png'
+21:34:32,086 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/title.png'
+21:34:32,087 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/logo-inames.png'
+21:34:32,087 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkgreen.png'
+21:34:32,088 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - No compatible mapper found for URL 'images/logo-inames.png'
+21:34:32,088 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - No compatible mapper found for URL 'images/checkgreen.png'
+21:34:32,087 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - No compatible mapper found for URL 'images/title.png'
+21:34:32,088 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkgreen.png'
+21:34:32,088 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/logo-inames.png'
+21:34:32,089 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkgreen.png'
+21:34:32,089 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/title.png'
+21:34:32,090 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/title.png'
+21:34:32,089 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/logo-inames.png'
+21:34:32,090 - DEBUG [org.apache.wicket.request.cycle.RequestCycle] - No suitable handler found for URL images/title.png, falling back to container to process this request
+21:34:32,090 - DEBUG [org.apache.wicket.request.cycle.RequestCycle] - No suitable handler found for URL images/checkgreen.png, falling back to container to process this request
+21:34:32,091 - DEBUG [org.apache.wicket.request.cycle.RequestCycle] - No suitable handler found for URL images/logo-inames.png, falling back to container to process this request
+21:34:32,094 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkyellow.png'
+21:34:32,095 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkyellow.png'
+21:34:32,095 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkyellow.png'
+21:34:32,095 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - No compatible mapper found for URL 'images/checkyellow.png'
+21:34:32,096 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkyellow.png'
+21:34:32,096 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/images/checkyellow.png'
+21:34:32,096 - DEBUG [org.apache.wicket.request.cycle.RequestCycle] - No suitable handler found for URL images/checkyellow.png, falling back to container to process this request
+21:34:34,692 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,693 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,693 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,693 - DEBUG [org.apache.wicket.request.mapper.CompoundRequestMapper] - One compatible mapper found for URL 'home/Index' -> 'Mapper: org.apache.wicket.request.mapper.mount.MountMapper; Score: 1'
+21:34:34,694 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,694 - DEBUG [org.apache.wicket.page.PageAccessSynchronizer] - '121165166@qtp-1146025520-0' attempting to acquire lock to page with id '0'
+21:34:34,695 - DEBUG [org.apache.wicket.page.PageAccessSynchronizer] - 121165166@qtp-1146025520-0 acquired lock to page 0
+21:34:34,695 - DEBUG [org.apache.wicket.MarkupContainer] - Add homePageLink to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 0]
+21:34:34,696 - DEBUG [org.apache.wicket.MarkupContainer] - Add HomeLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,696 - DEBUG [org.apache.wicket.MarkupContainer] - Add ScreenshotsLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,696 - DEBUG [org.apache.wicket.MarkupContainer] - Add Architecture1Link to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,697 - DEBUG [org.apache.wicket.MarkupContainer] - Add Architecture2Link to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,697 - DEBUG [org.apache.wicket.MarkupContainer] - Add ReferencesLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,697 - DEBUG [org.apache.wicket.MarkupContainer] - Add IbrokerStoreLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,698 - DEBUG [org.apache.wicket.MarkupContainer] - Add IbrokerFrontLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,698 - DEBUG [org.apache.wicket.MarkupContainer] - Add IbrokerTaskLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,698 - DEBUG [org.apache.wicket.MarkupContainer] - Add IbrokerCertLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,700 - DEBUG [org.apache.wicket.MarkupContainer] - Add OpenxriLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,701 - DEBUG [org.apache.wicket.MarkupContainer] - Add OpenxriAdminLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,701 - DEBUG [org.apache.wicket.MarkupContainer] - Add IserviceFrontLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,702 - DEBUG [org.apache.wicket.MarkupContainer] - Add IserviceStoreLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,702 - DEBUG [org.apache.wicket.MarkupContainer] - Add IserviceAdminLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,702 - DEBUG [org.apache.wicket.MarkupContainer] - Add OauthFrontLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,702 - DEBUG [org.apache.wicket.MarkupContainer] - Add XdiFrontLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,703 - DEBUG [org.apache.wicket.MarkupContainer] - Add Iname4JavaLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,703 - DEBUG [org.apache.wicket.MarkupContainer] - Add Epptools4JavaLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,703 - DEBUG [org.apache.wicket.MarkupContainer] - Add Xritools4JavaLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,703 - DEBUG [org.apache.wicket.MarkupContainer] - Add InstallationLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,704 - DEBUG [org.apache.wicket.MarkupContainer] - Add HowtosLink to [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,704 - DEBUG [org.apache.wicket.MarkupContainer] - Add sidePanel to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 0]
+21:34:34,704 - DEBUG [org.apache.wicket.MarkupContainer] - Add titleLabel to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 0]
+21:34:34,705 - DEBUG [org.apache.wicket.MarkupContainer] - Add feedbackul to [FeedbackPanel [Component id = feedbackPanel]]
+21:34:34,705 - DEBUG [org.apache.wicket.MarkupContainer] - Add messages to [WebMarkupContainer [Component id = feedbackul]]
+21:34:34,705 - DEBUG [org.apache.wicket.MarkupContainer] - Add feedbackPanel to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 0]
+21:34:34,706 - DEBUG [org.apache.wicket.Localizer] - Property found in cache: 'title'; Component: '[Index [Component id = 0]]'; value: 'ibrokerKit'
+21:34:34,708 - DEBUG [org.apache.wicket.Component] - Begin render [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1]
+21:34:34,708 - DEBUG [org.apache.wicket.MarkupContainer] - Add _header_0 to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1]
+21:34:34,709 - DEBUG [org.apache.wicket.Component] - Begin render [HtmlHeaderContainer [Component id = _header_0]]
+21:34:34,709 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = homePageLink]]
+21:34:34,709 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = HomeLink]]
+21:34:34,710 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = ScreenshotsLink]]
+21:34:34,710 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Architecture1Link]]
+21:34:34,710 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Architecture2Link]]
+21:34:34,710 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = ReferencesLink]]
+21:34:34,711 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IbrokerStoreLink]]
+21:34:34,711 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IbrokerFrontLink]]
+21:34:34,711 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IbrokerTaskLink]]
+21:34:34,711 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IbrokerCertLink]]
+21:34:34,711 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = OpenxriLink]]
+21:34:34,712 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = OpenxriAdminLink]]
+21:34:34,712 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IserviceFrontLink]]
+21:34:34,712 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IserviceStoreLink]]
+21:34:34,713 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = IserviceAdminLink]]
+21:34:34,713 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = OauthFrontLink]]
+21:34:34,713 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = XdiFrontLink]]
+21:34:34,714 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Iname4JavaLink]]
+21:34:34,714 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Epptools4JavaLink]]
+21:34:34,717 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = Xritools4JavaLink]]
+21:34:34,719 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = InstallationLink]]
+21:34:34,720 - DEBUG [org.apache.wicket.Component] - renderHead: [BookmarkablePageLink [Component id = HowtosLink]]
+21:34:34,720 - DEBUG [org.apache.wicket.Component] - renderHead: [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,721 - DEBUG [org.apache.wicket.Component] - renderHead: [Component id = titleLabel]
+21:34:34,721 - DEBUG [org.apache.wicket.Component] - renderHead: [FeedbackPanel [Component id = feedbackPanel]]
+21:34:34,721 - DEBUG [org.apache.wicket.Component] - renderHead: [HtmlHeaderContainer [Component id = _header_0]]
+21:34:34,721 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_1 to [HtmlHeaderContainer [Component id = _header_0]]
+21:34:34,722 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_1]]
+21:34:34,722 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_1]]
+21:34:34,723 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_2 to [HtmlHeaderContainer [Component id = _header_0]]
+21:34:34,723 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_2]]
+21:34:34,724 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_2]]
+21:34:34,724 - DEBUG [org.apache.wicket.Component] - renderHead: [Index [Component id = 0]]
+21:34:34,724 - DEBUG [org.apache.wicket.Component] - End render [HtmlHeaderContainer [Component id = _header_0]]
+21:34:34,725 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = homePageLink]]
+21:34:34,725 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,726 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,726 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,726 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,727 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_3 to [BookmarkablePageLink [Component id = homePageLink]]
+21:34:34,727 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_3]]
+21:34:34,727 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_3]]
+21:34:34,727 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_4 to [BookmarkablePageLink [Component id = homePageLink]]
+21:34:34,728 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_4]]
+21:34:34,728 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_4]]
+21:34:34,728 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = homePageLink]]
+21:34:34,729 - DEBUG [org.apache.wicket.Component] - Begin render [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,729 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = HomeLink]]
+21:34:34,730 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,730 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,731 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,731 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,731 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = HomeLink]]
+21:34:34,732 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = ScreenshotsLink]]
+21:34:34,732 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,732 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,733 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,733 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,733 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = ScreenshotsLink]]
+21:34:34,734 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Architecture1Link]]
+21:34:34,734 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,734 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,735 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,735 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,735 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Architecture1Link]]
+21:34:34,736 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Architecture2Link]]
+21:34:34,736 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,736 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,736 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,737 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,738 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Architecture2Link]]
+21:34:34,738 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = ReferencesLink]]
+21:34:34,738 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,739 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,739 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,740 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,740 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = ReferencesLink]]
+21:34:34,741 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IbrokerFrontLink]]
+21:34:34,741 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,742 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,742 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,743 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,743 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IbrokerFrontLink]]
+21:34:34,744 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IbrokerStoreLink]]
+21:34:34,744 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,744 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,744 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,745 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,745 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IbrokerStoreLink]]
+21:34:34,745 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IbrokerTaskLink]]
+21:34:34,746 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,746 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,746 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,747 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,747 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IbrokerTaskLink]]
+21:34:34,747 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IbrokerCertLink]]
+21:34:34,748 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,748 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,748 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,749 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,749 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IbrokerCertLink]]
+21:34:34,749 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = OpenxriLink]]
+21:34:34,750 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,750 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,750 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,751 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,751 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = OpenxriLink]]
+21:34:34,751 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = OpenxriAdminLink]]
+21:34:34,752 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,752 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,752 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,753 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,753 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = OpenxriAdminLink]]
+21:34:34,754 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IserviceFrontLink]]
+21:34:34,754 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,755 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,755 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,755 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,756 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IserviceFrontLink]]
+21:34:34,756 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IserviceStoreLink]]
+21:34:34,756 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,757 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,757 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,757 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,758 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IserviceStoreLink]]
+21:34:34,758 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = IserviceAdminLink]]
+21:34:34,758 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,759 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,759 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,759 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,760 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = IserviceAdminLink]]
+21:34:34,760 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = OauthFrontLink]]
+21:34:34,760 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,761 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,761 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,761 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,761 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = OauthFrontLink]]
+21:34:34,762 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = XdiFrontLink]]
+21:34:34,762 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,762 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,763 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,763 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,763 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = XdiFrontLink]]
+21:34:34,764 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Iname4JavaLink]]
+21:34:34,764 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,764 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,764 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,765 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,765 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Iname4JavaLink]]
+21:34:34,765 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Epptools4JavaLink]]
+21:34:34,766 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,766 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,766 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,767 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,767 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Epptools4JavaLink]]
+21:34:34,767 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = Xritools4JavaLink]]
+21:34:34,768 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,768 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,768 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,769 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,769 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = Xritools4JavaLink]]
+21:34:34,769 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = InstallationLink]]
+21:34:34,770 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,770 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,770 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,770 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,771 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = InstallationLink]]
+21:34:34,771 - DEBUG [org.apache.wicket.Component] - Begin render [BookmarkablePageLink [Component id = HowtosLink]]
+21:34:34,772 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,772 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,772 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,773 - DEBUG [org.apache.wicket.protocol.http.servlet.ServletWebRequest] - Calculating context relative path from: context path '', filterPrefix '', uri '/home/Index'
+21:34:34,773 - DEBUG [org.apache.wicket.Component] - End render [BookmarkablePageLink [Component id = HowtosLink]]
+21:34:34,773 - DEBUG [org.apache.wicket.Component] - End render [BasePageSidePanel [Component id = sidePanel]]
+21:34:34,773 - DEBUG [org.apache.wicket.Component] - Begin render [Component id = titleLabel]
+21:34:34,774 - DEBUG [org.apache.wicket.Component] - End render [Component id = titleLabel]
+21:34:34,774 - DEBUG [org.apache.wicket.Component] - Begin render [FeedbackPanel [Component id = feedbackPanel]]
+21:34:34,774 - DEBUG [org.apache.wicket.Component] - End render [FeedbackPanel [Component id = feedbackPanel]]
+21:34:34,775 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_child5 to [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1]
+21:34:34,775 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_child5]]
+21:34:34,775 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_extend6 to [TransparentWebMarkupContainer [Component id = wicket_child5]]
+21:34:34,776 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,776 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_7 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,776 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_7]]
+21:34:34,776 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_7]]
+21:34:34,777 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_8 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,777 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_8]]
+21:34:34,777 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_8]]
+21:34:34,778 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_9 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,778 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_9]]
+21:34:34,778 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_9]]
+21:34:34,778 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_10 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,779 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_10]]
+21:34:34,779 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_10]]
+21:34:34,779 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_11 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,780 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_11]]
+21:34:34,780 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_11]]
+21:34:34,780 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_12 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,780 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_12]]
+21:34:34,781 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_12]]
+21:34:34,781 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_13 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,781 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_13]]
+21:34:34,782 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_13]]
+21:34:34,782 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_14 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,782 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_14]]
+21:34:34,782 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_14]]
+21:34:34,783 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_15 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,783 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_15]]
+21:34:34,783 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_15]]
+21:34:34,784 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_16 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,784 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_16]]
+21:34:34,784 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_16]]
+21:34:34,784 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_17 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,785 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_17]]
+21:34:34,785 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_17]]
+21:34:34,785 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_18 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,786 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_18]]
+21:34:34,786 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_18]]
+21:34:34,786 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_19 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,786 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_19]]
+21:34:34,787 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_19]]
+21:34:34,787 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_20 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,787 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_20]]
+21:34:34,788 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_20]]
+21:34:34,788 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_21 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,788 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_21]]
+21:34:34,788 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_21]]
+21:34:34,789 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_22 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,789 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_22]]
+21:34:34,789 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_22]]
+21:34:34,790 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_23 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,790 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_23]]
+21:34:34,790 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_23]]
+21:34:34,790 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_24 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,791 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_24]]
+21:34:34,791 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_24]]
+21:34:34,791 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_25 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,792 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_25]]
+21:34:34,792 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_25]]
+21:34:34,792 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_26 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,792 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_26]]
+21:34:34,793 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_26]]
+21:34:34,793 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_27 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,793 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_27]]
+21:34:34,794 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_27]]
+21:34:34,794 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_28 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,794 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_28]]
+21:34:34,795 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_28]]
+21:34:34,795 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_29 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,795 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_29]]
+21:34:34,795 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_29]]
+21:34:34,796 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_30 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,796 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_30]]
+21:34:34,796 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_30]]
+21:34:34,796 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_31 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,797 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_31]]
+21:34:34,797 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_31]]
+21:34:34,797 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_32 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,798 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_32]]
+21:34:34,798 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_32]]
+21:34:34,798 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_33 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,798 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_33]]
+21:34:34,799 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_33]]
+21:34:34,799 - DEBUG [org.apache.wicket.MarkupContainer] - Add wicket_relative_path_prefix_34 to [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,799 - DEBUG [org.apache.wicket.Component] - Begin render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_34]]
+21:34:34,800 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_relative_path_prefix_34]]
+21:34:34,800 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_extend6]]
+21:34:34,800 - DEBUG [org.apache.wicket.Component] - End render [TransparentWebMarkupContainer [Component id = wicket_child5]]
+21:34:34,800 - DEBUG [org.apache.wicket.Component] - End render [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1]
+21:34:34,803 - DEBUG [org.apache.wicket.Page] - ending request for page [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1], request org.apache.wicket.protocol.http.servlet.ServletWebRequest@7c354093
+21:34:34,804 - DEBUG [org.apache.wicket.Page] - ending request for page [Page class = com.ibrokerkit.webpages.index.Index, id = 0, render count = 1], request org.apache.wicket.protocol.http.servlet.ServletWebRequest@7c354093
+21:34:34,804 - DEBUG [org.apache.wicket.page.PageAccessSynchronizer] - '121165166@qtp-1146025520-0' released lock to page with id '0'
+21:34:34,804 - DEBUG [org.apache.wicket.page.PageAccessSynchronizer] - '121165166@qtp-1146025520-0' notifying blocked threads
+21:34:39,443 -  INFO [org.mortbay.log] - Shutdown hook executing
+21:34:39,443 -  INFO [org.mortbay.log] - Shutdown hook executing
+21:34:39,445 -  INFO [org.mortbay.log] - Stopped SelectChannelConnector@0.0.0.0:8080
+21:34:39,445 -  INFO [org.mortbay.log] - Stopped SelectChannelConnector@0.0.0.0:8080
+21:34:39,953 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket core library initializer
+21:34:39,955 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket extensions initializer
+21:34:39,957 - DEBUG [org.apache.wicket.pageStore.DiskDataStore] - Destroying...
+21:34:39,958 - DEBUG [org.apache.wicket.pageStore.DiskDataStore] - Destroyed.
+21:34:39,961 -  INFO [/] - Closing Spring root WebApplicationContext
+21:34:39,963 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext: startup date [Wed Sep 18 21:34:19 CEST 2013]; root of context hierarchy
+21:34:39,963 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext: startup date [Wed Sep 18 21:34:19 CEST 2013]; root of context hierarchy
+21:34:39,968 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2143ed74: defining beans [wicketApplication]; root of factory hierarchy
+21:34:39,968 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2143ed74: defining beans [wicketApplication]; root of factory hierarchy
+21:34:40,074 -  INFO [org.mortbay.log] - Shutdown hook complete
+21:34:40,074 -  INFO [org.mortbay.log] - Shutdown hook complete
+21:35:56,454 -  INFO [org.mortbay.log] - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+21:35:56,454 -  INFO [org.mortbay.log] - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+21:35:56,528 -  INFO [org.mortbay.log] - jetty-6.1.26
+21:35:56,528 -  INFO [org.mortbay.log] - jetty-6.1.26
+21:35:56,691 -  INFO [org.mortbay.log] - No Transaction manager found - if your webapp requires one, please configure one.
+21:35:56,691 -  INFO [org.mortbay.log] - No Transaction manager found - if your webapp requires one, please configure one.
+21:35:56,921 -  INFO [/] - Initializing Spring root WebApplicationContext
+21:35:56,921 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization started
+21:35:56,921 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization started
+21:35:57,016 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Refreshing Root WebApplicationContext: startup date [Wed Sep 18 21:35:57 CEST 2013]; root of context hierarchy
+21:35:57,016 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Refreshing Root WebApplicationContext: startup date [Wed Sep 18 21:35:57 CEST 2013]; root of context hierarchy
+21:35:57,084 -  INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+21:35:57,084 -  INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+21:35:57,227 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@3e0bbd1b: defining beans [wicketApplication]; root of factory hierarchy
+21:35:57,227 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@3e0bbd1b: defining beans [wicketApplication]; root of factory hierarchy
+21:35:57,303 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 381 ms
+21:35:57,303 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 381 ms
+21:35:57,319 -  INFO [org.apache.wicket.util.file.WebXmlFile] - web.xml: url mapping found for filter with name WicketFilter: [/*]
+21:35:57,319 -  INFO [org.apache.wicket.util.file.WebXmlFile] - web.xml: url mapping found for filter with name WicketFilter: [/*]
+21:35:57,429 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket core library initializer
+21:35:57,429 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket core library initializer
+21:35:57,433 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IBehaviorListener, method=public abstract void org.apache.wicket.behavior.IBehaviorListener.onRequest()]
+21:35:57,433 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IBehaviorListener, method=public abstract void org.apache.wicket.behavior.IBehaviorListener.onRequest()]
+21:35:57,434 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IFormSubmitListener, method=public abstract void org.apache.wicket.markup.html.form.IFormSubmitListener.onFormSubmitted()]
+21:35:57,434 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IFormSubmitListener, method=public abstract void org.apache.wicket.markup.html.form.IFormSubmitListener.onFormSubmitted()]
+21:35:57,435 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=ILinkListener, method=public abstract void org.apache.wicket.markup.html.link.ILinkListener.onLinkClicked()]
+21:35:57,435 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=ILinkListener, method=public abstract void org.apache.wicket.markup.html.link.ILinkListener.onLinkClicked()]
+21:35:57,437 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IOnChangeListener, method=public abstract void org.apache.wicket.markup.html.form.IOnChangeListener.onSelectionChanged()]
+21:35:57,437 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IOnChangeListener, method=public abstract void org.apache.wicket.markup.html.form.IOnChangeListener.onSelectionChanged()]
+21:35:57,438 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IRedirectListener, method=public abstract void org.apache.wicket.IRedirectListener.onRedirect()]
+21:35:57,438 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IRedirectListener, method=public abstract void org.apache.wicket.IRedirectListener.onRedirect()]
+21:35:57,440 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IResourceListener, method=public abstract void org.apache.wicket.IResourceListener.onResourceRequested()]
+21:35:57,440 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IResourceListener, method=public abstract void org.apache.wicket.IResourceListener.onResourceRequested()]
+21:35:57,441 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket extensions initializer
+21:35:57,441 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket extensions initializer
+21:35:57,478 -  INFO [org.apache.wicket.protocol.http.WebApplication] - [WicketFilter] Started Wicket version 6.10.0 in DEVELOPMENT mode
+21:35:57,478 -  INFO [org.apache.wicket.protocol.http.WebApplication] - [WicketFilter] Started Wicket version 6.10.0 in DEVELOPMENT mode
+21:35:57,557 -  INFO [org.mortbay.log] - Started SelectChannelConnector@0.0.0.0:8080
+21:35:57,557 -  INFO [org.mortbay.log] - Started SelectChannelConnector@0.0.0.0:8080
+21:36:36,575 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@87e05c4
+21:36:36,575 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@87e05c4
+21:36:40,836 -  INFO [org.mortbay.log] - Shutdown hook executing
+21:36:40,836 -  INFO [org.mortbay.log] - Shutdown hook executing
+21:36:40,838 -  INFO [org.mortbay.log] - Stopped SelectChannelConnector@0.0.0.0:8080
+21:36:40,838 -  INFO [org.mortbay.log] - Stopped SelectChannelConnector@0.0.0.0:8080
+21:36:41,347 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket core library initializer
+21:36:41,347 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket core library initializer
+21:36:41,350 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket extensions initializer
+21:36:41,350 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket extensions initializer
+21:36:41,354 -  INFO [/] - Closing Spring root WebApplicationContext
+21:36:41,355 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext: startup date [Wed Sep 18 21:35:57 CEST 2013]; root of context hierarchy
+21:36:41,355 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext: startup date [Wed Sep 18 21:35:57 CEST 2013]; root of context hierarchy
+21:36:41,358 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@3e0bbd1b: defining beans [wicketApplication]; root of factory hierarchy
+21:36:41,358 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@3e0bbd1b: defining beans [wicketApplication]; root of factory hierarchy
+21:36:41,462 -  INFO [org.mortbay.log] - Shutdown hook complete
+21:36:41,462 -  INFO [org.mortbay.log] - Shutdown hook complete
+21:38:37,456 -  INFO [org.mortbay.log] - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+21:38:37,456 -  INFO [org.mortbay.log] - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+21:38:37,528 -  INFO [org.mortbay.log] - jetty-6.1.26
+21:38:37,528 -  INFO [org.mortbay.log] - jetty-6.1.26
+21:38:37,673 -  INFO [org.mortbay.log] - No Transaction manager found - if your webapp requires one, please configure one.
+21:38:37,673 -  INFO [org.mortbay.log] - No Transaction manager found - if your webapp requires one, please configure one.
+21:38:37,867 -  INFO [/] - Initializing Spring root WebApplicationContext
+21:38:37,868 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization started
+21:38:37,868 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization started
+21:38:37,954 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Refreshing Root WebApplicationContext: startup date [Wed Sep 18 21:38:37 CEST 2013]; root of context hierarchy
+21:38:37,954 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Refreshing Root WebApplicationContext: startup date [Wed Sep 18 21:38:37 CEST 2013]; root of context hierarchy
+21:38:38,007 -  INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+21:38:38,007 -  INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+21:38:38,133 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13ceebfa: defining beans [wicketApplication]; root of factory hierarchy
+21:38:38,133 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13ceebfa: defining beans [wicketApplication]; root of factory hierarchy
+21:38:38,208 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 339 ms
+21:38:38,208 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 339 ms
+21:38:38,225 -  INFO [org.apache.wicket.util.file.WebXmlFile] - web.xml: url mapping found for filter with name WicketFilter: [/*]
+21:38:38,225 -  INFO [org.apache.wicket.util.file.WebXmlFile] - web.xml: url mapping found for filter with name WicketFilter: [/*]
+21:38:38,329 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket core library initializer
+21:38:38,329 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket core library initializer
+21:38:38,333 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IBehaviorListener, method=public abstract void org.apache.wicket.behavior.IBehaviorListener.onRequest()]
+21:38:38,333 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IBehaviorListener, method=public abstract void org.apache.wicket.behavior.IBehaviorListener.onRequest()]
+21:38:38,336 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IFormSubmitListener, method=public abstract void org.apache.wicket.markup.html.form.IFormSubmitListener.onFormSubmitted()]
+21:38:38,336 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IFormSubmitListener, method=public abstract void org.apache.wicket.markup.html.form.IFormSubmitListener.onFormSubmitted()]
+21:38:38,338 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=ILinkListener, method=public abstract void org.apache.wicket.markup.html.link.ILinkListener.onLinkClicked()]
+21:38:38,338 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=ILinkListener, method=public abstract void org.apache.wicket.markup.html.link.ILinkListener.onLinkClicked()]
+21:38:38,341 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IOnChangeListener, method=public abstract void org.apache.wicket.markup.html.form.IOnChangeListener.onSelectionChanged()]
+21:38:38,341 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IOnChangeListener, method=public abstract void org.apache.wicket.markup.html.form.IOnChangeListener.onSelectionChanged()]
+21:38:38,343 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IRedirectListener, method=public abstract void org.apache.wicket.IRedirectListener.onRedirect()]
+21:38:38,343 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IRedirectListener, method=public abstract void org.apache.wicket.IRedirectListener.onRedirect()]
+21:38:38,346 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IResourceListener, method=public abstract void org.apache.wicket.IResourceListener.onResourceRequested()]
+21:38:38,346 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IResourceListener, method=public abstract void org.apache.wicket.IResourceListener.onResourceRequested()]
+21:38:38,347 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket extensions initializer
+21:38:38,347 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket extensions initializer
+21:38:38,382 -  INFO [org.apache.wicket.protocol.http.WebApplication] - [WicketFilter] Started Wicket version 6.10.0 in DEPLOYMENT mode
+21:38:38,382 -  INFO [org.apache.wicket.protocol.http.WebApplication] - [WicketFilter] Started Wicket version 6.10.0 in DEPLOYMENT mode
+21:38:38,456 -  INFO [org.mortbay.log] - Started SelectChannelConnector@0.0.0.0:8080
+21:38:38,456 -  INFO [org.mortbay.log] - Started SelectChannelConnector@0.0.0.0:8080
+21:38:53,302 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@7b9eef79
+21:38:53,302 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@7b9eef79
+21:39:42,769 -  INFO [org.mortbay.log] - Shutdown hook executing
+21:39:42,769 -  INFO [org.mortbay.log] - Shutdown hook executing
+21:39:42,771 -  INFO [org.mortbay.log] - Stopped SelectChannelConnector@0.0.0.0:8080
+21:39:42,771 -  INFO [org.mortbay.log] - Stopped SelectChannelConnector@0.0.0.0:8080
+21:39:43,277 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket core library initializer
+21:39:43,277 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket core library initializer
+21:39:43,278 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket extensions initializer
+21:39:43,278 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket extensions initializer
+21:39:43,280 -  INFO [/] - Closing Spring root WebApplicationContext
+21:39:43,281 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext: startup date [Wed Sep 18 21:38:37 CEST 2013]; root of context hierarchy
+21:39:43,281 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext: startup date [Wed Sep 18 21:38:37 CEST 2013]; root of context hierarchy
+21:39:43,281 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13ceebfa: defining beans [wicketApplication]; root of factory hierarchy
+21:39:43,281 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@13ceebfa: defining beans [wicketApplication]; root of factory hierarchy
+21:39:43,383 -  INFO [org.mortbay.log] - Shutdown hook complete
+21:39:43,383 -  INFO [org.mortbay.log] - Shutdown hook complete
+21:40:37,360 -  INFO [org.mortbay.log] - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+21:40:37,360 -  INFO [org.mortbay.log] - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+21:40:37,449 -  INFO [org.mortbay.log] - jetty-6.1.26
+21:40:37,449 -  INFO [org.mortbay.log] - jetty-6.1.26
+21:40:37,591 -  INFO [org.mortbay.log] - No Transaction manager found - if your webapp requires one, please configure one.
+21:40:37,591 -  INFO [org.mortbay.log] - No Transaction manager found - if your webapp requires one, please configure one.
+21:40:37,787 -  INFO [/] - Initializing Spring root WebApplicationContext
+21:40:37,789 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization started
+21:40:37,789 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization started
+21:40:37,885 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Refreshing Root WebApplicationContext: startup date [Wed Sep 18 21:40:37 CEST 2013]; root of context hierarchy
+21:40:37,885 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Refreshing Root WebApplicationContext: startup date [Wed Sep 18 21:40:37 CEST 2013]; root of context hierarchy
+21:40:37,945 -  INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+21:40:37,945 -  INFO [org.springframework.beans.factory.xml.XmlBeanDefinitionReader] - Loading XML bean definitions from ServletContext resource [/WEB-INF/applicationContext.xml]
+21:40:38,077 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@482982bf: defining beans [wicketApplication]; root of factory hierarchy
+21:40:38,077 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@482982bf: defining beans [wicketApplication]; root of factory hierarchy
+21:40:38,157 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 365 ms
+21:40:38,157 -  INFO [org.springframework.web.context.ContextLoader] - Root WebApplicationContext: initialization completed in 365 ms
+21:40:38,176 -  INFO [org.apache.wicket.util.file.WebXmlFile] - web.xml: url mapping found for filter with name WicketFilter: [/*]
+21:40:38,176 -  INFO [org.apache.wicket.util.file.WebXmlFile] - web.xml: url mapping found for filter with name WicketFilter: [/*]
+21:40:38,295 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket core library initializer
+21:40:38,295 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket core library initializer
+21:40:38,299 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IBehaviorListener, method=public abstract void org.apache.wicket.behavior.IBehaviorListener.onRequest()]
+21:40:38,299 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IBehaviorListener, method=public abstract void org.apache.wicket.behavior.IBehaviorListener.onRequest()]
+21:40:38,302 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IFormSubmitListener, method=public abstract void org.apache.wicket.markup.html.form.IFormSubmitListener.onFormSubmitted()]
+21:40:38,302 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IFormSubmitListener, method=public abstract void org.apache.wicket.markup.html.form.IFormSubmitListener.onFormSubmitted()]
+21:40:38,304 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=ILinkListener, method=public abstract void org.apache.wicket.markup.html.link.ILinkListener.onLinkClicked()]
+21:40:38,304 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=ILinkListener, method=public abstract void org.apache.wicket.markup.html.link.ILinkListener.onLinkClicked()]
+21:40:38,307 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IOnChangeListener, method=public abstract void org.apache.wicket.markup.html.form.IOnChangeListener.onSelectionChanged()]
+21:40:38,307 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IOnChangeListener, method=public abstract void org.apache.wicket.markup.html.form.IOnChangeListener.onSelectionChanged()]
+21:40:38,308 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IRedirectListener, method=public abstract void org.apache.wicket.IRedirectListener.onRedirect()]
+21:40:38,308 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IRedirectListener, method=public abstract void org.apache.wicket.IRedirectListener.onRedirect()]
+21:40:38,311 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IResourceListener, method=public abstract void org.apache.wicket.IResourceListener.onResourceRequested()]
+21:40:38,311 -  INFO [org.apache.wicket.RequestListenerInterface] - registered listener interface [RequestListenerInterface name=IResourceListener, method=public abstract void org.apache.wicket.IResourceListener.onResourceRequested()]
+21:40:38,312 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket extensions initializer
+21:40:38,312 -  INFO [org.apache.wicket.Application] - [WicketFilter] init: Wicket extensions initializer
+21:40:38,347 -  INFO [org.apache.wicket.protocol.http.WebApplication] - [WicketFilter] Started Wicket version 6.10.0 in DEPLOYMENT mode
+21:40:38,347 -  INFO [org.apache.wicket.protocol.http.WebApplication] - [WicketFilter] Started Wicket version 6.10.0 in DEPLOYMENT mode
+21:40:38,423 -  INFO [org.mortbay.log] - Started SelectChannelConnector@0.0.0.0:8080
+21:40:38,423 -  INFO [org.mortbay.log] - Started SelectChannelConnector@0.0.0.0:8080
+21:40:44,521 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:44,521 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Index.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:51,871 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/components/OpenxriAdmin.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:51,871 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/components/OpenxriAdmin.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:53,608 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/components/IbrokerTask.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:53,608 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/components/IbrokerTask.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:54,898 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/components/IbrokerFront.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:54,898 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/components/IbrokerFront.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:55,716 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Architecture2.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:55,716 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Architecture2.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:56,464 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Architecture1.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:40:56,464 -  INFO [org.apache.wicket.resource.PropertiesFactory] - Loading properties files from file:/D:/workspace-ibrokerkit/repo/www.ibrokerkit.com/target/classes/com/ibrokerkit/webpages/index/Architecture1.properties with loader org.apache.wicket.resource.IsoPropertiesFilePropertiesLoader@52c20893
+21:41:19,639 -  INFO [org.mortbay.log] - Shutdown hook executing
+21:41:19,639 -  INFO [org.mortbay.log] - Shutdown hook executing
+21:41:19,642 -  INFO [org.mortbay.log] - Stopped SelectChannelConnector@0.0.0.0:8080
+21:41:19,642 -  INFO [org.mortbay.log] - Stopped SelectChannelConnector@0.0.0.0:8080
+21:41:20,151 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket core library initializer
+21:41:20,151 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket core library initializer
+21:41:20,154 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket extensions initializer
+21:41:20,154 -  INFO [org.apache.wicket.Application] - [WicketFilter] destroy: Wicket extensions initializer
+21:41:20,160 -  INFO [/] - Closing Spring root WebApplicationContext
+21:41:20,162 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext: startup date [Wed Sep 18 21:40:37 CEST 2013]; root of context hierarchy
+21:41:20,162 -  INFO [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext: startup date [Wed Sep 18 21:40:37 CEST 2013]; root of context hierarchy
+21:41:20,167 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@482982bf: defining beans [wicketApplication]; root of factory hierarchy
+21:41:20,167 -  INFO [org.springframework.beans.factory.support.DefaultListableBeanFactory] - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@482982bf: defining beans [wicketApplication]; root of factory hierarchy
+21:41:20,273 -  INFO [org.mortbay.log] - Shutdown hook complete
+21:41:20,273 -  INFO [org.mortbay.log] - Shutdown hook complete

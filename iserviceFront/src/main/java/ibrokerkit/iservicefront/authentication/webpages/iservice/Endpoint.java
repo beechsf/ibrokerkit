@@ -1,7 +1,7 @@
 package ibrokerkit.iservicefront.authentication.webpages.iservice;
 
-import ibrokerkit.iservicefront.authentication.webapplication.AuthenticationApplication;
-import ibrokerkit.iservicefront.authentication.webapplication.AuthenticationSession;
+import ibrokerkit.iservicefront.IserviceApplication;
+import ibrokerkit.iservicefront.IserviceSession;
 import ibrokerkit.iservicestore.store.Authentication;
 
 import java.util.Enumeration;
@@ -9,14 +9,15 @@ import java.util.Enumeration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
-import org.apache.wicket.IRequestTarget;
 import org.apache.wicket.Page;
-import org.apache.wicket.Request;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Response;
 import org.apache.wicket.Session;
-import org.apache.wicket.protocol.http.WebRequest;
-import org.apache.wicket.request.target.basic.RedirectRequestTarget;
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
+import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
+import org.apache.wicket.request.IRequestCycle;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.openid4java.message.AssociationRequest;
 import org.openid4java.message.AuthRequest;
 import org.openid4java.message.AuthSuccess;
@@ -32,20 +33,26 @@ import org.openxri.XRIAuthority;
 import org.openxri.store.Authority;
 import org.openxri.xml.AuthenticationService;
 
-public class Endpoint implements IRequestTarget {
+public class Endpoint implements IRequestHandler {
 
 	private static Log log = LogFactory.getLog(Endpoint.class.getName());
 
 	public Endpoint() {
 
 	}
+	
+	@Override
+	public void detach(IRequestCycle requestCycle) {
 
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
-	public void respond(RequestCycle requestCycle) {
+	public void respond(IRequestCycle requestCycle) {
 
 		// handle the "Accept: uri-list" case
 
-		Enumeration<String> e = ((WebRequest) requestCycle.getRequest()).getHttpServletRequest().getHeaders("Accept");
+		Enumeration<String> e = ((ServletWebRequest) requestCycle.getRequest()).getContainerRequest().getHeaders("Accept");
 
 		while (e.hasMoreElements()) {
 
@@ -54,8 +61,8 @@ public class Endpoint implements IRequestTarget {
 
 				log.info("Processing uri-list request: " + AuthenticationService.SERVICE_TYPE1 + " / " + AuthenticationService.SERVICE_TYPE2);
 
-				requestCycle.getResponse().println(AuthenticationService.SERVICE_TYPE1);
-				requestCycle.getResponse().println(AuthenticationService.SERVICE_TYPE2);
+				requestCycle.getResponse().write(AuthenticationService.SERVICE_TYPE1 + "\n");
+				requestCycle.getResponse().write(AuthenticationService.SERVICE_TYPE2 + "\n");
 				requestCycle.getResponse().close();
 				return;
 			}
@@ -80,18 +87,17 @@ public class Endpoint implements IRequestTarget {
 	 * @param requestCycle
 	 * @throws Exception
 	 */
-	public void processRequest(RequestCycle requestCycle) throws Exception {
+	public void processRequest(IRequestCycle requestCycle) throws Exception {
 
-		ibrokerkit.iservicestore.store.Store iserviceStore = ((AuthenticationApplication) Application.get()).getIserviceStore();
-		org.openxri.store.Store openxriStore = ((AuthenticationApplication) Application.get()).getOpenxriStore();
+		ibrokerkit.iservicestore.store.Store iserviceStore = ((IserviceApplication) Application.get()).getIserviceStore();
+		org.openxri.store.Store openxriStore = ((IserviceApplication) Application.get()).getOpenxriStore();
 
-		Request request = requestCycle.getRequest();
 		Response response = requestCycle.getResponse();
-		ParameterList parameters = new ParameterList(request.getParameterMap());
+		ParameterList parameters = new ParameterList(((ServletWebRequest) requestCycle.getRequest()).getContainerRequest().getParameterMap());
 
 		// extract the parameters from the request
 
-		String mode = request.getParameter("openid.mode");
+		String mode = parameters.getParameterValue("openid.mode");
 		log.info("Processing Authentication request with mode " + mode);
 
 		for (Object parameter : parameters.getParameters()) {
@@ -183,7 +189,9 @@ public class Endpoint implements IRequestTarget {
 
 				// display not-found page
 
-				requestCycle.setResponsePage(new NotFoundPage(qxri));
+				Page page = new NotFoundPage(qxri);
+				
+				requestCycle.scheduleRequestHandlerAfterCurrent(new RenderPageRequestHandler(new PageProvider(page), RenderPageRequestHandler.RedirectPolicy.NEVER_REDIRECT));
 				return;
 			}
 		}
@@ -212,9 +220,9 @@ public class Endpoint implements IRequestTarget {
 		}
 	}
 
-	public void processAssociate(RequestCycle requestCycle, ParameterList parameters) throws Exception {
+	public void processAssociate(IRequestCycle requestCycle, ParameterList parameters) throws Exception {
 
-		ServerManager serverManager = ((AuthenticationApplication) Application.get()).getServerManager();
+		ServerManager serverManager = ((IserviceApplication) Application.get()).getServerManager();
 
 		Response response = requestCycle.getResponse();
 
@@ -237,15 +245,15 @@ public class Endpoint implements IRequestTarget {
 		response.write(message.keyValueFormEncoding());
 	}
 
-	public void processImmediate(RequestCycle requestCycle, ParameterList parameters, Authentication authentication, String identity) throws Exception {
+	public void processImmediate(IRequestCycle requestCycle, ParameterList parameters, Authentication authentication, String identity) throws Exception {
 
-		ServerManager serverManager = ((AuthenticationApplication) Application.get()).getServerManager();
+		ServerManager serverManager = ((IserviceApplication) Application.get()).getServerManager();
 
 		Response response = requestCycle.getResponse();
 
 		// check if the user is logged in
 
-		String userIdentifier = ((AuthenticationSession) Session.get()).getUserIdentifier();
+		String userIdentifier = ((IserviceSession) Session.get()).getUserIdentifier();
 
 		if (userIdentifier != null && (userIdentifier.equals(identity) || OpenIDUtil.isDirectedIdentity(identity))) {
 
@@ -267,7 +275,7 @@ public class Endpoint implements IRequestTarget {
 
 			// create OpenID response
 
-			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
+			String endpointUrl = ((IserviceApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
 			serverManager.setOPEndpointUrl(endpointUrl);
 
 			Message message;
@@ -309,7 +317,7 @@ public class Endpoint implements IRequestTarget {
 
 			String redirectUrl = message.getDestinationUrl(true);
 			log.info("Redirecting message: " + redirectUrl);
-			RequestCycle.get().setRequestTarget(new RedirectRequestTarget(redirectUrl));
+			requestCycle.scheduleRequestHandlerAfterCurrent(new RedirectRequestHandler(redirectUrl));
 
 			// option2: HTML FORM Redirection
 			//Endpoint.log.debug("Sending authentication response via HTML FORM redirect.");
@@ -321,7 +329,7 @@ public class Endpoint implements IRequestTarget {
 
 			// create OpenID response
 
-			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
+			String endpointUrl = ((IserviceApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
 			serverManager.setOPEndpointUrl(endpointUrl);
 
 			String userSetupUrl = endpointUrl;
@@ -353,7 +361,7 @@ public class Endpoint implements IRequestTarget {
 
 			String redirectUrl = message.getDestinationUrl(true);
 			log.info("Redirecting message: " + redirectUrl);
-			RequestCycle.get().setRequestTarget(new RedirectRequestTarget(redirectUrl));
+			requestCycle.scheduleRequestHandlerAfterCurrent(new RedirectRequestHandler(redirectUrl));
 
 			// option2: HTML FORM Redirection
 			//Endpoint.log.debug("Sending authentication response via HTML FORM redirect.");
@@ -364,15 +372,15 @@ public class Endpoint implements IRequestTarget {
 		}
 	}
 
-	public void processSetup(RequestCycle requestCycle, ParameterList parameters, Authentication authentication, String identity) throws Exception {
+	public void processSetup(IRequestCycle requestCycle, ParameterList parameters, Authentication authentication, String identity) throws Exception {
 
-		ServerManager serverManager = ((AuthenticationApplication) Application.get()).getServerManager();
+		ServerManager serverManager = ((IserviceApplication) Application.get()).getServerManager();
 
 		Response response = requestCycle.getResponse();
 
 		// check if the user is logged in
 
-		String userIdentifier = ((AuthenticationSession) Session.get()).getUserIdentifier();
+		String userIdentifier = ((IserviceSession) Session.get()).getUserIdentifier();
 
 		if (userIdentifier != null && (userIdentifier.equals(identity) || OpenIDUtil.isDirectedIdentity(identity))) {
 
@@ -394,7 +402,7 @@ public class Endpoint implements IRequestTarget {
 
 			// create OpenID response
 
-			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
+			String endpointUrl = ((IserviceApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
 			serverManager.setOPEndpointUrl(endpointUrl);
 
 			Message message;
@@ -436,7 +444,7 @@ public class Endpoint implements IRequestTarget {
 
 			String redirectUrl = message.getDestinationUrl(true);
 			log.info("Redirecting message: " + redirectUrl);
-			RequestCycle.get().setRequestTarget(new RedirectRequestTarget(redirectUrl));
+			requestCycle.scheduleRequestHandlerAfterCurrent(new RedirectRequestHandler(redirectUrl));
 
 			// option2: HTML FORM Redirection
 			//Endpoint.log.debug("Sending authentication response via HTML FORM redirect.");
@@ -448,22 +456,23 @@ public class Endpoint implements IRequestTarget {
 
 			// display the authentication page
 
-			Page authenticationPage = new AuthenticationPage(authentication, parameters, identity);
+			Page page = new AuthenticationPage(authentication, parameters, identity);
 
-			requestCycle.setResponsePage(authenticationPage);
+			requestCycle.scheduleRequestHandlerAfterCurrent(new RenderPageRequestHandler(new PageProvider(page), RenderPageRequestHandler.RedirectPolicy.NEVER_REDIRECT));
+			return;
 		}
 	}
 
-	public void processCancel(RequestCycle requestCycle, ParameterList parameters, Authentication authentication) throws Exception {
+	public void processCancel(IRequestCycle requestCycle, ParameterList parameters, Authentication authentication) throws Exception {
 
 		// log out user
 
-		((AuthenticationSession) Session.get()).logoutUser();
+		((IserviceSession) Session.get()).logoutUser();
 	}
 
-	public void processCheckAuthentication(RequestCycle requestCycle, ParameterList parameters) throws Exception {
+	public void processCheckAuthentication(IRequestCycle requestCycle, ParameterList parameters) throws Exception {
 
-		ServerManager serverManager = ((AuthenticationApplication) Application.get()).getServerManager();
+		ServerManager serverManager = ((IserviceApplication) Application.get()).getServerManager();
 
 		Response response = requestCycle.getResponse();
 
@@ -475,10 +484,6 @@ public class Endpoint implements IRequestTarget {
 		log.info("Sending message: " + message.keyValueFormEncoding());
 		response.write(message.keyValueFormEncoding());
 		return;
-	}
-
-	public void detach(RequestCycle requestCycle) {
-
 	}
 
 	/**
