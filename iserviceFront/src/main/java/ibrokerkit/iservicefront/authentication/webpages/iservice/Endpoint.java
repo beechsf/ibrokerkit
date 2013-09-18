@@ -267,7 +267,7 @@ public class Endpoint implements IRequestTarget {
 
 			// create OpenID response
 
-			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("endpoint-url");
+			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
 			serverManager.setOPEndpointUrl(endpointUrl);
 
 			Message message;
@@ -321,7 +321,7 @@ public class Endpoint implements IRequestTarget {
 
 			// create OpenID response
 
-			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("endpoint-url");
+			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
 			serverManager.setOPEndpointUrl(endpointUrl);
 
 			String userSetupUrl = endpointUrl;
@@ -394,7 +394,7 @@ public class Endpoint implements IRequestTarget {
 
 			// create OpenID response
 
-			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("endpoint-url");
+			String endpointUrl = ((AuthenticationApplication) Application.get()).getProperties().getProperty("authentication-endpoint-url");
 			serverManager.setOPEndpointUrl(endpointUrl);
 
 			Message message;

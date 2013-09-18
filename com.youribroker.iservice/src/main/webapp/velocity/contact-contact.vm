@@ -1,0 +1,35 @@
+	<h2>$contact.indx's Contact Page</h2>
+
+	<h3>Information about the recipient:</h3>
+	
+	<p><strong>i-name:</strong> $qxri</p>
+
+	<p>
+	<div class="border"><b>$encoder.html($contact.description)</b></div>
+	</p>
+	
+	<h3>Your message:</h3>
+	
+	<div wicket:id="feedbackPanel">___ feedbackPanel here ___</div>
+
+	<p>Note: You should input either your own e-mail address or your i-name, so that the
+	recipient of this message can get back to you.</p>
+
+	<form wicket:id="contactForm">
+
+		<p>Your Name: 
+		<input wicket:id="sender" type="text" size="30"><p>
+
+		<p>Your E-Mail: 
+		<input wicket:id="senderEmail" type="text" size="30"><p>
+
+		<p>Your i-name: 
+		<span wicket:id="openid">___ openid here ___</span>
+
+		<p>Your message:<br>
+		<textarea wicket:id="message" style="width: 100%" cols="40" rows="8"></textarea></p>
+
+		<input wicket:id="sendButton" type="submit" value="Send Message">
+
+	</form>
+	

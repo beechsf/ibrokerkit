@@ -28,7 +28,7 @@ public class ContactApplication extends SpringWebApplication {
 		// set up page mounting
 
 		this.mountBookmarkablePage("/page", CustomPage.class);
-		this.mount(new EndpointStrategy(this.properties.getProperty("endpoint-path")));
+		this.mount(new EndpointStrategy(this.properties.getProperty("contact-endpoint-path")));
 
 		// set up various wicket parameters
 

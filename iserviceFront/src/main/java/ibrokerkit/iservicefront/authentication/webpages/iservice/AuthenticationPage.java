@@ -209,7 +209,7 @@ public class AuthenticationPage extends BasePage {
 
 				// create OpenID response
 
-				String endpointUrl = ((AuthenticationApplication) this.getApplication()).getProperties().getProperty("endpoint-url");
+				String endpointUrl = ((AuthenticationApplication) this.getApplication()).getProperties().getProperty("authentication-endpoint-url");
 				serverManager.setOPEndpointUrl(endpointUrl);
 
 				Message message;
@@ -309,7 +309,7 @@ public class AuthenticationPage extends BasePage {
 
 				// create OpenID response
 
-				String endpointUrl = ((AuthenticationApplication) this.getApplication()).getProperties().getProperty("endpoint-url");
+				String endpointUrl = ((AuthenticationApplication) this.getApplication()).getProperties().getProperty("authentication-endpoint-url");
 				serverManager.setOPEndpointUrl(endpointUrl);
 
 				AuthenticationPage.log.debug("Creating negative authentication response...");

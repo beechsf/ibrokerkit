@@ -1,0 +1,27 @@
+	<div id="container">
+		<div id="header">
+			<h1>$providername</h1>
+		</div>
+		<div id="content">
+
+			<div wicket:id="velocity">___ velocity here ___</div>
+
+		</div>
+		<div id="sidebar">
+			<ul>
+				<li><a href="page/name/custompage1">Terms of Service</a></li>
+				<li><a href="page/name/custompage2">Privacy Policy</a></li>
+			</ul>
+			
+			<div class="widget">
+				Provider i-name:<br><strong>$providername</strong>
+			</div>
+			<div class="widget">
+				Provider i-number:<br><strong>$providerid</strong>
+			</div>
+			<p>
+				<strong>Information:</strong> For more information about this i-service, see <a href="$providerlink">$providername</a>!
+			</p>
+		</div>
+		<div id="footer">Copyright $providername </div>
+	</div>

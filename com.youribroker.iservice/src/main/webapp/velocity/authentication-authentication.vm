@@ -1,0 +1,41 @@
+
+	<h1>Request for Authentication</h1>
+
+	<p>We have received a request to authenticate you. Please enter your i-name password
+	to continue.</p>
+	
+	#set ($realm = $parameters.getParameterValue("openid.realm"))
+	#if (! $realm)
+		#set ($realm = $parameters.getParameterValue("openid.trust_root"))
+	#end
+
+	<table>
+	<tr>
+	<td><img src="images/openid.gif"></td>
+	<td>
+	<table>
+	<tr><td><strong>OpenID identity:</strong>&nbsp;</td><td>$identity</td></tr>
+	<tr><td><strong>Authenticating to:</strong>&nbsp;</td><td>$realm</td></tr>
+	</table>
+	</td>
+	</tr>
+	</table>
+	
+	<div wicket:id="feedbackPanel">___ feedbackPanel here ___</div>
+
+	<h2>Please authenticate:</h2>
+
+	<form wicket:id="authenticationForm">
+
+		<div wicket:id="inameContainer">
+	
+			<strong>I-Name:</strong>&nbsp;<input wicket:id="iname" type="text">
+		
+		</div>
+
+		<strong>Password:</strong>&nbsp;<input wicket:id="pass" type="password" style="padding:5px"><br>
+		<input wicket:id="staySignedIn" type="checkbox"> Stay signed in 
+		<input wicket:id="authenticate" type="submit" value="Authenticate">
+		<input wicket:id="cancel" type="submit" value="Cancel">
+
+	</form>

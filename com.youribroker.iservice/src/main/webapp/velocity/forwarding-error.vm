@@ -1,0 +1,26 @@
+	#if ($exexpired)
+		<p>The page you tried to access has expired. Please try again.</p>
+	#end
+	
+	#if ($exinternal)
+		<p>Internal Error.</p>
+	#end
+	
+	#if ($exexception)
+		<p>We are sorry, we experienced an internal problem with our software. The error has
+		been logged and will soon be acted upon.</p>
+	
+		<p>
+		
+		<strong>Type of error:</strong> $exclass<br>
+		
+		<strong>Time of error:</strong> $extime<br>
+		
+		<strong>Request path:</strong> $expath<br>
+		
+		<strong>Additional information:</strong> $encoder.html($exmessage,true)
+	
+		</p>
+	
+		<p class="code">$encoder.html($extrace,true)</p>
+	#end

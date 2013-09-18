@@ -102,7 +102,7 @@ public class ErrorPage extends BasePage implements IHeaderContributor {
 			}
 		}
 
-		if (openidServer == null ) openidServer = properties.getProperty("authn-endpoint-url");
+		if (openidServer == null ) openidServer = properties.getProperty("authentication-endpoint-url");
 		if (openidDelegate == null) openidDelegate = (this.xrd != null && this.xrd.getCanonicalID() != null) ? this.xrd.getCanonicalID().getValue() : this.qxri.getAuthorityPath().toString();
 
 		// insert OpenID delegation tags

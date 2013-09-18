@@ -28,7 +28,7 @@ public class LocatorApplication extends SpringWebApplication {
 		// set up page mounting
 
 		this.mountBookmarkablePage("/page", CustomPage.class);
-		this.mount(new EndpointStrategy(this.properties.getProperty("endpoint-path")));
+		this.mount(new EndpointStrategy(this.properties.getProperty("locator-endpoint-path")));
 
 		// set up various wicket parameters
 
