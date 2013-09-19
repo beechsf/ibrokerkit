@@ -43,6 +43,8 @@ public abstract class MyVelocityContributor extends Behavior {
 
 			Reader templateReader = this.getTemplateReader();
 
+			Velocity.setProperty("input.encoding", "UTF-8");
+			Velocity.setProperty("output.encoding", "UTF-8");
 			Velocity.evaluate(velocityContext, writer, this.getClass().getName(), templateReader);
 		} catch (Exception ex) {
 

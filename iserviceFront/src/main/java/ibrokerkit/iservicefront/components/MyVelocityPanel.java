@@ -84,6 +84,8 @@ public abstract class MyVelocityPanel extends Panel implements IMarkupResourceSt
 
 			try {
 
+				Velocity.setProperty("input.encoding", "UTF-8");
+				Velocity.setProperty("output.encoding", "UTF-8");
 				Velocity.evaluate(ctx, writer, logTag, templateReader);
 
 				evaluatedTemplate = writer.toString();
@@ -120,7 +122,7 @@ public abstract class MyVelocityPanel extends Panel implements IMarkupResourceSt
 		}
 
 		StringResourceStream markupStream = new StringResourceStream(buffer.toString());
-		markupStream.setCharset(Charset.forName((String) Velocity.getProperty("output.encoding")));
+		markupStream.setCharset(Charset.forName("UTF-8"));
 
 		return(markupStream);
 	}
