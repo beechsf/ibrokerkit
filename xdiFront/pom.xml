@@ -4,12 +4,11 @@
 		<groupId>ibrokerkit</groupId>
 		<artifactId>ibrokerKit</artifactId>
 		<version>0.5</version>
+		<relativePath>../ibrokerKit</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ibrokerkit</groupId>
 	<artifactId>xdiFront</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5</version>
 	<name>xdiFront</name>
 	<url>http://www.ibrokerkit.com/</url>
 	<build>

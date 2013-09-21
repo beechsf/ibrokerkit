@@ -5,18 +5,13 @@
 		<groupId>ibrokerkit</groupId>
 		<artifactId>ibrokerKit</artifactId>
 		<version>0.5</version>
+		<relativePath>../ibrokerKit</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ibrokerMaintenance</artifactId>
 	<packaging>jar</packaging>
 	<name>ibrokerMaintenance</name>
 	<url>http://www.ibrokerkit.com/</url>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>dstovall.org</id>
-			<url>http://dstovall.org/maven2/</url>
-		</pluginRepository>
-	</pluginRepositories>
 	<build>
 		<plugins>
 			<plugin>
@@ -36,27 +31,8 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.dstovall</groupId>
-				<artifactId>onejar-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<executions>
-					<execution>
-						<id>one-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>one-jar</goal>
-						</goals>
-						<configuration>
-							<mainClass>
-								ibrokerkit.ibrokermaintenance.IbrokerMaintenance
-							</mainClass>
-							<onejarVersion>0.96</onejarVersion>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
 				<executions>
 					<execution>
 						<id>copy-resources-conf</id>
@@ -93,6 +69,23 @@
 								</resource>
 							</resources>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.jolira</groupId>
+				<artifactId>onejar-maven-plugin</artifactId>
+				<version>1.4.4</version>
+				<executions>
+					<execution>
+						<configuration>
+							<onejarVersion>0.97</onejarVersion>
+							<attachToBuild>true</attachToBuild>
+							<classifier>onejar</classifier>
+						</configuration>
+						<goals>
+							<goal>one-jar</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

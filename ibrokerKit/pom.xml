@@ -27,6 +27,19 @@
 		</developerConnection>
 	</scm>
 
+	<repositories>
+		<repository>
+			<id>external</id>
+			<url>file://${project.basedir}/../external</url>
+		</repository>
+	</repositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<github.global.server>github</github.global.server>
+	</properties>
+
 	<reporting>
 		<outputDirectory>${basedir}/target/site</outputDirectory>
 		<plugins>

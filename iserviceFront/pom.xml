@@ -5,12 +5,11 @@
 		<groupId>ibrokerkit</groupId>
 		<artifactId>ibrokerKit</artifactId>
 		<version>0.5</version>
+		<relativePath>../ibrokerKit</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ibrokerkit</groupId>
 	<artifactId>iserviceFront</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5</version>
 	<name>iserviceFront</name>
 	<url>http://www.ibrokerkit.com/</url>
 	<build>
@@ -24,26 +23,6 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>execution1</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>install-file</goal>
-						</goals>
-						<configuration>
-							<groupId>org.openid4java</groupId>
-							<artifactId>openid4java-nodeps</artifactId>
-							<version>0.9.5-SNAPSHOT</version>
-							<packaging>jar</packaging>
-							<file>${basedir}/lib/openid4java-nodeps-0.9.5-SNAPSHOT.jar</file>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.1</version>

@@ -5,42 +5,15 @@
 		<groupId>ibrokerkit</groupId>
 		<artifactId>ibrokerKit</artifactId>
 		<version>0.5</version>
+		<relativePath>../ibrokerKit</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ibrokerkit</groupId>
 	<artifactId>ibrokerCert</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5</version>
 	<name>ibrokerCert</name>
 	<url>http://www.ibrokerkit.com/</url>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>dstovall.org</id>
-			<url>http://dstovall.org/maven2/</url>
-		</pluginRepository>
-	</pluginRepositories>
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>execution1</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>install-file</goal>
-						</goals>
-						<configuration>
-							<groupId>com.neulevel</groupId>
-							<artifactId>epp</artifactId>
-							<version>0.4.9</version>
-							<packaging>jar</packaging>
-							<file>${basedir}/lib/epp-0.4.9.jar</file>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.1</version>
@@ -58,27 +31,8 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.dstovall</groupId>
-				<artifactId>onejar-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<executions>
-					<execution>
-						<id>one-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>one-jar</goal>
-						</goals>
-						<configuration>
-							<mainClass>
-								ibrokerkit.ibrokercert.EppCert
-							</mainClass>
-							<onejarVersion>0.96</onejarVersion>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
 				<executions>
 					<execution>
 						<id>copy-resources-conf</id>
@@ -119,6 +73,23 @@
 								</resource>
 							</resources>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.jolira</groupId>
+				<artifactId>onejar-maven-plugin</artifactId>
+				<version>1.4.4</version>
+				<executions>
+					<execution>
+						<configuration>
+							<onejarVersion>0.97</onejarVersion>
+							<attachToBuild>true</attachToBuild>
+							<classifier>onejar</classifier>
+						</configuration>
+						<goals>
+							<goal>one-jar</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
