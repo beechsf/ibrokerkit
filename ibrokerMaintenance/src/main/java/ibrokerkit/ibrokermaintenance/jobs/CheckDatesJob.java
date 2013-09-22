@@ -5,14 +5,14 @@ import ibrokerkit.iname4java.store.Xri;
 import ibrokerkit.iname4java.store.XriConstants;
 import ibrokerkit.iname4java.store.impl.grs.GrsXri;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.neulevel.epp.xri.EppXriName;
 
 public class CheckDatesJob implements Job {
 
-	private static final Log log = LogFactory.getLog(CheckDatesJob.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(CheckDatesJob.class.getName());
 
 	private boolean fix;
 

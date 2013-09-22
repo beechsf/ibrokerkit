@@ -1,7 +1,5 @@
 package com.ibrokerkit.webapplication;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
@@ -11,12 +9,14 @@ import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ibrokerkit.webpages.error.ExceptionPage;
 
 public class IbrokerKitRequestCycleListener extends AbstractRequestCycleListener implements IRequestCycleListener {
 
-	private static Log log = LogFactory.getLog(IbrokerKitRequestCycleListener.class.getName());
+	private static Logger log = LoggerFactory.getLogger(IbrokerKitRequestCycleListener.class.getName());
 
 	@Override
 	public IRequestHandler onException(RequestCycle requestCycle, Exception ex) {

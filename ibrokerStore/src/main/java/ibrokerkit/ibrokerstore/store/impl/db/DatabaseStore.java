@@ -8,34 +8,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Hibernate-based implementation of the Store interface.
  */
 public class DatabaseStore implements Store {
 
-	private static final Log log = LogFactory.getLog(DatabaseStore.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(DatabaseStore.class.getName());
 
 	private Properties properties;
 	private Configuration configuration;
+	private ServiceRegistry serviceRegistry;
 	private SessionFactory sessionFactory;
 
 	public DatabaseStore(Properties properties) {
 
 		this.properties = properties;
 		this.configuration = null;
+		this.serviceRegistry = null;
 		this.sessionFactory = null;
 	}
 
 	public void init() throws StoreException {
 
-		log.trace("init()");
+		log.debug("init()");
 
 		try {
 
@@ -52,27 +56,29 @@ public class DatabaseStore implements Store {
 			this.initSessionFactory();
 		} catch (Exception ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot initialize Hibernate", ex);
 		}
 
-		log.trace("Done.");
+		log.debug("Done.");
 	}
 
 	private void initSessionFactory() {
 
-		this.sessionFactory = this.configuration.buildSessionFactory();
+		this.serviceRegistry = new ServiceRegistryBuilder().applySettings(this.configuration.getProperties()).buildServiceRegistry();        
+		this.sessionFactory = this.configuration.buildSessionFactory(serviceRegistry);
 	}
 
 	public boolean isInitialized() {
 
-		return(this.configuration != null && this.sessionFactory != null);
+		return(this.configuration != null && this.serviceRegistry != null && this.sessionFactory != null);
 	}
 
 	public void close() {
 
-		log.trace("close()");
+		log.debug("close()");
 
+		this.serviceRegistry = null;
 		this.sessionFactory.close();
 		this.sessionFactory = null;
 	}
@@ -113,7 +119,7 @@ public class DatabaseStore implements Store {
 
 	public void updateObject(Object object) throws StoreException {
 
-		log.trace("updateObject()");
+		log.debug("updateObject()");
 
 		Session session = this.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -133,18 +139,18 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 	}
 
 	public void deleteObject(Object object) throws StoreException {
 
-		log.trace("deleteObject()");
+		log.debug("deleteObject()");
 
 		Session session = this.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -164,7 +170,7 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 	}
@@ -175,7 +181,7 @@ public class DatabaseStore implements Store {
 
 	public User createOrUpdateUser(String identifier, String pass, String recovery, String name, String email, Boolean openid) throws StoreException {
 
-		log.trace("createOrUpdateUser()");
+		log.debug("createOrUpdateUser()");
 
 		DbUser user = null;
 
@@ -201,19 +207,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(user);
 	}
 
 	public User[] listUsers() throws StoreException {
 
-		log.trace("listUsers()");
+		log.debug("listUsers()");
 
 		Session session = this.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -229,7 +235,7 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
@@ -239,13 +245,13 @@ public class DatabaseStore implements Store {
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(result);
 	}
 
 	public User findUser(String identifier) throws StoreException {
 
-		log.trace("findUser()");
+		log.debug("findUser()");
 
 		DbUser user;
 
@@ -261,19 +267,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(user);
 	}
 
 	public User[] findUsersByEmail(String email) throws StoreException {
 
-		log.trace("findUsersByEmail()");
+		log.debug("findUsersByEmail()");
 
 		Session session = this.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -289,7 +295,7 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
@@ -299,13 +305,13 @@ public class DatabaseStore implements Store {
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(result);
 	}
 
 	public User findUserByRecovery(String recovery) throws StoreException {
 
-		log.trace("findUserByRecovery()");
+		log.debug("findUserByRecovery()");
 
 		DbUser user;
 
@@ -321,19 +327,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(user);
 	}
 
 	public boolean existsUser(String identifier, String name) throws StoreException {
 
-		log.trace("existsUser()");
+		log.debug("existsUser()");
 
 		boolean exists = false;
 
@@ -350,19 +356,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(exists);
 	}
 
 	public User checkUserPassword(String identifier, String pass) throws StoreException {
 
-		log.trace("checkUserPassword()");
+		log.debug("checkUserPassword()");
 
 		DbUser user;
 
@@ -378,13 +384,13 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(user);
 	}
 
@@ -396,6 +402,6 @@ public class DatabaseStore implements Store {
 
 		if (session.contains(object)) return;
 
-		session.lock(object, LockMode.NONE);
+		session.buildLockRequest(LockOptions.READ).lock(object);
 	}
 }

@@ -11,17 +11,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.Velocity;
 import org.openxri.config.ServerConfig;
 import org.openxri.config.impl.XMLServerConfig;
 import org.openxri.factories.ServerConfigFactory;
 import org.openxri.store.Store;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IbrokerTask {
 
-	private static final Log log = LogFactory.getLog(IbrokerTask.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(IbrokerTask.class.getName());
 
 	public static Properties properties;
 	public static EppTools eppTools;

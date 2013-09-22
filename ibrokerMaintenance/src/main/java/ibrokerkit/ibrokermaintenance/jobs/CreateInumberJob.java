@@ -4,8 +4,8 @@ import ibrokerkit.epptools4java.EppTools;
 import ibrokerkit.ibrokermaintenance.IbrokerMaintenance;
 import ibrokerkit.iname4java.store.impl.grs.GrsXriData;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.neulevel.epp.xri.EppXriSocialData;
 import com.neulevel.epp.xri.response.EppResponseDataCreateXriAuthority;
@@ -13,7 +13,7 @@ import com.neulevel.epp.xri.response.EppResponseDataCreateXriNumber;
 
 public class CreateInumberJob implements Job {
 
-	private static final Log log = LogFactory.getLog(CreateInumberJob.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(CreateInumberJob.class.getName());
 
 	public CreateInumberJob() {
 
@@ -57,7 +57,7 @@ public class CreateInumberJob implements Job {
 		eppResponseDataCreateXriNumber = IbrokerMaintenance.eppTools.createInumber(gcs, grsAuthorityId, grsAuthorityId, 1);
 
 		log.info("I-Number: " + eppResponseDataCreateXriNumber.getINumber());
-		log.trace("Authority Response Data: " + eppResponseDataCreateXriAuthority);
-		log.trace("Number Response Data: " + eppResponseDataCreateXriNumber);
+		log.debug("Authority Response Data: " + eppResponseDataCreateXriAuthority);
+		log.debug("Number Response Data: " + eppResponseDataCreateXriNumber);
 	}
 }

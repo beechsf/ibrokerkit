@@ -79,8 +79,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.openid4java</groupId>
-			<artifactId>openid4java-nodeps</artifactId>
-			<version>0.9.5-SNAPSHOT</version>
+			<artifactId>openid4java</artifactId>
+			<version>0.9.8</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

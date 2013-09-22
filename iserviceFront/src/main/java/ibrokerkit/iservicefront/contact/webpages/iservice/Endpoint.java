@@ -6,8 +6,6 @@ import ibrokerkit.iservicestore.store.Contact;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.core.request.handler.PageProvider;
@@ -20,10 +18,12 @@ import org.openxri.XRI;
 import org.openxri.XRIAuthority;
 import org.openxri.store.Authority;
 import org.openxri.xml.ContactService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Endpoint implements IRequestHandler {
 
-	private static Log log = LogFactory.getLog(Endpoint.class.getName());
+	private final static Logger log = LoggerFactory.getLogger(Endpoint.class.getName());
 
 	public Endpoint() {
 
@@ -64,7 +64,7 @@ public class Endpoint implements IRequestHandler {
 			this.processRequest(requestCycle, qxri);
 		} catch (Exception ex) {
 
-			log.fatal("Failed.", ex);
+			log.error("Failed.", ex);
 			throw new RuntimeException(ex);
 		}
 	}

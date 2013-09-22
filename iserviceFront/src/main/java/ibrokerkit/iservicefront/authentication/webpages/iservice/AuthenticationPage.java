@@ -8,8 +8,6 @@ import ibrokerkit.iservicefront.components.MyVelocityPanel;
 import ibrokerkit.iservicestore.store.Authentication;
 import ibrokerkit.iservicestore.store.StoreUtil;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
@@ -30,12 +28,14 @@ import org.openid4java.server.ServerManager;
 import org.openxri.XRI;
 import org.openxri.XRIAuthority;
 import org.openxri.store.Authority;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AuthenticationPage extends AuthenticationBasePage {
 
 	private static final long serialVersionUID = 6746092032675507969L;
 
-	protected final static Log log = LogFactory.getLog(AuthenticationPage.class.getName());
+	private final static Logger log = LoggerFactory.getLogger(AuthenticationPage.class.getName());
 
 	private Authentication authentication;
 	private ParameterList parameters;
@@ -167,7 +167,7 @@ public class AuthenticationPage extends AuthenticationBasePage {
 						outIdentity = (authority == null) ? null : authority.getXrd().getCanonicalID().getValue();
 					} catch (Exception ex) {
 
-						log.error(ex);
+						log.error(ex.getMessage(), ex);
 						this.error(AuthenticationPage.this.getString("openidex") + ex.getMessage());
 						return;
 					}
@@ -271,7 +271,7 @@ public class AuthenticationPage extends AuthenticationBasePage {
 					if (message instanceof AuthSuccess) serverManager.sign((AuthSuccess) message);
 				} catch (Exception ex) {
 
-					log.error(ex);
+					log.error(ex.getMessage(), ex);
 					this.error(AuthenticationPage.this.getString("openidex") + ex.getMessage());
 					return;
 				}

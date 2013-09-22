@@ -11,8 +11,6 @@ import ibrokerkit.iservicestore.store.Contact;
 import java.util.Properties;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.StringHeaderItem;
@@ -29,12 +27,14 @@ import org.openxri.XRI;
 import org.openxri.xml.AuthenticationService;
 import org.openxri.xml.Service;
 import org.openxri.xml.XRD;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ContactPage extends ContactBasePage implements IHeaderContributor {
 
 	private static final long serialVersionUID = 896701525596879770L;
 
-	private static Log log = LogFactory.getLog(ContactPage.class.getName());
+	private final static Logger log = LoggerFactory.getLogger(ContactPage.class.getName());
 
 	private Contact contact;
 	private XRI qxri;
@@ -220,7 +220,7 @@ public class ContactPage extends ContactBasePage implements IHeaderContributor {
 					this.info(ContactPage.this.getString("success", null));
 				} catch (Exception ex) {
 
-					log.fatal(ex);
+					log.error(ex.getMessage(), ex);
 					this.error(ContactPage.this.getString("sorry", null));
 					return;
 				}

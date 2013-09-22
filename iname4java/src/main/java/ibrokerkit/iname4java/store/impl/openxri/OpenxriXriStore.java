@@ -12,8 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openxri.GCSAuthority;
 import org.openxri.exceptions.StoreException;
 import org.openxri.store.Authority;
@@ -23,13 +21,15 @@ import org.openxri.store.StoreBetterLookup;
 import org.openxri.store.StoreStatistics;
 import org.openxri.store.SubSegment;
 import org.openxri.xml.XRD;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The OpenxriXriStore is used for creating, retrieving and managing i-names in OpenXRI.
  */
 public class OpenxriXriStore implements XriStore {
 
-	private static Log log = LogFactory.getLog(OpenxriXriStore.class.getName());
+	private static Logger log = LoggerFactory.getLogger(OpenxriXriStore.class.getName());
 
 	protected Store openxriStore;
 
@@ -63,7 +63,7 @@ public class OpenxriXriStore implements XriStore {
 			}
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot check subsegment " + localName + ": " + ex.getMessage(), ex);
 		}
 
@@ -116,7 +116,7 @@ public class OpenxriXriStore implements XriStore {
 			((StoreAttributable) this.openxriStore).setAuthorityIndex(authority, openxriXriData.getUserIdentifier());
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot register subsegment " + localName + ": " + ex.getMessage(), ex);
 		}
 
@@ -158,7 +158,7 @@ public class OpenxriXriStore implements XriStore {
 			((StoreAttributable) this.openxriStore).setSubSegmentIndex(subSegment, openxriXriData.getUserIdentifier());
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot register subsegment " + localName + ": " + ex.getMessage(), ex);
 		}
 
@@ -201,7 +201,7 @@ public class OpenxriXriStore implements XriStore {
 			((StoreAttributable) this.openxriStore).setAuthorityIndex(authority, openxriXriData.getUserIdentifier());
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot register subsegment " + localName + ": " + ex.getMessage(), ex);
 		}
 
@@ -228,7 +228,7 @@ public class OpenxriXriStore implements XriStore {
 			for (SubSegment subSegment : subSegments) this.openxriStore.releaseSubSegment(subSegment);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot delete subsegments or authority: " + ex.getMessage(), ex);
 		}
 	}
@@ -256,7 +256,7 @@ public class OpenxriXriStore implements XriStore {
 			for (SubSegment subSegment : subSegments) this.openxriStore.releaseSubSegment(subSegment);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot delete subsegments or authority: " + ex.getMessage(), ex);
 		}
 	}
@@ -289,7 +289,7 @@ public class OpenxriXriStore implements XriStore {
 			this.openxriStore.releaseSubSegment(subSegment);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot delete subsegment: " + ex.getMessage(), ex);
 		}
 	}
@@ -317,7 +317,7 @@ public class OpenxriXriStore implements XriStore {
 			this.openxriStore.releaseSubSegment(subSegment);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot delete subsegment: " + ex.getMessage(), ex);
 		}
 	}
@@ -347,7 +347,7 @@ public class OpenxriXriStore implements XriStore {
 			this.openxriStore.releaseSubSegment(subSegment);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot delete subsegment: " + ex.getMessage(), ex);
 		}
 	}
@@ -363,7 +363,7 @@ public class OpenxriXriStore implements XriStore {
 			for (SubSegment subSegment : subSegments) this.openxriStore.releaseSubSegment(subSegment);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot delete subsegments or authority: " + ex.getMessage(), ex);
 		}
 	}
@@ -380,7 +380,7 @@ public class OpenxriXriStore implements XriStore {
 			subSegments = ((StoreBetterLookup) this.openxriStore).listSubSegments();
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot list subsegments: " + ex.getMessage(), ex);
 		}
 
@@ -405,7 +405,7 @@ public class OpenxriXriStore implements XriStore {
 			subSegments = this.openxriStore.listRootSubSegments();
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot list root subsegments: " + ex.getMessage(), ex);
 		}
 
@@ -430,7 +430,7 @@ public class OpenxriXriStore implements XriStore {
 			subSegments = ((StoreAttributable) this.openxriStore).listSubSegmentsByIndex(userIdentifier);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot list user subsegments: " + ex.getMessage(), ex);
 		}
 
@@ -458,7 +458,7 @@ public class OpenxriXriStore implements XriStore {
 			if (subSegment == null) return(null);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot find user subsegments: " + ex.getMessage(), ex);
 		}
 
@@ -483,7 +483,7 @@ public class OpenxriXriStore implements XriStore {
 			subSegment = subSegments[0];
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot find in OpenXRI " + grsAuthorityId + ": " + ex.getMessage(), ex);
 		}
 
@@ -502,7 +502,7 @@ public class OpenxriXriStore implements XriStore {
 			userIdentifier = ((StoreAttributable) this.openxriStore).getAuthorityIndex(authority);
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot list user subsegments: " + ex.getMessage(), ex);
 		}
 
@@ -520,7 +520,7 @@ public class OpenxriXriStore implements XriStore {
 			authorityCount = ((StoreStatistics) this.openxriStore).getAuthorityCount();
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot count i-name authorities: " + ex.getMessage(), ex);
 		}
 
@@ -538,7 +538,7 @@ public class OpenxriXriStore implements XriStore {
 			xriCount = ((StoreStatistics) this.openxriStore).getSubSegmentCount();
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot count i-names: " + ex.getMessage(), ex);
 		}
 

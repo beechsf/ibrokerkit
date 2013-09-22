@@ -10,11 +10,11 @@ import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.neulevel.epp.xri.EppXriName;
 import com.neulevel.epp.xri.EppXriNumber;
@@ -23,7 +23,7 @@ public class CheckExpirationJob {
 
 	public static final long MILLIS_PER_DAY = 24 * 60 * 60 * 1000;
 
-	private static final Log log = LogFactory.getLog(CheckExpirationJob.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(CheckExpirationJob.class.getName());
 
 	public CheckExpirationJob() {
 

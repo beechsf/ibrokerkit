@@ -18,8 +18,6 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openxri.util.DOMUtils;
 import org.openxri.xml.CanonicalEquivID;
 import org.openxri.xml.EquivID;
@@ -32,6 +30,8 @@ import org.openxri.xml.SEPType;
 import org.openxri.xml.SEPUri;
 import org.openxri.xml.Service;
 import org.openxri.xml.XRD;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
 import com.neulevel.epp.core.EppAddress;
@@ -91,7 +91,7 @@ public class EppTools implements Serializable {
 
 	private static final long serialVersionUID = 3837202598036526233L;
 
-	private static final Log log = LogFactory.getLog(EppTools.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(EppTools.class.getName());
 
 	private static final String TAG_GRS_ID = "grsid";
 
@@ -139,7 +139,7 @@ public class EppTools implements Serializable {
 	 */
 	public synchronized void init() throws Exception {
 
-		log.trace("init()");
+		log.debug("init()");
 
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 
@@ -169,7 +169,7 @@ public class EppTools implements Serializable {
 			this.store.init();
 		}
 
-		log.trace("Done.");
+		log.debug("Done.");
 	}
 
 	/**
@@ -521,7 +521,7 @@ public class EppTools implements Serializable {
 
 	public EppResponseData poll(char gcs, boolean ack) throws EppToolsException {
 
-		log.trace("poll(gcs=" + gcs + ", ack=" + ack + ")");
+		log.debug("poll(gcs=" + gcs + ", ack=" + ack + ")");
 
 		EppCommandPoll eppCommandPoll = new EppCommandPoll(this.generateTransactionId());
 		eppCommandPoll.setOperation(EppCommandPoll.OPTYPE_REQ);
@@ -1175,7 +1175,7 @@ public class EppTools implements Serializable {
 
 			this.eppSessionAt[i] = null;
 			this.eppChannelAt[i] = null;
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw ex;
 		}
 
@@ -1198,7 +1198,7 @@ public class EppTools implements Serializable {
 
 			this.eppSessionAt = null;
 			this.eppChannelAt = null;
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw ex;
 		}
 	}
@@ -1285,7 +1285,7 @@ public class EppTools implements Serializable {
 					this.beginSessionEqual(null, i);
 				} catch (Exception ex2) {
 
-					log.error(ex2);
+					log.error(ex2.getMessage(), ex2);
 					throw new EppToolsException("{= " + i + "} Cannot restore channel: " + ex.getMessage(), ex);
 				}
 
@@ -1318,7 +1318,7 @@ public class EppTools implements Serializable {
 					this.beginSessionAt(null, i);
 				} catch (Exception ex2) {
 
-					log.error(ex2);
+					log.error(ex2.getMessage(), ex2);
 					throw new EppToolsException("{@ " + i + "} Cannot restore channel: " + ex.getMessage(), ex);
 				}
 

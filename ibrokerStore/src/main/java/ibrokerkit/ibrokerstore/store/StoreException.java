@@ -1,7 +1,7 @@
 package ibrokerkit.ibrokerstore.store;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An Exception thrown by various methods accessing the Store.
@@ -10,7 +10,7 @@ public class StoreException extends Exception {
 
 	private static final long serialVersionUID = 6472000796830169833L;
 
-	private static Log log = LogFactory.getLog(StoreException.class);
+	private static Logger log = LoggerFactory.getLogger(StoreException.class);
 
 	public StoreException() {
 		
@@ -37,6 +37,6 @@ public class StoreException extends Exception {
 		
 		super(t);
 
-		log.error(t);
+		log.error(t.getMessage(), t);
 	}
 }

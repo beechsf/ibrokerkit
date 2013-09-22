@@ -4,14 +4,14 @@ import ibrokerkit.ibrokermaintenance.IbrokerMaintenance;
 
 import java.util.Calendar;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.neulevel.epp.xri.EppXriNumber;
 
 public class RenewInumberJob implements Job {
 
-	private static final Log log = LogFactory.getLog(RenewInumberJob.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(RenewInumberJob.class.getName());
 
 	private String inumber;
 

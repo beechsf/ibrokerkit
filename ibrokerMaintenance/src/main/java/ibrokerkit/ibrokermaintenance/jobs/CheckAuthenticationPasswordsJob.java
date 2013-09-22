@@ -4,12 +4,12 @@ import ibrokerkit.ibrokermaintenance.IbrokerMaintenance;
 import ibrokerkit.ibrokerstore.store.User;
 import ibrokerkit.iservicestore.store.Authentication;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CheckAuthenticationPasswordsJob implements Job {
 
-	private static final Log log = LogFactory.getLog(CheckAuthenticationPasswordsJob.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(CheckAuthenticationPasswordsJob.class.getName());
 
 	private boolean fix;
 

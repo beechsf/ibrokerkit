@@ -7,10 +7,8 @@
 		<version>0.5</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ibrokerkit</groupId>
 	<artifactId>iserviceAdmin</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5</version>
 	<name>iserviceAdmin</name>
 	<url>http://www.ibrokerkit.com/</url>
 	<build>

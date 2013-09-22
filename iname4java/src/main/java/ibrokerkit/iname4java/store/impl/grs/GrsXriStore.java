@@ -15,13 +15,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openxri.exceptions.StoreException;
 import org.openxri.store.Store;
 import org.openxri.store.StoreAttributable;
 import org.openxri.store.SubSegment;
 import org.openxri.xml.CanonicalID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.neulevel.epp.xri.EppXriAuthority;
 import com.neulevel.epp.xri.EppXriName;
@@ -39,7 +39,7 @@ import com.neulevel.epp.xri.response.EppResponseDataCreateXriNumber;
  */
 public class GrsXriStore extends OpenxriXriStore {
 
-	private static Log log = LogFactory.getLog(GrsXriStore.class.getName());
+	private static Logger log = LoggerFactory.getLogger(GrsXriStore.class.getName());
 
 	private EppTools eppTools;
 
@@ -72,7 +72,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			return(this.eppTools.checkIname(gcs, localName));
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot check in GRS for existence of " + localName + ": " + ex.getMessage(), ex);
 		}
 	}
@@ -119,7 +119,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			inumber = eppResponseDataCreateXriNumber.getINumber();
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot register in GRS " + localName + ": " + ex.getMessage(), ex);
 		}
 
@@ -140,7 +140,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			this.openxriStore.registerSubsegment(null, inumber, newXri.getAuthority());
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot register in OpenXRI " + inumber + ": " + ex.getMessage(), ex);
 		}
 
@@ -180,7 +180,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			eppResponseDataCreateXriName = this.eppTools.createIname(gcs, localName, grsAuthorityId, years);
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot register in GRS " + localName + ": " + ex.getMessage(), ex);
 		}
 
@@ -234,7 +234,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			inumber = ((EppXriNumberAttribute) eppXriAuthority.getINumber().get(0)).getINumber();
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot transfer in GRS " + localName + ": " + ex.getMessage(), ex);
 		}
 
@@ -273,11 +273,11 @@ public class GrsXriStore extends OpenxriXriStore {
 			}
 		} catch (StoreException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot transfer in OpenXRI " + inumber + ": " + ex.getMessage(), ex);
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot transfer in OpenXRI " + inumber + ": " + ex.getMessage(), ex);
 		}
 
@@ -307,7 +307,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			grsAuthorityPassword = eppXriAuthority.getAuthInfo().getValue();
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot read password of authority " + grsAuthorityId + ": " + ex.getMessage(), ex);
 		}
 
@@ -347,7 +347,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			this.eppTools.transferApproveAuthority(gcs, grsAuthorityId, grsAuthorityPassword, token);
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot approve transfer of authority " + grsAuthorityId + ": " + ex.getMessage(), ex);
 		}
 	}
@@ -372,7 +372,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			this.eppTools.transferRejectAuthority(gcs, grsAuthorityId, grsAuthorityPassword, token);
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot reject transfer of authority " + grsAuthorityId + ": " + ex.getMessage(), ex);
 		}
 	}
@@ -443,7 +443,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			this.eppTools.transferApproveIname(gcs, iname, grsAuthorityPassword, token);
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot approve transfer of i-name " + iname + ": " + ex.getMessage(), ex);
 		}
 	}
@@ -468,7 +468,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			this.eppTools.transferRejectIname(gcs, iname, grsAuthorityPassword, token);
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot reject transfer of i-name " + iname + ": " + ex.getMessage(), ex);
 		}
 	}
@@ -527,7 +527,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			}
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot renew in GRS " + iname + ": " + ex.getMessage(), ex);
 		}
 
@@ -561,7 +561,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			this.eppTools.deleteIname(gcs, iname);
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot delete in GRS " + iname + ": " + ex.getMessage(), ex);
 		}
 	}
@@ -583,7 +583,7 @@ public class GrsXriStore extends OpenxriXriStore {
 				this.eppTools.deleteIname(gcs, iname);
 			} catch (EppToolsException ex) {
 
-				log.error(ex);
+				log.error(ex.getMessage(), ex);
 				throw new XriStoreException("Cannot delete in GRS " + iname + ": " + ex.getMessage(), ex);
 			}
 		}
@@ -597,7 +597,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			this.eppTools.deleteInumber(gcs, inumber);
 		} catch (EppToolsException ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new XriStoreException("Cannot delete in GRS " + inumber + ": " + ex.getMessage(), ex);
 		}
 

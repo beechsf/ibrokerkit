@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.core.request.handler.PageProvider;
@@ -31,12 +29,14 @@ import org.openid4java.discovery.DiscoveryInformation;
 import org.openid4java.discovery.Identifier;
 import org.openid4java.message.AuthRequest;
 import org.openid4java.message.ParameterList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OpenIDPanel extends Panel {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Log log = LogFactory.getLog(OpenIDPanel.class.getName());
+	private final static Logger log = LoggerFactory.getLogger(OpenIDPanel.class.getName());
 
 	private static final String OPENID_MOUNT_PATH = "OpenIDCallback";
 
@@ -161,7 +161,7 @@ public class OpenIDPanel extends Panel {
 				discoveries = MyConsumerManager.getInstance().discover(identifier);
 			} catch (Exception ex) {
 
-				OpenIDPanel.log.warn(ex);
+				OpenIDPanel.log.warn(ex.getMessage(), ex);
 				discoveries = null;
 			}
 

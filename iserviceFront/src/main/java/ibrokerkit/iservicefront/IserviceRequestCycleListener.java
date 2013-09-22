@@ -2,8 +2,6 @@ package ibrokerkit.iservicefront;
 
 import ibrokerkit.iservicefront.iservice.webpages.error.ExceptionPage;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.core.request.handler.PageProvider;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
@@ -13,10 +11,12 @@ import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IserviceRequestCycleListener extends AbstractRequestCycleListener implements IRequestCycleListener {
 
-	private static Log log = LogFactory.getLog(IserviceRequestCycleListener.class.getName());
+	private final static Logger log = LoggerFactory.getLogger(IserviceRequestCycleListener.class.getName());
 
 	@Override
 	public IRequestHandler onException(RequestCycle requestCycle, Exception ex) {

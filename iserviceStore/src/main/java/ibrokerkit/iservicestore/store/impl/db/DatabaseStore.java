@@ -10,35 +10,39 @@ import ibrokerkit.iservicestore.store.StoreException;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
-import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Hibernate-based implementation of the Store interface.
  */
 public class DatabaseStore implements Store {
 
-	private static final Log log = LogFactory.getLog(DatabaseStore.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(DatabaseStore.class.getName());
 
 	private Properties properties;
 	private Configuration configuration;
+	private ServiceRegistry serviceRegistry;
 	private SessionFactory sessionFactory;
 
 	public DatabaseStore(Properties properties) {
 
 		this.properties = properties;
 		this.configuration = null;
+		this.serviceRegistry = null;
 		this.sessionFactory = null;
 	}
 
 	public void init() throws StoreException {
 
-		log.trace("init()");
+		log.debug("init()");
 
 		try {
 
@@ -58,27 +62,29 @@ public class DatabaseStore implements Store {
 			this.initSessionFactory();
 		} catch (Exception ex) {
 
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot initialize Hibernate", ex);
 		}
 
-		log.trace("Done.");
+		log.debug("Done.");
 	}
 
 	private void initSessionFactory() {
 
-		this.sessionFactory = this.configuration.buildSessionFactory();
+		this.serviceRegistry = new ServiceRegistryBuilder().applySettings(this.configuration.getProperties()).buildServiceRegistry();        
+		this.sessionFactory = this.configuration.buildSessionFactory(serviceRegistry);
 	}
 
 	public boolean isInitialized() {
 
-		return(this.configuration != null && this.sessionFactory != null);
+		return(this.configuration != null && this.serviceRegistry != null && this.sessionFactory != null);
 	}
 
 	public void close() {
 
-		log.trace("close()");
+		log.debug("close()");
 
+		this.serviceRegistry = null;
 		this.sessionFactory.close();
 		this.sessionFactory = null;
 	}
@@ -119,7 +125,7 @@ public class DatabaseStore implements Store {
 
 	public void updateObject(Object object) throws StoreException {
 
-		log.trace("updateObject()");
+		log.debug("updateObject()");
 
 		Session session = this.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -139,18 +145,18 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 	}
 
 	public void deleteObject(Object object) throws StoreException {
 
-		log.trace("deleteObject()");
+		log.debug("deleteObject()");
 
 		Session session = this.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -171,13 +177,13 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 	}
 
 	/*
@@ -186,7 +192,7 @@ public class DatabaseStore implements Store {
 
 	public void deleteAllIServices(String qxri) throws StoreException {
 
-		log.trace("deleteAllIServices(" + qxri + ")");
+		log.debug("deleteAllIServices(" + qxri + ")");
 
 		Session session = this.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -205,13 +211,13 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 	}
 
 	/*
@@ -220,7 +226,7 @@ public class DatabaseStore implements Store {
 
 	public Authentication createAuthentication() throws StoreException {
 
-		log.trace("createAuthentication()");
+		log.debug("createAuthentication()");
 
 		DbAuthentication authentication = null;
 
@@ -240,19 +246,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(authentication);
 	}
 
 	public Authentication getAuthentication(Long id) throws StoreException {
 
-		log.trace("getAuthentication(" + id + ")");
+		log.debug("getAuthentication(" + id + ")");
 
 		DbAuthentication authentication = null;
 
@@ -275,19 +281,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(authentication);
 	}
 
 	public Authentication[] listAuthentications() throws StoreException {
 
-		log.trace("listAuthentications()");
+		log.debug("listAuthentications()");
 
 		List<DbAuthentication> authentications = null;
 
@@ -304,19 +310,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(authentications.toArray(new Authentication[authentications.size()]));
 	}
 
 	public Authentication[] listAuthenticationsByIndex(String indx) throws StoreException {
 
-		log.trace("listAuthenticationsByIndex(" + indx + ")");
+		log.debug("listAuthenticationsByIndex(" + indx + ")");
 
 		List<DbAuthentication> authentications = null;
 
@@ -333,19 +339,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(authentications.toArray(new Authentication[authentications.size()]));
 	}
 
 	public Authentication findAuthentication(String qxri) throws StoreException {
 
-		log.trace("findAuthentication(" + qxri + ")");
+		log.debug("findAuthentication(" + qxri + ")");
 
 		DbAuthentication authentication = null;
 
@@ -367,19 +373,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(authentication);
 	}
 
 	public Authentication[] findAuthentications(String qxri) throws StoreException {
 
-		log.trace("findAuthentications(" + qxri + ")");
+		log.debug("findAuthentications(" + qxri + ")");
 
 		List<DbAuthentication> authentications = null;
 
@@ -396,13 +402,13 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(authentications.toArray(new Authentication[authentications.size()]));
 	}
 
@@ -412,7 +418,7 @@ public class DatabaseStore implements Store {
 
 	public Contact createContact() throws StoreException {
 
-		log.trace("createContact()");
+		log.debug("createContact()");
 
 		DbContact contact = null;
 
@@ -432,19 +438,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(contact);
 	}
 
 	public Contact getContact(Long id) throws StoreException {
 
-		log.trace("getContact(" + id + ")");
+		log.debug("getContact(" + id + ")");
 
 		DbContact contact = null;
 
@@ -467,19 +473,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(contact);
 	}
 
 	public Contact[] listContacts() throws StoreException {
 
-		log.trace("listContacts()");
+		log.debug("listContacts()");
 
 		List<DbContact> contacts = null;
 
@@ -496,19 +502,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(contacts.toArray(new Contact[contacts.size()]));
 	}
 
 	public Contact[] listContactsByIndex(String indx) throws StoreException {
 
-		log.trace("listContactsByIndex(" + indx + ")");
+		log.debug("listContactsByIndex(" + indx + ")");
 
 		List<DbContact> contacts = null;
 
@@ -525,19 +531,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(contacts.toArray(new Contact[contacts.size()]));
 	}
 
 	public Contact findContact(String qxri) throws StoreException {
 
-		log.trace("findContact()");
+		log.debug("findContact()");
 
 		DbContact contact = null;
 
@@ -559,19 +565,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(contact);
 	}
 
 	public Contact[] findContacts(String qxri) throws StoreException {
 
-		log.trace("findContacts(" + qxri + ")");
+		log.debug("findContacts(" + qxri + ")");
 
 		List<DbContact> contacts = null;
 
@@ -588,13 +594,13 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(contacts.toArray(new Contact[contacts.size()]));
 	}
 
@@ -604,7 +610,7 @@ public class DatabaseStore implements Store {
 
 	public Forwarding createForwarding() throws StoreException {
 
-		log.trace("createForwarding()");
+		log.debug("createForwarding()");
 
 		DbForwarding forwarding = null;
 
@@ -624,19 +630,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(forwarding);
 	}
 
 	public Forwarding getForwarding(Long id) throws StoreException {
 
-		log.trace("getForwarding(" + id + ")");
+		log.debug("getForwarding(" + id + ")");
 
 		DbForwarding forwarding = null;
 
@@ -659,19 +665,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(forwarding);
 	}
 
 	public Forwarding[] listForwardings() throws StoreException {
 
-		log.trace("findForwardings()");
+		log.debug("findForwardings()");
 
 		List<DbForwarding> forwardings = null;
 
@@ -688,19 +694,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(forwardings.toArray(new Forwarding[forwardings.size()]));
 	}
 
 	public Forwarding[] listForwardingsByIndex(String indx) throws StoreException {
 
-		log.trace("listForwardingsByIndex(" + indx + ")");
+		log.debug("listForwardingsByIndex(" + indx + ")");
 
 		List<DbForwarding> forwardings = null;
 
@@ -717,13 +723,13 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(forwardings.toArray(new Forwarding[forwardings.size()]));
 	}
 
@@ -749,7 +755,7 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
@@ -760,7 +766,7 @@ public class DatabaseStore implements Store {
 
 	public Forwarding[] findForwardings(String qxri) throws StoreException {
 
-		log.trace("findForwardings(" + qxri + ")");
+		log.debug("findForwardings(" + qxri + ")");
 
 		List<DbForwarding> forwardings = null;
 
@@ -777,13 +783,13 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(forwardings.toArray(new Forwarding[forwardings.size()]));
 	}
 
@@ -793,7 +799,7 @@ public class DatabaseStore implements Store {
 
 	public Locator createLocator() throws StoreException {
 
-		log.trace("createLocator()");
+		log.debug("createLocator()");
 
 		DbLocator locator = null;
 
@@ -813,19 +819,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(locator);
 	}
 
 	public Locator getLocator(Long id) throws StoreException {
 
-		log.trace("getLocator(" + id + ")");
+		log.debug("getLocator(" + id + ")");
 
 		DbLocator locator = null;
 
@@ -848,19 +854,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(locator);
 	}
 
 	public Locator[] listLocators() throws StoreException {
 
-		log.trace("listLocators()");
+		log.debug("listLocators()");
 
 		List<DbLocator> locators = null;
 
@@ -877,19 +883,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(locators.toArray(new Locator[locators.size()]));
 	}
 
 	public Locator[] listLocatorsByIndex(String indx) throws StoreException {
 
-		log.trace("listLocatorsByIndex(" + indx + ")");
+		log.debug("listLocatorsByIndex(" + indx + ")");
 
 		List<DbLocator> locators = null;
 
@@ -906,19 +912,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(locators.toArray(new Locator[locators.size()]));
 	}
 
 	public Locator findLocator(String qxri) throws StoreException {
 
-		log.trace("findLocator()");
+		log.debug("findLocator()");
 
 		DbLocator locator = null;
 
@@ -940,19 +946,19 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(locator);
 	}
 
 	public Locator[] findLocators(String qxri) throws StoreException {
 
-		log.trace("findLocators(" + qxri + ")");
+		log.debug("findLocators(" + qxri + ")");
 
 		List<DbLocator> locators = null;
 
@@ -969,13 +975,13 @@ public class DatabaseStore implements Store {
 		} catch (Exception ex) {
 
 			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
-			log.error(ex);
+			log.error(ex.getMessage(), ex);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
 		// done
 
-		log.trace("Done.");
+		log.debug("Done.");
 		return(locators.toArray(new Locator[locators.size()]));
 	}
 
@@ -987,6 +993,6 @@ public class DatabaseStore implements Store {
 
 		if (session.contains(object)) return;
 
-		session.lock(object, LockMode.READ);
+		session.buildLockRequest(LockOptions.READ).lock(object);
 	}
 }
