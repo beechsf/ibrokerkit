@@ -36,8 +36,8 @@ public abstract class BasePage extends WebPage {
 
 		super.renderHead(headerResponse);
 
-		headerResponse.render(CssHeaderItem.forUrl("style.css", "screen"));
-		headerResponse.render(CssHeaderItem.forUrl("style-print.css", "print"));
+		headerResponse.render(CssHeaderItem.forUrl("/style.css", "screen"));
+		headerResponse.render(CssHeaderItem.forUrl("/style-print.css", "print"));
 	}
 
 	protected String getPageStats() {
