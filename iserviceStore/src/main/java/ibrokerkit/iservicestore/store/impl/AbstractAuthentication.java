@@ -5,6 +5,8 @@ import ibrokerkit.iservicestore.store.IService;
 
 public abstract class AbstractAuthentication implements Authentication {
 
+	private static final long serialVersionUID = -2730626957338167173L;
+
 	public int compareTo(IService other) {
 
 		if (other == this) return(0);

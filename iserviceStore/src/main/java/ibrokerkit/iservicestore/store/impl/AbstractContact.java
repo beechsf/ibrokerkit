@@ -6,6 +6,8 @@ import ibrokerkit.iservicestore.store.IService;
 
 public abstract class AbstractContact implements Contact {
 
+	private static final long serialVersionUID = 8548786639733757400L;
+
 	public int compareTo(IService other) {
 
 		if (other == this) return(0);

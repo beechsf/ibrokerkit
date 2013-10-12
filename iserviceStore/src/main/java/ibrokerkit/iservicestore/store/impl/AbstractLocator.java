@@ -5,6 +5,8 @@ import ibrokerkit.iservicestore.store.Locator;
 
 public abstract class AbstractLocator implements Locator {
 
+	private static final long serialVersionUID = -5715806323900267922L;
+
 	public int compareTo(IService other) {
 
 		if (other == this) return(0);

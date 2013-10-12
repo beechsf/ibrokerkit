@@ -5,6 +5,8 @@ import ibrokerkit.iservicestore.store.IService;
 
 public abstract class AbstractForwarding implements Forwarding {
 
+	private static final long serialVersionUID = -5823938790488435710L;
+
 	public int compareTo(IService other) {
 
 		if (other == this) return(0);
