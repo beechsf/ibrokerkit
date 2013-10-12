@@ -135,11 +135,11 @@ public class DatabaseStore implements Store {
 			session.update(object);
 			session.flush();
 			session.refresh(object);
-			session.getTransaction().commit();
+			commit(session);
 		} catch (Exception ex) {
 
-			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
 			log.error(ex.getMessage(), ex);
+			rollback(session);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
@@ -166,11 +166,11 @@ public class DatabaseStore implements Store {
 			reattach(session, object);
 			session.delete(object);
 			session.flush();
-			session.getTransaction().commit();
+			commit(session);
 		} catch (Exception ex) {
 
-			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
 			log.error(ex.getMessage(), ex);
+			rollback(session);
 			throw new StoreException("Cannot access database.", ex);
 		}
 	}
@@ -193,11 +193,11 @@ public class DatabaseStore implements Store {
 		try {
 
 			actions = DbAction.All(session);
-			session.getTransaction().commit();
+			commit(session);
 		} catch (Exception ex) {
 
-			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
 			log.error(ex.getMessage(), ex);
+			rollback(session);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
@@ -232,11 +232,11 @@ public class DatabaseStore implements Store {
 			action.setResponse(response);
 
 			session.save(action);
-			session.getTransaction().commit();
+			commit(session);
 		} catch (Exception ex) {
 
-			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
 			log.error(ex.getMessage(), ex);
+			rollback(session);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
@@ -264,11 +264,11 @@ public class DatabaseStore implements Store {
 		try {
 
 			polls = DbPoll.All(session);
-			session.getTransaction().commit();
+			commit(session);
 		} catch (Exception ex) {
 
-			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
 			log.error(ex.getMessage(), ex);
+			rollback(session);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
@@ -302,11 +302,11 @@ public class DatabaseStore implements Store {
 			poll.setResponse(response);
 
 			session.save(poll);
-			session.getTransaction().commit();
+			commit(session);
 		} catch (Exception ex) {
 
-			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
 			log.error(ex.getMessage(), ex);
+			rollback(session);
 			throw new StoreException("Cannot access database.", ex);
 		}
 
@@ -325,5 +325,28 @@ public class DatabaseStore implements Store {
 		if (session.contains(object)) return;
 
 		session.buildLockRequest(LockOptions.READ).lock(object);
+	}
+
+	private static void commit(Session session) {
+
+		try {
+
+			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().commit();
+		} catch (Exception ex) {
+			
+			log.error(ex.getMessage(), ex);
+			rollback(session);
+		}
+	}
+
+	private static void rollback(Session session) {
+
+		try {
+
+			if (session.isOpen() && session.getTransaction().isActive()) session.getTransaction().rollback();
+		} catch (Exception ex) {
+
+			log.error(ex.getMessage(), ex);
+		}
 	}
 }
