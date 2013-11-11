@@ -26,6 +26,8 @@ public abstract class AbstractXri implements Xri {
 		if (o == this) return(true);
 		if (o == null) return(false);
 
+		if (! (o instanceof Xri)) return false;
+		
 		if (this.getFullName() != null) return(this.getFullName().equals(((Xri) o).getFullName()));
 
 		return(false);

@@ -3,7 +3,7 @@ package ibrokerkit.iservicefront;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 
-public class IserviceSessionImpl extends WebSession {
+public class IserviceSessionImpl extends WebSession implements IserviceSession {
 
 	private static final long serialVersionUID = -5669746479827302910L;
 
