@@ -108,7 +108,8 @@ public class GrsXriStore extends OpenxriXriStore {
 		EppResponseDataCreateXriAuthority eppResponseDataCreateXriAuthority; 
 		EppResponseDataCreateXriNumber eppResponseDataCreateXriNumber;
 		EppResponseDataCreateXriName eppResponseDataCreateXriName;
-		String inumber;
+
+		String inumber = grsXriData.getInumber();
 
 		try {
 

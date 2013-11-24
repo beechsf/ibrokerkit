@@ -564,7 +564,7 @@ public class EppTools implements Serializable {
 	 * Methods for authorities
 	 */
 
-	public EppResponseDataCreateXriAuthority createAuthority(char gcs, String authId, String password, EppXriSocialData eppXriSocialData, String trusteeEscrowAgent, String trusteeContactAgent) throws EppToolsException {
+	public EppResponseDataCreateXriAuthority createAuthority(char gcs, String authId, String password, String inumber, String iname, EppXriSocialData eppXriSocialData, String trusteeEscrowAgent, String trusteeContactAgent) throws EppToolsException {
 
 		EppXriTrustee eppXriTrusteeEscrowAgent = new EppXriTrustee();
 		eppXriTrusteeEscrowAgent.setAuthorityId(trusteeEscrowAgent != null ? trusteeEscrowAgent : this.properties.getProperty("epp-trusteeescrowagent"));
@@ -572,13 +572,17 @@ public class EppTools implements Serializable {
 		EppXriTrustee eppXriTrusteeContactAgent = new EppXriTrustee();
 		eppXriTrusteeContactAgent.setAuthorityId(trusteeContactAgent != null ? trusteeContactAgent : this.properties.getProperty("epp-trusteecontactagent"));
 
-		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
+		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password != null ? password : makeGrsAuthorityPassword());
 
-		EppXriAuthority eppXriAuthority = new EppXriAuthority(authId);
+		EppXriAuthority eppXriAuthority = new EppXriAuthority(authId != null ? authId : this.makeGrsAuthorityId(gcs));
+
 		eppXriAuthority.setEscrowAgent(eppXriTrusteeEscrowAgent);
 		eppXriAuthority.setContactAgent(eppXriTrusteeContactAgent);
 		eppXriAuthority.setSocialData(eppXriSocialData);
 		eppXriAuthority.setAuthInfo(eppAuthInfo);
+
+		if (inumber != null) eppXriAuthority.addINumber(inumber);
+		if (iname != null) eppXriAuthority.addIName(iname);
 
 		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriAuthority, this.generateTransactionId());
 
@@ -588,6 +592,11 @@ public class EppTools implements Serializable {
 		if (eppResponseData == null) throw new EppToolsException("No response data");
 
 		return(eppResponseData);
+	}
+
+	public EppResponseDataCreateXriAuthority createAuthority(char gcs, String authId, String password, EppXriSocialData eppXriSocialData, String trusteeEscrowAgent, String trusteeContactAgent) throws EppToolsException {
+
+		return this.createAuthority(gcs, authId, password, null, null, eppXriSocialData, trusteeEscrowAgent, trusteeContactAgent);
 	}
 
 	public void deleteAuthority(char gcs, String authId) throws EppToolsException {
@@ -790,6 +799,17 @@ public class EppTools implements Serializable {
 		this.send(gcs, eppCommandUpdate);
 	}
 
+	public void addDiscoveryKeys(char gcs, String authId, String password, String[] keys) throws EppToolsException {
+
+		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
+
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		for (String key : keys) eppCommandUpdate.addDiscoverykey(key);
+		eppCommandUpdate.setAuthInfo(eppAuthInfo);
+
+		this.send(gcs, eppCommandUpdate);
+	}
+
 	public void deleteCanonicalEquivID(char gcs, String authId, String password, CanonicalEquivID canonicalEquivID) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
@@ -845,11 +865,22 @@ public class EppTools implements Serializable {
 		this.send(gcs, eppCommandUpdate);
 	}
 
+	public void deleteDiscoveryKeys(char gcs, String authId, String password, String[] keys) throws EppToolsException {
+
+		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
+
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		for (String key : keys) eppCommandUpdate.removeDiscoverykey(key);
+		eppCommandUpdate.setAuthInfo(eppAuthInfo);
+
+		this.send(gcs, eppCommandUpdate);
+	}
+
 	/*
 	 * Methods for i-numbers
 	 */
 
-	public EppResponseDataCreateXriNumber createInumber(char gcs, String authId, String referenceId, int years) throws EppToolsException {
+	public EppResponseDataCreateXriNumber createInumber(char gcs, String authId, String referenceId, String inumber, int years) throws EppToolsException {
 
 		EppPeriod eppPeriod = new EppPeriod(years, EppPeriod.UNIT_YEAR);
 
@@ -866,6 +897,11 @@ public class EppTools implements Serializable {
 		if (eppResponseData == null) throw new EppToolsException("No response data");
 
 		return(eppResponseData);
+	}
+
+	public EppResponseDataCreateXriNumber createInumber(char gcs, String authId, String referenceId, int years) throws EppToolsException {
+
+		return this.createInumber(gcs, authId, referenceId, null, years);
 	}
 
 	public void deleteInumber(char gcs, String inumber) throws EppToolsException {

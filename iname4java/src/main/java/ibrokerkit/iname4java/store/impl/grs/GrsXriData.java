@@ -37,6 +37,8 @@ public class GrsXriData extends OpenxriXriData {
 	private String trusteeEscrowAgent;
 	private String trusteeContactAgent;
 
+	private String inumber;
+
 	public GrsXriData() {
 
 		super();
@@ -56,6 +58,7 @@ public class GrsXriData extends OpenxriXriData {
 		this.pager = null;
 		this.trusteeEscrowAgent = null;
 		this.trusteeEscrowAgent = null;
+		this.inumber = null;
 	}
 
 	@Override
@@ -238,5 +241,15 @@ public class GrsXriData extends OpenxriXriData {
 	public void setTrusteeContactAgent(String trusteeContactAgent) {
 
 		this.trusteeContactAgent = trusteeContactAgent;
+	}
+
+	public String getInumber() {
+
+		return this.inumber;
+	}
+
+	public void setInumber(String inumber) {
+
+		this.inumber = inumber;
 	}
 }
