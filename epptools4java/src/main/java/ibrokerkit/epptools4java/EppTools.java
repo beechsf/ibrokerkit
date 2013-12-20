@@ -884,7 +884,7 @@ public class EppTools implements Serializable {
 
 		EppPeriod eppPeriod = new EppPeriod(years, EppPeriod.UNIT_YEAR);
 
-		EppXriNumber eppXriNumber = new EppXriNumber(null);
+		EppXriNumber eppXriNumber = new EppXriNumber(inumber);
 		eppXriNumber.setReferenceId(referenceId);
 		eppXriNumber.setAuthorityId(authId);
 		eppXriNumber.setPeriod(eppPeriod);
