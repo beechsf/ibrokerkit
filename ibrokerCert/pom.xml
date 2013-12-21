@@ -99,7 +99,7 @@
 		<dependency>
 			<groupId>com.neulevel</groupId>
 			<artifactId>epp</artifactId>
-			<version>0.4.9</version>
+			<version>0.4.14</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>

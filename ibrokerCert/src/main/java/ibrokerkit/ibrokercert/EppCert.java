@@ -181,7 +181,6 @@ public class EppCert {
 		fileWriter.close();
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 
 		// read properties
@@ -1022,7 +1021,7 @@ public class EppCert {
 			EppXriNumber eppXriNumber = new EppXriNumber(null);
 			eppXriNumber.setReferenceId("test_ref_id_015");
 			eppXriNumber.setAuthorityId("=!(!!1001!123E!1235.1234.1247)");
-			eppXriNumber.setPriority(1);
+// BROKEN SINCE EPP 0.4.14			eppXriNumber.setPriority(1);
 			eppXriNumber.setPeriod(eppPeriod);
 
 			EppCommandCreate eppCommandCreate = EppCommand.create(eppXriNumber, "xri-testcase20cmd");
@@ -1181,7 +1180,7 @@ public class EppCert {
 				if (! (eppXriNumber.getRoid().equals("NUM455-PER"))) alert ("Test 24: Unexpected roid in response data: " + eppXriNumber.getRoid());
 				if (! (eppStatus.getStatus().equals("ok"))) alert ("Test 24: Unexpected status in response data: " + eppStatus.getStatus());
 				if (! (eppXriNumber.getAuthorityId().equals("=!(!!1001!123E!1235.1234.1242)"))) alert ("Test 24: Unexpected authId in response data: " + eppXriNumber.getAuthorityId());
-				if (! (eppXriNumber.getPriority() == 10)) alert ("Test 24: Unexpected priority in response data: " + eppXriNumber.getPriority());
+// BROKEN SINCE EPP 0.4.14				if (! (eppXriNumber.getPriority() == 10)) alert ("Test 24: Unexpected priority in response data: " + eppXriNumber.getPriority());
 				if (! (eppXriNumber.getClientId().equals("NEUSTAR"))) alert ("Test 24: Unexpected clID in response data: " + eppXriNumber.getClientId());
 				if (! (eppXriNumber.getClientIdCreated().equals("NEUSTAR"))) alert ("Test 24: Unexpected crID in response data: " + eppXriNumber.getClientIdCreated());
 				if (! (xmlDateFormat.format(eppXriNumber.getDateCreated().getTime()).equals("2005-09-21T19:09:33.0Z"))) alert ("Test 24: Unexpected crDate in response data: " + eppXriNumber.getDateCreated());
