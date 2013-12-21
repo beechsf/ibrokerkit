@@ -51,11 +51,5 @@
 			<version>1.2.2-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.neulevel</groupId>
-			<artifactId>epp</artifactId>
-			<version>0.4.9</version>
-			<scope>compile</scope>
-		</dependency>
 	</dependencies>
 </project>
