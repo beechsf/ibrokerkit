@@ -66,8 +66,6 @@
 		<module>../iserviceFront</module>
 		<module>../iserviceStore</module>
 		<module>../xritools4java</module>
-		<!--  <module>../oauthFront</module> -->
-		<!--  <module>../xdiFront</module> -->
 	</modules>
 
 	<build>
