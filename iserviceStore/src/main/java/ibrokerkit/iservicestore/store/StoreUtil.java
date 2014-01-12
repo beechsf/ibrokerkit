@@ -1,11 +1,9 @@
 package ibrokerkit.iservicestore.store;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -13,61 +11,62 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class StoreUtil {
 
-	/**
-	 * Calculates a hashed password suitable for an Authentication i-service.
-	 * @param pass A password.
-	 * @return The hashed password.
-	 */
-	public static String hashPass(String pass) {
+	public static String makeXriPass(String claimedPass) {
 
-		// create hash for password
+		String xriSalt = UUID.randomUUID().toString();
+		String xriPass = xriSaltedHash(xriSalt + xriSaltedHash(claimedPass));
 
-		String hashedPass;
-
-		if (pass == null) {
-
-			hashedPass = null;
-		} else {
-
-			try {
-
-				MessageDigest digest = MessageDigest.getInstance("SHA-1");
-				digest.reset();
-				digest.update(pass.getBytes());
-				hashedPass = new String(Base64.encodeBase64(digest.digest()));
-			} catch (NoSuchAlgorithmException ex) {
-
-				throw new RuntimeException("Cannot calculate password hash.", ex);
-			}
-		}
-
-		return(hashedPass);
+		return("xri--" + xriSalt + "--" + xriPass);
 	}
 
-	/**
-	 * Checks if a claimed pass is correct.
-	 * @param pass The pass stored in iserviceStore.
-	 * @param claimedPass A claimed pass.
-	 * @return True, if the claimed pass is correct.
-	 */
 	public static boolean checkPass(String pass, String claimedPass) {
 
-		if (pass.startsWith("linksafe--")) {
+		if (pass.startsWith("xri--")) {
 
-			Matcher matcher = Pattern.compile("^linksafe--(.+?)--(.+?)$").matcher(pass);
-			if (! matcher.matches()) return(false);
-			String linksafeSalt = matcher.group(1);
-			String linksafePass = matcher.group(2);
-			String linksafeSaltedPass = linksafeSaltedHash(linksafeSalt + linksafeSaltedHash(claimedPass));
-			return(linksafePass.equals(linksafeSaltedPass));
+			return(checkXriPass(pass, claimedPass));
+		} else if (pass.startsWith("linksafe--")) {
+
+			return(checkLinksafePass(pass, claimedPass));
 		} else {
 
-			return(hashPass(claimedPass).equals(pass));
+			return(checkOldHashPass(pass, claimedPass));
 		}
+	}
+
+	private static boolean checkXriPass(String pass, String claimedPass) {
+
+		Matcher matcher = Pattern.compile("^xri--(.+?)--(.+?)$").matcher(pass);
+		if (! matcher.matches()) return(false);
+		String xriSalt = matcher.group(1);
+		String xriPass = matcher.group(2);
+		String xriClaimedPass = xriSaltedHash(xriSalt + xriSaltedHash(claimedPass));
+
+		return(xriPass.equals(xriClaimedPass));
+	}
+
+	private static String xriSaltedHash(String string) {
+
+		return(DigestUtils.shaHex("@#XX$XRI.XDI" + "--" + string + "--"));
+	}
+
+	private static boolean checkLinksafePass(String pass, String claimedPass) {
+
+		Matcher matcher = Pattern.compile("^linksafe--(.+?)--(.+?)$").matcher(pass);
+		if (! matcher.matches()) return(false);
+		String linksafeSalt = matcher.group(1);
+		String linksafePass = matcher.group(2);
+		String linksafeClaimedPass = linksafeSaltedHash(linksafeSalt + linksafeSaltedHash(claimedPass));
+
+		return(linksafePass.equals(linksafeClaimedPass));
 	}
 
 	private static String linksafeSaltedHash(String string) {
 
 		return(DigestUtils.shaHex("@#AF$RQETQEE" + "--" + string + "--"));
+	}
+
+	private static boolean checkOldHashPass(String pass, String claimedPass) {
+
+		return(pass.equals(DigestUtils.shaHex(claimedPass)));
 	}
 }
