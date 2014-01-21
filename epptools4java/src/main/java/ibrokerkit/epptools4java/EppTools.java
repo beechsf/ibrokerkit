@@ -592,10 +592,22 @@ public class EppTools implements Serializable {
 
 		if (extension != null) {
 
-			EppUnspec unspec = new EppUnspec();
-			EppGenericNVPairs nvPairs = new EppGenericNVPairs();
-			for (Entry<String, String> extensionEntry : extension.entrySet()) nvPairs.addGenericNVPair(extensionEntry.getKey(), extensionEntry.getValue());
-			unspec.setGenericNVPairs(nvPairs);
+			StringBuffer buffer = new StringBuffer();
+			boolean first = true;
+
+			for (Entry<String, String> extensionEntry : extension.entrySet()) {
+
+				if (extensionEntry.getKey().contains("=") || extensionEntry.getKey().contains("+")) continue;
+				if (extensionEntry.getValue().contains("=") || extensionEntry.getValue().contains("+")) continue;
+
+				if (! first) buffer.append(" ");
+				buffer.append(extensionEntry.getKey());
+				buffer.append("=");
+				buffer.append(extensionEntry.getValue());
+				first = false;
+			}
+
+			EppUnspec unspec = new EppUnspec(buffer.toString());
 			eppCommandCreate.setUnspec(unspec);
 		}
 
