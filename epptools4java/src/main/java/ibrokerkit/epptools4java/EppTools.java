@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Random;
 import java.util.TimeZone;
@@ -38,9 +40,11 @@ import com.neulevel.epp.core.EppAddress;
 import com.neulevel.epp.core.EppAuthInfo;
 import com.neulevel.epp.core.EppContactData;
 import com.neulevel.epp.core.EppError;
+import com.neulevel.epp.core.EppGenericNVPairs;
 import com.neulevel.epp.core.EppGreeting;
 import com.neulevel.epp.core.EppObject;
 import com.neulevel.epp.core.EppPeriod;
+import com.neulevel.epp.core.EppUnspec;
 import com.neulevel.epp.core.command.EppCommand;
 import com.neulevel.epp.core.command.EppCommandCheck;
 import com.neulevel.epp.core.command.EppCommandCreate;
@@ -564,7 +568,7 @@ public class EppTools implements Serializable {
 	 * Methods for authorities
 	 */
 
-	public EppResponseDataCreateXriAuthority createAuthority(char gcs, String authId, String password, String inumber, String iname, EppXriSocialData eppXriSocialData, String trusteeEscrowAgent, String trusteeContactAgent) throws EppToolsException {
+	public EppResponseDataCreateXriAuthority createAuthority(char gcs, String authId, String password, String inumber, String iname, EppXriSocialData eppXriSocialData, String trusteeEscrowAgent, String trusteeContactAgent, Map<String, String> extension) throws EppToolsException {
 
 		EppXriTrustee eppXriTrusteeEscrowAgent = new EppXriTrustee();
 		eppXriTrusteeEscrowAgent.setAuthorityId(trusteeEscrowAgent != null ? trusteeEscrowAgent : this.properties.getProperty("epp-trusteeescrowagent"));
@@ -586,6 +590,15 @@ public class EppTools implements Serializable {
 
 		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriAuthority, this.generateTransactionId());
 
+		if (extension != null) {
+
+			EppUnspec unspec = new EppUnspec();
+			EppGenericNVPairs nvPairs = new EppGenericNVPairs();
+			for (Entry<String, String> extensionEntry : extension.entrySet()) nvPairs.addGenericNVPair(extensionEntry.getKey(), extensionEntry.getValue());
+			unspec.setGenericNVPairs(nvPairs);
+			eppCommandCreate.setUnspec(unspec);
+		}
+
 		EppResponse eppResponse = this.send(gcs, eppCommandCreate);
 
 		EppResponseDataCreateXriAuthority eppResponseData = (EppResponseDataCreateXriAuthority) eppResponse.getResponseData();
@@ -594,9 +607,19 @@ public class EppTools implements Serializable {
 		return(eppResponseData);
 	}
 
+	public EppResponseDataCreateXriAuthority createAuthority(char gcs, String authId, String password, String inumber, String iname, EppXriSocialData eppXriSocialData, String trusteeEscrowAgent, String trusteeContactAgent) throws EppToolsException {
+
+		return this.createAuthority(gcs, authId, password, inumber, iname, eppXriSocialData, trusteeEscrowAgent, trusteeContactAgent, null);
+	}
+
+	public EppResponseDataCreateXriAuthority createAuthority(char gcs, String authId, String password, EppXriSocialData eppXriSocialData, String trusteeEscrowAgent, String trusteeContactAgent, Map<String, String> extension) throws EppToolsException {
+
+		return this.createAuthority(gcs, authId, password, null, null, eppXriSocialData, trusteeEscrowAgent, trusteeContactAgent, extension);
+	}
+
 	public EppResponseDataCreateXriAuthority createAuthority(char gcs, String authId, String password, EppXriSocialData eppXriSocialData, String trusteeEscrowAgent, String trusteeContactAgent) throws EppToolsException {
 
-		return this.createAuthority(gcs, authId, password, null, null, eppXriSocialData, trusteeEscrowAgent, trusteeContactAgent);
+		return this.createAuthority(gcs, authId, password, eppXriSocialData, trusteeEscrowAgent, trusteeContactAgent, null);
 	}
 
 	public void deleteAuthority(char gcs, String authId) throws EppToolsException {
@@ -880,7 +903,7 @@ public class EppTools implements Serializable {
 	 * Methods for i-numbers
 	 */
 
-	public EppResponseDataCreateXriNumber createInumber(char gcs, String authId, String referenceId, String inumber, int years) throws EppToolsException {
+	public EppResponseDataCreateXriNumber createInumber(char gcs, String authId, String referenceId, String inumber, int years, Map<String, String> extension) throws EppToolsException {
 
 		EppPeriod eppPeriod = new EppPeriod(years, EppPeriod.UNIT_YEAR);
 
@@ -891,6 +914,15 @@ public class EppTools implements Serializable {
 
 		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriNumber, this.generateTransactionId());
 
+		if (extension != null) {
+
+			EppUnspec unspec = new EppUnspec();
+			EppGenericNVPairs nvPairs = new EppGenericNVPairs();
+			for (Entry<String, String> extensionEntry : extension.entrySet()) nvPairs.addGenericNVPair(extensionEntry.getKey(), extensionEntry.getValue());
+			unspec.setGenericNVPairs(nvPairs);
+			eppCommandCreate.setUnspec(unspec);
+		}
+
 		EppResponse eppResponse = this.send(gcs, eppCommandCreate);
 
 		EppResponseDataCreateXriNumber eppResponseData = (EppResponseDataCreateXriNumber) eppResponse.getResponseData();
@@ -899,9 +931,19 @@ public class EppTools implements Serializable {
 		return(eppResponseData);
 	}
 
+	public EppResponseDataCreateXriNumber createInumber(char gcs, String authId, String referenceId, String inumber, int years) throws EppToolsException {
+
+		return this.createInumber(gcs, authId, referenceId, inumber, years, null);
+	}
+
+	public EppResponseDataCreateXriNumber createInumber(char gcs, String authId, String referenceId, int years, Map<String, String> extension) throws EppToolsException {
+
+		return this.createInumber(gcs, authId, referenceId, null, years, extension);
+	}
+
 	public EppResponseDataCreateXriNumber createInumber(char gcs, String authId, String referenceId, int years) throws EppToolsException {
 
-		return this.createInumber(gcs, authId, referenceId, null, years);
+		return this.createInumber(gcs, authId, referenceId, years, null);
 	}
 
 	public void deleteInumber(char gcs, String inumber) throws EppToolsException {
@@ -966,7 +1008,7 @@ public class EppTools implements Serializable {
 	 * Methods for i-names
 	 */
 
-	public EppResponseDataCreateXriName createIname(char gcs, String iname, String authId, int years) throws EppToolsException {
+	public EppResponseDataCreateXriName createIname(char gcs, String iname, String authId, int years, Map<String, String> extension) throws EppToolsException {
 
 		EppPeriod eppPeriod = new EppPeriod(years, EppPeriod.UNIT_YEAR);
 
@@ -975,6 +1017,15 @@ public class EppTools implements Serializable {
 		eppXriName.setPeriod(eppPeriod);
 
 		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriName, this.generateTransactionId());
+
+		if (extension != null) {
+
+			EppUnspec unspec = new EppUnspec();
+			EppGenericNVPairs nvPairs = new EppGenericNVPairs();
+			for (Entry<String, String> extensionEntry : extension.entrySet()) nvPairs.addGenericNVPair(extensionEntry.getKey(), extensionEntry.getValue());
+			unspec.setGenericNVPairs(nvPairs);
+			eppCommandCreate.setUnspec(unspec);
+		}
 
 		EppResponse eppResponse = this.send(gcs, eppCommandCreate);
 
