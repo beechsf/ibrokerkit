@@ -4,6 +4,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -67,6 +68,6 @@ public class StoreUtil {
 
 	private static boolean checkOldHashPass(String pass, String claimedPass) {
 
-		return(pass.equals(DigestUtils.shaHex(claimedPass)));
+		return(pass.equals(Base64.encodeBase64String(DigestUtils.sha(claimedPass))));
 	}
 }

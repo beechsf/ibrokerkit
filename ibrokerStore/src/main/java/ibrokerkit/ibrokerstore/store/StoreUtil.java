@@ -4,22 +4,13 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * Utility methods for the Store.
  */
 public class StoreUtil {
-
-	public static final int CODE_LENGTH = 10;
-
-	public static String makeRecoveryCode() {
-
-		byte b[] = new byte[CODE_LENGTH];
-		for (int i=0; i<CODE_LENGTH; i++) b[i] = (byte)((int)(Math.random() * ('z' - 'a') + 'a'));
-
-		return(new String(b));
-	}
 
 	public static String makeXriPass(String claimedPass) {
 
@@ -77,6 +68,16 @@ public class StoreUtil {
 
 	private static boolean checkOldHashPass(String pass, String claimedPass) {
 
-		return(pass.equals(DigestUtils.shaHex(claimedPass)));
+		return(pass.equals(Base64.encodeBase64String(DigestUtils.sha(claimedPass))));
+	}
+
+	public static final int CODE_LENGTH = 10;
+
+	public static String makeRecoveryCode() {
+
+		byte b[] = new byte[CODE_LENGTH];
+		for (int i=0; i<CODE_LENGTH; i++) b[i] = (byte)((int)(Math.random() * ('z' - 'a') + 'a'));
+
+		return(new String(b));
 	}
 }
