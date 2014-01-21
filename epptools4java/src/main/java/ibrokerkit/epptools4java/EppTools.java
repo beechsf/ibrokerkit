@@ -1035,6 +1035,11 @@ public class EppTools implements Serializable {
 		return(eppResponseData);
 	}
 
+	public EppResponseDataCreateXriName createIname(char gcs, String iname, String authId, int years) throws EppToolsException {
+
+		return this.createIname(gcs, iname, authId, years, null);
+	}
+
 	public void deleteIname(char gcs, String iname) throws EppToolsException {
 
 		EppCommandDelete eppCommandDelete = EppCommand.delete(EppObject.XRI_INAME, iname, this.generateTransactionId());
