@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>ibrokerkit</groupId>
 		<artifactId>ibrokerKit</artifactId>
-		<version>0.5</version>
+		<version>0.6</version>
 		<relativePath>../ibrokerKit</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -108,25 +108,25 @@
 		<dependency>
 			<groupId>ibrokerkit</groupId>
 			<artifactId>epptools4java</artifactId>
-			<version>0.5</version>
+			<version>0.6</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>ibrokerkit</groupId>
 			<artifactId>iname4java</artifactId>
-			<version>0.5</version>
+			<version>0.6</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>ibrokerkit</groupId>
 			<artifactId>ibrokerStore</artifactId>
-			<version>0.5</version>
+			<version>0.6</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>ibrokerkit</groupId>
 			<artifactId>iserviceStore</artifactId>
-			<version>0.5</version>
+			<version>0.6</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
