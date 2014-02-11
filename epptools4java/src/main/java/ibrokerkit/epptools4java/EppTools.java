@@ -99,7 +99,7 @@ public class EppTools implements Serializable {
 
 	private static final String TAG_GRS_ID = "grsid";
 
-	private static final int NUM_SESSIONS = 5;
+	private static final String DEFAULT_NUM_SESSIONS = "5";
 
 	public static SimpleDateFormat xmlDateFormat;
 	public static SimpleDateFormat xmlShortDateFormat;
@@ -107,6 +107,7 @@ public class EppTools implements Serializable {
 	private static Random random;
 
 	private Properties properties;
+	private int numSessions;
 	private transient Store store;
 
 	private transient EppSession[] eppSessionEqual, eppSessionAt;
@@ -127,13 +128,14 @@ public class EppTools implements Serializable {
 	public EppTools(Properties properties) {
 
 		this.properties = properties;
+		this.numSessions = Integer.parseInt(properties.getProperty("num-sessions", DEFAULT_NUM_SESSIONS));
 
-		this.eppSessionEqual = new EppSession[NUM_SESSIONS];
-		this.eppSessionAt = new EppSession[NUM_SESSIONS];
-		this.eppChannelEqual = new EppChannel[NUM_SESSIONS];
-		this.eppChannelAt = new EppChannel[NUM_SESSIONS];
-		this.eppBlockedEqual = new Boolean[NUM_SESSIONS];
-		this.eppBlockedAt = new Boolean[NUM_SESSIONS];
+		this.eppSessionEqual = new EppSession[this.numSessions];
+		this.eppSessionAt = new EppSession[this.numSessions];
+		this.eppChannelEqual = new EppChannel[this.numSessions];
+		this.eppChannelAt = new EppChannel[this.numSessions];
+		this.eppBlockedEqual = new Boolean[this.numSessions];
+		this.eppBlockedAt = new Boolean[this.numSessions];
 
 		this.eppListeners = new ArrayList<EppListener> ();
 	}
@@ -141,6 +143,7 @@ public class EppTools implements Serializable {
 	/**
 	 * Init everything and start a session
 	 */
+	@SuppressWarnings("restriction")
 	public synchronized void init() throws Exception {
 
 		log.debug("init()");
@@ -1176,8 +1179,8 @@ public class EppTools implements Serializable {
 	 */
 	private synchronized void beginSessionEqual(String newPassword, int i) throws Exception {
 
-		if (this.eppSessionEqual == null) this.eppSessionEqual = new EppSession[NUM_SESSIONS];
-		if (this.eppChannelEqual == null) this.eppChannelEqual = new EppChannel[NUM_SESSIONS];
+		if (this.eppSessionEqual == null) this.eppSessionEqual = new EppSession[this.numSessions];
+		if (this.eppChannelEqual == null) this.eppChannelEqual = new EppChannel[this.numSessions];
 
 		// end session first if it's open
 
@@ -1244,8 +1247,8 @@ public class EppTools implements Serializable {
 	 */
 	private synchronized void beginSessionAt(String newPassword, int i) throws Exception {
 
-		if (this.eppSessionAt == null) this.eppSessionAt = new EppSession[NUM_SESSIONS];
-		if (this.eppChannelAt == null) this.eppChannelAt = new EppChannel[NUM_SESSIONS];
+		if (this.eppSessionAt == null) this.eppSessionAt = new EppSession[this.numSessions];
+		if (this.eppChannelAt == null) this.eppChannelAt = new EppChannel[this.numSessions];
 
 		// end session first if it's open
 
@@ -1640,11 +1643,11 @@ public class EppTools implements Serializable {
 	private EppResponse send(char gcs, EppCommand eppCommand) throws EppToolsException {
 
 		int i = 0;
+		
+		if (gcs == '=') while (this.eppBlockedEqual[i] != null && this.eppBlockedEqual[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
+		if (gcs == '@') while (this.eppBlockedAt[i] != null && this.eppBlockedAt[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
 
-		if (gcs == '=') while (this.eppBlockedEqual[i] != null && this.eppBlockedEqual[i].equals(Boolean.TRUE) && i < NUM_SESSIONS) i++;
-		if (gcs == '@') while (this.eppBlockedAt[i] != null && this.eppBlockedAt[i].equals(Boolean.TRUE) && i < NUM_SESSIONS) i++;
-
-		if (i == NUM_SESSIONS) throw new EppToolsException("All channels to " + gcs + " registry are blocked. Please try again later.");
+		if (i == this.numSessions) throw new EppToolsException("All channels to " + gcs + " registry are blocked. Please try again later.");
 
 		log.debug("Sending to " + gcs + " channel " + i);
 
@@ -1726,9 +1729,19 @@ public class EppTools implements Serializable {
 	 * Getters and Setters
 	 */
 
+	public int getNumSessions() {
+
+		return this.numSessions;
+	}
+
+	public void setNumSessions(int numSessions) {
+
+		this.numSessions = numSessions;
+	}
+
 	public Store getStore() {
 
-		return store;
+		return this.store;
 	}
 
 	public void setStore(Store store) {
