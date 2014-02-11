@@ -6,7 +6,7 @@
 	<artifactId>ibrokerKit</artifactId>
 	<packaging>pom</packaging>
 	<name>ibrokerkit</name>
-	<version>0.6</version>
+	<version>0.7-SNAPSHOT</version>
 
 	<description>
 		ibrokerKit is a software solution for XDI.org accredited

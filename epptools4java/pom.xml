@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>ibrokerkit</groupId>
 		<artifactId>ibrokerKit</artifactId>
-		<version>0.6</version>
+		<version>0.7-SNAPSHOT</version>
 		<relativePath>../ibrokerKit</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>

@@ -5,7 +5,7 @@
 	<groupId>ibrokerkit</groupId>
 	<artifactId>www.ibrokerkit.com</artifactId>
 	<packaging>war</packaging>
-	<version>0.6</version>
+	<version>0.7-SNAPSHOT</version>
 	<name>www.ibrokerkit.com Maven Webapp</name>
 	<url>http://www.ibrokerkit.com/</url>
 
