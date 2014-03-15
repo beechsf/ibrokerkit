@@ -64,6 +64,7 @@ public class GrsXriStore extends OpenxriXriStore {
 		// build the GRS data
 
 		char gcs = localName.charAt(0);
+		if (gcs == '[') gcs = localName.charAt(1);
 
 		// look in GRS
 
@@ -97,6 +98,7 @@ public class GrsXriStore extends OpenxriXriStore {
 		// build the GRS data
 
 		char gcs = localName.charAt(0);
+		if (gcs == '[') gcs = localName.charAt(1);
 		String grsAuthorityId = this.eppTools.makeGrsAuthorityId(gcs, newXri.getAuthorityId());
 		String grsAuthorityPassword = EppTools.makeGrsAuthorityPassword();
 		EppXriSocialData eppXriSocialData = EppTools.makeEppXriSocialData(grsXriData.getStreet(), grsXriData.getCity(), grsXriData.getState(), grsXriData.getPostalCode(), grsXriData.getCountryCode(), grsXriData.getName(), grsXriData.getOrganization(), grsXriData.getPrimaryVoice(), grsXriData.getSecondaryVoice(), grsXriData.getFax(), grsXriData.getPrimaryEmail(), grsXriData.getSecondaryEmail(), grsXriData.getPager());
@@ -169,6 +171,7 @@ public class GrsXriStore extends OpenxriXriStore {
 		// build the GRS data
 
 		char gcs = localName.charAt(0);
+		if (gcs == '[') gcs = localName.charAt(1);
 		String grsAuthorityId = xri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYID);
 		String grsAuthorityPassword = xri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYPASSWORD);
 
@@ -212,6 +215,7 @@ public class GrsXriStore extends OpenxriXriStore {
 		// build the GRS data
 
 		char gcs = localName.charAt(0);
+		if (gcs == '[') gcs = localName.charAt(1);
 		String grsAuthorityId;
 		String grsAuthorityPassword = "unknownTransferPending";
 		String transferToken;
@@ -623,6 +627,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			} else {
 
 				char gcs = openxriXri.getLocalName().charAt(0);
+				if (gcs == '[') gcs = openxriXri.getLocalName().charAt(1);
 				String grsAuthorityId = openxriXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYID);
 				String grsAuthorityPassword = openxriXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYPASSWORD);
 
@@ -655,6 +660,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			} else {
 
 				char gcs = openxriRootXri.getLocalName().charAt(0);
+				if (gcs == '[') gcs = openxriRootXri.getLocalName().charAt(1);
 				String grsAuthorityId = openxriRootXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYID);
 				String grsAuthorityPassword = openxriRootXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYPASSWORD);
 
@@ -685,6 +691,7 @@ public class GrsXriStore extends OpenxriXriStore {
 			} else {
 
 				char gcs = openxriUserXri.getLocalName().charAt(0);
+				if (gcs == '[') gcs = openxriUserXri.getLocalName().charAt(1);
 				String grsAuthorityId = openxriUserXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYID);
 				String grsAuthorityPassword = openxriUserXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYPASSWORD);
 
@@ -715,6 +722,7 @@ public class GrsXriStore extends OpenxriXriStore {
 		} else {
 
 			char gcs = openxriXri.getLocalName().charAt(0);
+			if (gcs == '[') gcs = openxriXri.getLocalName().charAt(1);
 			String grsAuthorityId = openxriXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYID);
 			String grsAuthorityPassword = openxriXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYPASSWORD);
 
@@ -740,6 +748,7 @@ public class GrsXriStore extends OpenxriXriStore {
 		} else {
 
 			char gcs = openxriXri.getLocalName().charAt(0);
+			if (gcs == '[') gcs = openxriXri.getLocalName().charAt(1);
 			String grsAuthorityPassword = openxriXri.getAuthorityAttribute(XriConstants.ATTRIBUTE_GRS_AUTHORITYPASSWORD);
 
 			return(new GrsXri((OpenxriXri) openxriXri, this.eppTools, gcs, grsAuthorityId, grsAuthorityPassword));
