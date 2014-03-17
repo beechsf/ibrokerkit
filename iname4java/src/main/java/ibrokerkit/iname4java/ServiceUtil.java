@@ -16,6 +16,7 @@ public class ServiceUtil {
 		"xri://$res*auth*($v*2.0)",
 		"xri://+i-service*(+account)*($v*1.0)",
 		"xri://$xdi!($v!1)",
+		"<$xdi>",
 		"xri://$certificate*($x.509)",
 		"http://microformats.org/profile/hcard",
 		"http://portablecontacts.net/spec/1.0#me",
