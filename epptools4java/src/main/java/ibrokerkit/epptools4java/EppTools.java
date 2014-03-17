@@ -506,7 +506,7 @@ public class EppTools implements Serializable {
 	 * Methods for authority data
 	 */
 
-/*	public void initAuthority(char gcs, String authId, String password, EppCommandUpdateXriAuthority eppCommandUpdateXriAuthority) throws EppToolsException {
+	/*	public void initAuthority(char gcs, String authId, String password, EppCommandUpdateXriAuthority eppCommandUpdateXriAuthority) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
@@ -594,12 +594,14 @@ public class EppTools implements Serializable {
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void addServices(char gcs, String authId, String password, EppXriServiceEndpoint[] services) throws EppToolsException {
+	public void addServices(char gcs, String authId, String password, EppXriServiceEndpoint[] eppXriServiceEndpoints) throws EppToolsException {
+
+		for (EppXriServiceEndpoint eppXriServiceEndpoint : eppXriServiceEndpoints) if (eppXriServiceEndpoint.getId() == null) eppXriServiceEndpoint.setId(EppTools.makeGrsServiceId());
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (EppXriServiceEndpoint service : services) eppCommandUpdate.addServiceEndpoint(service);
+		for (EppXriServiceEndpoint eppXriServiceEndpoint : eppXriServiceEndpoints) eppCommandUpdate.addServiceEndpoint(eppXriServiceEndpoint);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
