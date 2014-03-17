@@ -2,6 +2,7 @@ package ibrokerkit.iname4java.store.impl.grs;
 
 import ibrokerkit.epptools4java.EppTools;
 import ibrokerkit.epptools4java.EppToolsException;
+import ibrokerkit.epptools4java.EppToolsOpenxriUtil;
 import ibrokerkit.iname4java.ServiceUtil;
 import ibrokerkit.iname4java.store.Xri;
 import ibrokerkit.iname4java.store.XriStoreException;
@@ -149,7 +150,7 @@ public class GrsXri extends OpenxriXri {
 
 		super.setXriAttribute(key, value);
 	}
-	
+
 	@Override
 	public String getAuthorityAttribute(String key) throws XriStoreException {
 
@@ -244,7 +245,7 @@ public class GrsXri extends OpenxriXri {
 				EppXriAuthority eppXriAuthority = this.getEppXriAuthority();
 				List<EppXriSynonym> eppXriSynonyms = eppXriAuthority.getEquivID();
 				this.equivIDs = new ArrayList<EquivID> (eppXriSynonyms.size());
-				for (EppXriSynonym eppXriSynonym : eppXriSynonyms) this.equivIDs.add(EppTools.makeEquivID(eppXriSynonym));
+				for (EppXriSynonym eppXriSynonym : eppXriSynonyms) this.equivIDs.add(EppToolsOpenxriUtil.makeOpenxriEquivID(eppXriSynonym));
 			} catch (EppToolsException ex) {
 
 				throw new XriStoreException(ex.getMessage(), ex);
@@ -265,7 +266,7 @@ public class GrsXri extends OpenxriXri {
 				EppXriAuthority eppXriAuthority = this.getEppXriAuthority();
 				List<EppXriRef> eppXriRefs = eppXriAuthority.getRef();
 				this.refs = new ArrayList<Ref> (eppXriRefs.size());
-				for (EppXriRef eppXriRef : eppXriRefs) this.refs.add(EppTools.makeRef(eppXriRef));
+				for (EppXriRef eppXriRef : eppXriRefs) this.refs.add(EppToolsOpenxriUtil.makeOpenxriRef(eppXriRef));
 			} catch (EppToolsException ex) {
 
 				throw new XriStoreException(ex.getMessage(), ex);
@@ -286,7 +287,7 @@ public class GrsXri extends OpenxriXri {
 				EppXriAuthority eppXriAuthority = this.getEppXriAuthority();
 				List<EppXriURI> eppXriURIs = eppXriAuthority.getRedirect();
 				this.redirects = new ArrayList<Redirect> (eppXriURIs.size());
-				for (EppXriURI eppXriURI : eppXriURIs) this.redirects.add(EppTools.makeRedirect(eppXriURI));
+				for (EppXriURI eppXriURI : eppXriURIs) this.redirects.add(EppToolsOpenxriUtil.makeOpenxriRedirect(eppXriURI));
 			} catch (EppToolsException ex) {
 
 				throw new XriStoreException(ex.getMessage(), ex);
@@ -307,7 +308,7 @@ public class GrsXri extends OpenxriXri {
 				EppXriAuthority eppXriAuthority = this.getEppXriAuthority();
 				List<EppXriServiceEndpoint> eppXriServiceEndpoints = eppXriAuthority.getServiceEndpoint();
 				this.services = new ArrayList<Service> (eppXriServiceEndpoints.size());
-				for (EppXriServiceEndpoint eppXriServiceEndpoint : eppXriServiceEndpoints) this.services.add(EppTools.makeService(eppXriServiceEndpoint));
+				for (EppXriServiceEndpoint eppXriServiceEndpoint : eppXriServiceEndpoints) this.services.add(EppToolsOpenxriUtil.makeOpenxriService(eppXriServiceEndpoint));
 			} catch (EppToolsException ex) {
 
 				throw new XriStoreException(ex.getMessage(), ex);
@@ -328,8 +329,16 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			if (this.getCanonicalEquivID() != null) this.eppTools.deleteCanonicalEquivID(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, this.canonicalEquivID);
-			this.eppTools.setCanonicalEquivID(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, canonicalEquivID);
+			if (this.getCanonicalEquivID() != null) {
+
+				String canonicalEquivIDString = EppToolsOpenxriUtil.makeCanonicalEquivIDString(this.getCanonicalEquivID());
+
+				this.eppTools.deleteCanonicalEquivID(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, canonicalEquivIDString);
+			}
+
+			String canonicalEquivIDString = EppToolsOpenxriUtil.makeCanonicalEquivIDString(canonicalEquivID);
+
+			this.eppTools.setCanonicalEquivID(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, canonicalEquivIDString);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -357,7 +366,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.addEquivIDs(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, new EquivID[] { equivID });
+			EppXriSynonym[] eppXriSynonyms = EppToolsOpenxriUtil.makeEppXriSynonyms(new EquivID[] { equivID });
+
+			this.eppTools.addEquivIDs(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, eppXriSynonyms);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -371,7 +382,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.addRefs(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, new Ref[] { ref });
+			EppXriRef[] eppXriRefs = EppToolsOpenxriUtil.makeEppXriRefs(new Ref[] { ref });
+
+			this.eppTools.addRefs(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, eppXriRefs);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -385,7 +398,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.addRedirects(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, new Redirect[] { redirect });
+			EppXriURI[] eppXriURIs = EppToolsOpenxriUtil.makeEppXriURIs(new Redirect[] { redirect });
+
+			this.eppTools.addRedirects(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, eppXriURIs);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -399,7 +414,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.addServices(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, new Service[] { service });
+			EppXriServiceEndpoint[] eppXriServiceEndpoints = EppToolsOpenxriUtil.makeEppXriServiceEndpoints(new Service[] { service });
+
+			this.eppTools.addServices(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, eppXriServiceEndpoints);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -413,7 +430,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.addServices(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, services);
+			EppXriServiceEndpoint[] eppXriServiceEndpoints = EppToolsOpenxriUtil.makeEppXriServiceEndpoints(services);
+
+			this.eppTools.addServices(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, eppXriServiceEndpoints);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -427,9 +446,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			CanonicalEquivID canonicalEquivID = this.getCanonicalEquivID();
+			String canonicalEquivIDString = EppToolsOpenxriUtil.makeCanonicalEquivIDString(this.getCanonicalEquivID());
 
-			if (canonicalEquivID != null) this.eppTools.deleteCanonicalEquivID(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, canonicalEquivID);
+			if (canonicalEquivIDString != null) this.eppTools.deleteCanonicalEquivID(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, canonicalEquivIDString);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -457,7 +476,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.deleteEquivIDs(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, new EquivID[] { equivID });
+			String[] equivIDStrings = EppToolsOpenxriUtil.makeEquivIDStrings(new EquivID[] { equivID });
+
+			this.eppTools.deleteEquivIDs(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, equivIDStrings);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -471,7 +492,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.deleteRefs(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, new Ref[] { ref });
+			String[] refStrings = EppToolsOpenxriUtil.makeRefStrings(new Ref[] { ref });
+
+			this.eppTools.deleteRefs(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, refStrings);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -485,7 +508,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.deleteRedirects(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, new Redirect[] { redirect });
+			String[] redirectStrings = EppToolsOpenxriUtil.makeRedirectStrings(new Redirect[] { redirect });
+
+			this.eppTools.deleteRedirects(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, redirectStrings);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -499,7 +524,9 @@ public class GrsXri extends OpenxriXri {
 
 		try {
 
-			this.eppTools.deleteServices(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, new Service[] { service });
+			String[] serviceIds = EppToolsOpenxriUtil.makeServiceIds(new Service[] { service });
+
+			this.eppTools.deleteServiceIds(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, serviceIds);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -516,7 +543,9 @@ public class GrsXri extends OpenxriXri {
 			List<Service> serviceList = this.getServices();
 			if (serviceList.size() < 1) return;
 
-			this.eppTools.deleteServices(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, serviceList.toArray(new Service[serviceList.size()]));
+			String[] serviceIds = EppToolsOpenxriUtil.makeServiceIds(serviceList.toArray(new Service[serviceList.size()]));
+
+			this.eppTools.deleteServiceIds(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, serviceIds);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);
@@ -545,7 +574,9 @@ public class GrsXri extends OpenxriXri {
 			}
 			if (removeList.size() < 1) return;
 
-			this.eppTools.deleteServices(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, removeList.toArray(new Service[removeList.size()]));
+			String[] serviceIds = EppToolsOpenxriUtil.makeServiceIds(removeList.toArray(new Service[removeList.size()]));
+
+			this.eppTools.deleteServiceIds(this.gcs, this.grsAuthorityId, this.grsAuthorityPassword, serviceIds);
 		} catch (EppToolsException ex) {
 
 			throw new XriStoreException(ex.getMessage(), ex);

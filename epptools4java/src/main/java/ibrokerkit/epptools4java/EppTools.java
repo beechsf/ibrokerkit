@@ -6,7 +6,6 @@ import ibrokerkit.epptools4java.store.impl.db.DatabaseStore;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URISyntaxException;
 import java.security.Security;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,23 +17,9 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Random;
 import java.util.TimeZone;
-import java.util.Vector;
 
-import org.openxri.util.DOMUtils;
-import org.openxri.xml.CanonicalEquivID;
-import org.openxri.xml.EquivID;
-import org.openxri.xml.LocalID;
-import org.openxri.xml.Redirect;
-import org.openxri.xml.Ref;
-import org.openxri.xml.SEPMediaType;
-import org.openxri.xml.SEPPath;
-import org.openxri.xml.SEPType;
-import org.openxri.xml.SEPUri;
-import org.openxri.xml.Service;
-import org.openxri.xml.XRD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Element;
 
 import com.neulevel.epp.core.EppAddress;
 import com.neulevel.epp.core.EppAuthInfo;
@@ -65,9 +50,6 @@ import com.neulevel.epp.xri.EppXriName;
 import com.neulevel.epp.xri.EppXriNumber;
 import com.neulevel.epp.xri.EppXriRef;
 import com.neulevel.epp.xri.EppXriServiceEndpoint;
-import com.neulevel.epp.xri.EppXriServiceEndpointMediaType;
-import com.neulevel.epp.xri.EppXriServiceEndpointPath;
-import com.neulevel.epp.xri.EppXriServiceEndpointType;
 import com.neulevel.epp.xri.EppXriSocialData;
 import com.neulevel.epp.xri.EppXriSynonym;
 import com.neulevel.epp.xri.EppXriTrustee;
@@ -96,8 +78,6 @@ public class EppTools implements Serializable {
 	private static final long serialVersionUID = 3837202598036526233L;
 
 	private static final Logger log = LoggerFactory.getLogger(EppTools.class.getName());
-
-	private static final String TAG_GRS_ID = "grsid";
 
 	private static final String DEFAULT_NUM_SESSIONS = "5";
 
@@ -308,218 +288,6 @@ public class EppTools implements Serializable {
 		fixedPhone = fixedPhone.replaceAll(" ", "");
 
 		return(fixedPhone);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static EppXriServiceEndpoint makeEppXriServiceEndpoint(Service service) {
-
-		EppXriServiceEndpoint eppXriServiceEndpoint = new EppXriServiceEndpoint();
-
-		for (SEPPath path : (Vector<SEPPath>) service.getPaths()) eppXriServiceEndpoint.addPath(makeEppXriServiceEndpointPath(path));
-		for (SEPType type : (Vector<SEPType>) service.getTypes()) eppXriServiceEndpoint.addType(makeEppXriServiceEndpointType(type));
-		for (SEPMediaType mediaType : (Vector<SEPMediaType>) service.getMediaTypes()) eppXriServiceEndpoint.addMediaType(makeEppXriServiceEndpointMediaType(mediaType));
-		for (SEPUri uri : (Vector<SEPUri>) service.getURIs()) eppXriServiceEndpoint.addURI(makeEppXriURI(uri));
-		for (Ref ref : (Vector<Ref>) service.getRefs()) eppXriServiceEndpoint.addRef(makeEppXriRef(ref));
-		for (Redirect redirect : (Vector<Redirect>) service.getRedirects()) eppXriServiceEndpoint.addRedirect(makeEppXriURI(redirect));
-		for (int i=0; i<service.getNumLocalIDs(); i++) eppXriServiceEndpoint.addLocalID(makeEppXriSynonym(service.getLocalIDAt(i)));
-		eppXriServiceEndpoint.setPriority(service.getPriority() == null ? 10 : service.getPriority().intValue());
-		eppXriServiceEndpoint.setAuthority(service.getProviderId());
-
-		String id;
-		String extension;
-
-		if (service.getOtherTagValues(TAG_GRS_ID) != null && service.getOtherTagValues(TAG_GRS_ID).size() > 0) {
-
-			id = ((Element) service.getOtherTagValues(TAG_GRS_ID).get(0)).getTextContent();
-			service.getOtherChildrenVectorMap().remove(TAG_GRS_ID);
-			extension = service.getExtension();
-			service.setOtherTagValues(TAG_GRS_ID, "<" + TAG_GRS_ID + ">" + id + "</" + TAG_GRS_ID + ">");
-		} else {
-
-			id = makeGrsServiceId();
-			extension = service.getExtension();
-		}
-
-		if (service.getKeyInfo() != null) {
-
-			if (extension == null) extension = "";
-			extension += DOMUtils.toString(service.getKeyInfo().getElement(), true, true);
-		}
-
-		eppXriServiceEndpoint.setId(id);
-		eppXriServiceEndpoint.setExtension(extension);
-
-		return(eppXriServiceEndpoint);
-	}
-
-	public static EppXriServiceEndpointPath makeEppXriServiceEndpointPath(SEPPath path) {
-
-		return(new EppXriServiceEndpointPath(path.getPath(), path.getMatch(), new Boolean(path.getSelect())));
-	}
-
-	public static EppXriServiceEndpointType makeEppXriServiceEndpointType(SEPType type) {
-
-		return(new EppXriServiceEndpointType(type.getType(), type.getMatch(), new Boolean(type.getSelect())));
-	}
-
-	public static EppXriServiceEndpointMediaType makeEppXriServiceEndpointMediaType(SEPMediaType mediaType) {
-
-		return(new EppXriServiceEndpointMediaType(mediaType.getMediaType(), mediaType.getMatch(), new Boolean(mediaType.getSelect())));
-	}
-
-	public static EppXriURI makeEppXriURI(SEPUri uri) {
-
-		EppXriURI eppXriURI = new EppXriURI(uri.getUriString());
-		if (uri.getPriority() != null) eppXriURI.setPriority(uri.getPriority().intValue());
-		if (uri.getAppend() != null) eppXriURI.setAppend(uri.getAppend());
-		return(eppXriURI);
-	}
-
-	public static EppXriURI makeEppXriURI(Redirect redirect) {
-
-		EppXriURI eppXriURI = new EppXriURI(redirect.getValue());
-		if (redirect.getPriority() != null) eppXriURI.setPriority(redirect.getPriority().intValue());
-		if (redirect.getAppend() != null) eppXriURI.setAppend(redirect.getAppend());
-		return(eppXriURI);
-	}
-
-	public static EppXriRef makeEppXriRef(Ref ref) {
-
-		EppXriRef eppXriRef = new EppXriRef(ref.getValue());
-		if (ref.getPriority() != null) eppXriRef.setPriority(ref.getPriority().intValue());
-		return(eppXriRef);
-	}
-
-	public static EppXriSynonym makeEppXriSynonym(CanonicalEquivID canonicalEquivID) {
-
-		EppXriSynonym eppXriSynonym = new EppXriSynonym(canonicalEquivID.getValue());
-		return(eppXriSynonym);
-	}
-
-	public static EppXriSynonym makeEppXriSynonym(LocalID localID) {
-
-		EppXriSynonym eppXriSynonym = new EppXriSynonym(localID.getValue());
-		return(eppXriSynonym);
-	}
-
-	public static EppXriSynonym makeEppXriSynonym(EquivID equivID) {
-
-		EppXriSynonym eppXriSynonym = new EppXriSynonym(equivID.getValue());
-		if (equivID.getPriority() != null) eppXriSynonym.setPriority(equivID.getPriority().intValue());
-		return(eppXriSynonym);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static Service makeService(EppXriServiceEndpoint eppXriServiceEndpoint) throws EppToolsException {
-
-		Service service = new Service();
-
-		try {
-
-			for (EppXriServiceEndpointPath eppXriServiceEndpointPath : (List<EppXriServiceEndpointPath>) eppXriServiceEndpoint.getPath()) service.addPath(makePath(eppXriServiceEndpointPath));
-			for (EppXriServiceEndpointType eppXriServiceEndpointType : (List<EppXriServiceEndpointType>) eppXriServiceEndpoint.getType()) service.addType(makeType(eppXriServiceEndpointType));
-			for (EppXriServiceEndpointMediaType eppXriServiceEndpointMediaType : (List<EppXriServiceEndpointMediaType>) eppXriServiceEndpoint.getMediaType()) service.addMediaType(makeMediaType(eppXriServiceEndpointMediaType));
-			for (EppXriURI eppXriURI : (List<EppXriURI>) eppXriServiceEndpoint.getURI()) service.addURI(makeUri(eppXriURI));
-			for (EppXriRef eppXriRef : (List<EppXriRef>) eppXriServiceEndpoint.getRef()) service.addRef(makeRef(eppXriRef));
-			for (EppXriURI eppXriURI : (List<EppXriURI>) eppXriServiceEndpoint.getRedirect()) service.addRedirect(makeRedirect(eppXriURI));
-			for (EppXriSynonym eppXriSynonym : (List<EppXriSynonym>) eppXriServiceEndpoint.getLocalID()) service.addLocalID(makeLocalID(eppXriSynonym));
-			if (eppXriServiceEndpoint.getPriority() != -1) service.setPriority(new Integer(eppXriServiceEndpoint.getPriority()));
-			if (eppXriServiceEndpoint.getExtension() != null) service.setExtension(eppXriServiceEndpoint.getExtension());
-			if (eppXriServiceEndpoint.getAuthority() != null) service.setProviderId(eppXriServiceEndpoint.getAuthority());
-		} catch (Exception ex) {
-
-			throw new EppToolsException("Cannot convert service endpoint: " + ex.getMessage(), ex);
-		}
-
-		service.getOtherChildrenVectorMap().remove(TAG_GRS_ID);
-		service.setOtherTagValues(TAG_GRS_ID, "<" + TAG_GRS_ID + ">" + eppXriServiceEndpoint.getId() + "</" + TAG_GRS_ID + ">");
-
-		return(service);
-	}
-
-	public static SEPPath makePath(EppXriServiceEndpointPath eppXriServiceEndpointPath) {
-
-		String path = eppXriServiceEndpointPath.getPath();
-		if (path != null && path.trim().equals("")) path = null;
-
-		String match = eppXriServiceEndpointPath.getMatch();
-		if (match != null && match.trim().equals("")) match = null;
-
-		// TODO: the toolkit doesn't tell us if the select attribute exists or not
-		Boolean select = new Boolean(eppXriServiceEndpointPath.getSelect());
-
-		return(new SEPPath(path, match, select));
-	}
-
-	public static SEPType makeType(EppXriServiceEndpointType eppXriServiceEndpointType) {
-
-		String type = eppXriServiceEndpointType.getType();
-		if (type != null && type.trim().equals("")) type = null;
-
-		String match = eppXriServiceEndpointType.getMatch();
-		if (match != null && match.trim().equals("")) match = null;
-
-		// TODO: the toolkit doesn't tell us if the select attribute exists or not
-		Boolean select = new Boolean(eppXriServiceEndpointType.getSelect());
-
-		return(new SEPType(type, match, select)); 
-	}
-
-	public static SEPMediaType makeMediaType(EppXriServiceEndpointMediaType eppXriServiceEndpointMediaType) {
-
-		String mediaType = eppXriServiceEndpointMediaType.getMediaType();
-		if (mediaType != null && mediaType.trim().equals("")) mediaType = null;
-
-		String match = eppXriServiceEndpointMediaType.getMatch();
-		if (match != null && match.trim().equals("")) match = null;
-
-		// TODO: the toolkit doesn't tell us if the select attribute exists or not
-		Boolean select = new Boolean(eppXriServiceEndpointMediaType.getSelect());
-
-		return(new SEPMediaType(mediaType, match, select)); 
-	}
-
-	public static SEPUri makeUri(EppXriURI eppXriURI) {
-
-		try {
-
-			SEPUri uri = new SEPUri(eppXriURI.getURI());
-			if (eppXriURI.getPriority() != -1) uri.setPriority(eppXriURI.getPriority());
-			if (eppXriURI.getAppend() != null) uri.setAppend(eppXriURI.getAppend());
-			return(uri);
-		} catch (URISyntaxException ex) {
-
-			throw new RuntimeException(ex);
-		} 
-	}
-
-	public static Ref makeRef(EppXriRef eppXriRef) {
-
-		Ref ref = new Ref(eppXriRef.getRef());
-		if (eppXriRef.getPriority() != -1) ref.setPriority(new Integer(eppXriRef.getPriority()));
-		return(ref);
-	}
-
-	public static Redirect makeRedirect(EppXriURI eppXriURI) {
-
-		Redirect redirect = new Redirect(eppXriURI.getURI());
-		if (eppXriURI.getPriority() != -1) redirect.setPriority(new Integer(eppXriURI.getPriority()));
-		if (eppXriURI.getAppend() != null) redirect.setAppend(eppXriURI.getAppend());
-		return(redirect);
-	}
-
-	public static EquivID makeEquivID(EppXriSynonym eppXriSynonym) {
-
-		EquivID equivID = new EquivID(eppXriSynonym.getSynonym());
-		if (eppXriSynonym.getPriority() != -1) equivID.setPriority(new Integer(eppXriSynonym.getPriority()));
-		return(equivID);
-	}
-
-	public static LocalID makeLocalID(EppXriSynonym eppXriSynonym) {
-
-		LocalID localID = new LocalID(eppXriSynonym.getSynonym());
-		if (eppXriSynonym.getPriority() != -1) localID.setPriority(new Integer(eppXriSynonym.getPriority()));
-		return(localID);
 	}
 
 	/*
@@ -738,7 +506,7 @@ public class EppTools implements Serializable {
 	 * Methods for authority data
 	 */
 
-	public void initAuthorityFromXrd(char gcs, String authId, String password, XRD xrd) throws EppToolsException {
+/*	public void initAuthority(char gcs, String authId, String password, EppCommandUpdateXriAuthority eppCommandUpdateXriAuthority) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
@@ -751,7 +519,7 @@ public class EppTools implements Serializable {
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
-	}
+	}*/
 
 	public void setSocialData(char gcs, String authId, String password, EppXriSocialData eppXriSocialData) throws EppToolsException {
 
@@ -771,12 +539,12 @@ public class EppTools implements Serializable {
 		this.setSocialData(gcs, authId, password, eppXriSocialData);
 	}
 
-	public void setCanonicalEquivID(char gcs, String authId, String password, CanonicalEquivID canonicalEquivID) throws EppToolsException {
+	public void setCanonicalEquivID(char gcs, String authId, String password, String canonicalEquivIDString) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		eppCommandUpdate.setCanonicalEquivID(canonicalEquivID.getValue());
+		eppCommandUpdate.setCanonicalEquivID(canonicalEquivIDString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
@@ -793,45 +561,45 @@ public class EppTools implements Serializable {
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void addEquivIDs(char gcs, String authId, String password, EquivID[] equivIDs) throws EppToolsException {
+	public void addEquivIDs(char gcs, String authId, String password, EppXriSynonym[] eppXriSynonyms) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (EquivID equivID : equivIDs) eppCommandUpdate.addEquivID(makeEppXriSynonym(equivID));
+		for (EppXriSynonym equivID : eppXriSynonyms) eppCommandUpdate.addEquivID(equivID);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void addRefs(char gcs, String authId, String password, Ref[] refs) throws EppToolsException {
+	public void addRefs(char gcs, String authId, String password, EppXriRef[] eppXriRefs) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (Ref ref : refs) eppCommandUpdate.addRef(makeEppXriRef(ref));
+		for (EppXriRef eppXriRef : eppXriRefs) eppCommandUpdate.addRef(eppXriRef);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void addRedirects(char gcs, String authId, String password, Redirect[] redirects) throws EppToolsException {
+	public void addRedirects(char gcs, String authId, String password, EppXriURI[] eppXriURIs) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (Redirect redirect : redirects) eppCommandUpdate.addRedirect(makeEppXriURI(redirect));
+		for (EppXriURI eppXriURI : eppXriURIs) eppCommandUpdate.addRedirect(eppXriURI);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void addServices(char gcs, String authId, String password, Service[] services) throws EppToolsException {
+	public void addServices(char gcs, String authId, String password, EppXriServiceEndpoint[] services) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (Service service : services) eppCommandUpdate.addServiceEndpoint(makeEppXriServiceEndpoint(service));
+		for (EppXriServiceEndpoint service : services) eppCommandUpdate.addServiceEndpoint(service);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
@@ -848,56 +616,56 @@ public class EppTools implements Serializable {
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void deleteCanonicalEquivID(char gcs, String authId, String password, CanonicalEquivID canonicalEquivID) throws EppToolsException {
+	public void deleteCanonicalEquivID(char gcs, String authId, String password, String canonicalEquivIDString) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		eppCommandUpdate.removeCanonicalEquivID(canonicalEquivID.getValue());
+		eppCommandUpdate.removeCanonicalEquivID(canonicalEquivIDString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void deleteEquivIDs(char gcs, String authId, String password, EquivID[] equivIDs) throws EppToolsException {
+	public void deleteEquivIDs(char gcs, String authId, String password, String[] equivIDStrings) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (EquivID equivID : equivIDs) eppCommandUpdate.removeEquivID(equivID.getValue());
+		for (String equivIDString : equivIDStrings) eppCommandUpdate.removeEquivID(equivIDString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void deleteRefs(char gcs, String authId, String password, Ref[] refs) throws EppToolsException {
+	public void deleteRefs(char gcs, String authId, String password, String[] refStrings) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (Ref ref : refs) eppCommandUpdate.removeRef(ref.getValue());
+		for (String refString : refStrings) eppCommandUpdate.removeRef(refString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void deleteRedirects(char gcs, String authId, String password, Redirect[] redirects) throws EppToolsException {
+	public void deleteRedirects(char gcs, String authId, String password, String[] redirectStrings) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (Redirect redirect : redirects) eppCommandUpdate.removeRedirect(redirect.getValue());
+		for (String redirectString : redirectStrings) eppCommandUpdate.removeRedirect(redirectString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
 	}
 
-	public void deleteServices(char gcs, String authId, String password, Service[] services) throws EppToolsException {
+	public void deleteServiceIds(char gcs, String authId, String password, String[] serviceIds) throws EppToolsException {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
 		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
-		for (Service service : services) eppCommandUpdate.removeServiceEndpoint(((Element) service.getOtherTagValues(TAG_GRS_ID).get(0)).getTextContent());
+		for (String service : serviceIds) eppCommandUpdate.removeServiceEndpoint(service);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
 		this.send(gcs, eppCommandUpdate);
@@ -1643,7 +1411,7 @@ public class EppTools implements Serializable {
 	private EppResponse send(char gcs, EppCommand eppCommand) throws EppToolsException {
 
 		int i = 0;
-		
+
 		if (gcs == '=') while (this.eppBlockedEqual[i] != null && this.eppBlockedEqual[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
 		if (gcs == '@') while (this.eppBlockedAt[i] != null && this.eppBlockedAt[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
 
@@ -1681,7 +1449,7 @@ public class EppTools implements Serializable {
 	 * - our thread ID
 	 * - a timestamp
 	 */
-	private String generateTransactionId() {
+	String generateTransactionId() {
 
 		this.currentTransactionNumber++;
 
