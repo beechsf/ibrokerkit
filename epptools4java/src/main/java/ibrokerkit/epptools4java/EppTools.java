@@ -90,9 +90,9 @@ public class EppTools implements Serializable {
 	private int numSessions;
 	private transient Store store;
 
-	private transient EppSession[] eppSessionEqual, eppSessionAt;
-	private transient EppChannel[] eppChannelEqual, eppChannelAt;
-	private Boolean[] eppBlockedEqual, eppBlockedAt;
+	private transient EppSession[] eppSessionEqual, eppSessionPlus;
+	private transient EppChannel[] eppChannelEqual, eppChannelPlus;
+	private Boolean[] eppBlockedEqual, eppBlockedPlus;
 
 	private final List<EppListener> eppListeners;
 
@@ -111,11 +111,11 @@ public class EppTools implements Serializable {
 		this.numSessions = Integer.parseInt(properties.getProperty("num-sessions", DEFAULT_NUM_SESSIONS));
 
 		this.eppSessionEqual = new EppSession[this.numSessions];
-		this.eppSessionAt = new EppSession[this.numSessions];
+		this.eppSessionPlus = new EppSession[this.numSessions];
 		this.eppChannelEqual = new EppChannel[this.numSessions];
-		this.eppChannelAt = new EppChannel[this.numSessions];
+		this.eppChannelPlus = new EppChannel[this.numSessions];
 		this.eppBlockedEqual = new Boolean[this.numSessions];
-		this.eppBlockedAt = new Boolean[this.numSessions];
+		this.eppBlockedPlus = new Boolean[this.numSessions];
 
 		this.eppListeners = new ArrayList<EppListener> ();
 	}
@@ -142,10 +142,10 @@ public class EppTools implements Serializable {
 
 		try {
 
-			this.beginSessionAt(null, 0);
+			this.beginSessionPlus(null, 0);
 		} catch (Exception ex) {
 
-			log.warn("Cannot initialize @ session 0.");
+			log.warn("Cannot initialize + session 0.");
 		}
 
 		// init store
@@ -167,7 +167,7 @@ public class EppTools implements Serializable {
 		// close EPP session
 
 		for (int i=0; i<this.eppSessionEqual.length; i++) this.endSessionEqual(i);
-		for (int i=0; i<this.eppSessionAt.length; i++) this.endSessionAt(i);
+		for (int i=0; i<this.eppSessionPlus.length; i++) this.endSessionPlus(i);
 
 		// close store
 
@@ -185,8 +185,8 @@ public class EppTools implements Serializable {
 			this.endSessionEqual(0);
 			this.beginSessionEqual(newPassword, 0);
 
-			this.endSessionAt(0);
-			this.beginSessionAt(newPassword, 0);
+			this.endSessionPlus(0);
+			this.beginSessionPlus(newPassword, 0);
 		} catch (Exception ex) {
 
 			throw new EppToolsException(ex.getMessage(), ex);
@@ -1015,14 +1015,14 @@ public class EppTools implements Serializable {
 	/**
 	 * Start the session and log in.
 	 */
-	private synchronized void beginSessionAt(String newPassword, int i) throws Exception {
+	private synchronized void beginSessionPlus(String newPassword, int i) throws Exception {
 
-		if (this.eppSessionAt == null) this.eppSessionAt = new EppSession[this.numSessions];
-		if (this.eppChannelAt == null) this.eppChannelAt = new EppChannel[this.numSessions];
+		if (this.eppSessionPlus == null) this.eppSessionPlus = new EppSession[this.numSessions];
+		if (this.eppChannelPlus == null) this.eppChannelPlus = new EppChannel[this.numSessions];
 
 		// end session first if it's open
 
-		if (this.eppChannelAt[i] != null || this.eppSessionAt[i] != null) endSessionAt(i);
+		if (this.eppChannelPlus[i] != null || this.eppSessionPlus[i] != null) endSessionPlus(i);
 
 		// open session and channel
 
@@ -1032,26 +1032,26 @@ public class EppTools implements Serializable {
 
 			if (Boolean.parseBoolean(this.properties.getProperty("epp-usetls"))) {
 
-				this.eppSessionAt[i] = new EppSessionTcp();
-				this.eppSessionAt[i].init(this.properties);
+				this.eppSessionPlus[i] = new EppSessionTcp();
+				this.eppSessionPlus[i].init(this.properties);
 			} else {
 
-				this.eppSessionAt[i] = new EppSessionTcp(false);
+				this.eppSessionPlus[i] = new EppSessionTcp(false);
 			}
 
-			String eppHost = this.properties.getProperty("epp-host-at");
-			int eppPort = Integer.parseInt(this.properties.getProperty("epp-port-at"));
+			String eppHost = this.properties.getProperty("epp-host-plus");
+			int eppPort = Integer.parseInt(this.properties.getProperty("epp-port-plus"));
 
-			log.info("{@ " + i + "} Trying to connect to " + eppHost + ":" + Integer.toString(eppPort) + " for @ services.");
+			log.info("{+ " + i + "} Trying to connect to " + eppHost + ":" + Integer.toString(eppPort) + " for + services.");
 
-			eppGreeting = this.eppSessionAt[i].connect(eppHost, eppPort);
-			if (eppGreeting == null) throw new EppToolsException("{@ " + i + "} No greeting on connect: " + this.eppSessionAt[i].getException().getMessage(), this.eppSessionAt[i].getException());
+			eppGreeting = this.eppSessionPlus[i].connect(eppHost, eppPort);
+			if (eppGreeting == null) throw new EppToolsException("{+ " + i + "} No greeting on connect: " + this.eppSessionPlus[i].getException().getMessage(), this.eppSessionPlus[i].getException());
 
-			this.eppChannelAt[i] = this.eppSessionAt[i].getChannel();
+			this.eppChannelPlus[i] = this.eppSessionPlus[i].getChannel();
 		} catch (Exception ex) {
 
-			this.eppSessionAt[i] = null;
-			this.eppChannelAt[i] = null;
+			this.eppSessionPlus[i] = null;
+			this.eppChannelPlus[i] = null;
 			log.error(ex.getMessage(), ex);
 			throw ex;
 		}
@@ -1065,7 +1065,7 @@ public class EppTools implements Serializable {
 			eppCommandLogin.setCreds(new EppCreds(this.properties.getProperty("epp-username"), this.properties.getProperty("epp-password")));
 			if (newPassword != null) eppCommandLogin.setNewPassword(newPassword);
 
-			EppResponse eppResponse = this.eppChannelAt[i].start(eppCommandLogin);
+			EppResponse eppResponse = this.eppChannelPlus[i].start(eppCommandLogin);
 			EppResult eppResult = (EppResult) eppResponse.getResult().get(0);
 
 			if (eppResult == null) throw new EppToolsException("No result");
@@ -1073,8 +1073,8 @@ public class EppTools implements Serializable {
 			if (eppResponse.getTransactionId() == null || eppResponse.getTransactionId().getClientTransactionId() == null || ! (eppResponse.getTransactionId().getClientTransactionId().equals(this.getLastTransactionId()))) throw new EppToolsException("Unexpected clTRID: " + eppResponse.getTransactionId().getClientTransactionId());
 		} catch (Exception ex) {
 
-			this.eppSessionAt = null;
-			this.eppChannelAt = null;
+			this.eppSessionPlus = null;
+			this.eppChannelPlus = null;
 			log.error(ex.getMessage(), ex);
 			throw ex;
 		}
@@ -1113,31 +1113,31 @@ public class EppTools implements Serializable {
 	/**
 	 * End the session.
 	 */
-	private synchronized void endSessionAt(int i) {
+	private synchronized void endSessionPlus(int i) {
 
 		// shut down channel and session
 
-		/*		log.debug("{@" + " " + i + "} Terminating channel to @ server.");
+		/*		log.debug("{+" + " " + i + "} Terminating channel to + server.");
 
 		if (this.eppChannelAt[i] != null) {
 
 			this.eppChannelAt[i].terminate();
 		}*/
 
-		log.debug("{@" + " " + i + "} Closing session to @ server.");
+		log.debug("{+" + " " + i + "} Closing session to + server.");
 
-		if (this.eppSessionAt[i] != null) {
+		if (this.eppSessionPlus[i] != null) {
 
 			try {
 
-				if (((EppSessionTcp) this.eppSessionAt[i]).getSocket() != null) ((EppSessionTcp) this.eppSessionAt[i]).getSocket().close();
+				if (((EppSessionTcp) this.eppSessionPlus[i]).getSocket() != null) ((EppSessionTcp) this.eppSessionPlus[i]).getSocket().close();
 			} catch (IOException ex) { }
 		}
 
-		this.eppSessionAt[i] = null;
-		this.eppChannelAt[i] = null;
+		this.eppSessionPlus[i] = null;
+		this.eppChannelPlus[i] = null;
 
-		log.debug("{@" + " " + i + "} Session ended to @ server.");
+		log.debug("{+" + " " + i + "} Session ended to + server.");
 	}
 
 	/**
@@ -1179,30 +1179,30 @@ public class EppTools implements Serializable {
 	 */
 	public EppChannel checkChannelAt(int i) throws EppToolsException {
 
-		synchronized (this.eppChannelAt[i]) {
+		synchronized (this.eppChannelPlus[i]) {
 
 			try {
 
-				EppGreeting eppGreeting = this.eppChannelAt[i].hello();
+				EppGreeting eppGreeting = this.eppChannelPlus[i].hello();
 				if (eppGreeting == null) throw new NullPointerException();
 			} catch (Exception ex) {
 
-				log.warn("{@ " + i + "} Channel to @ server seems to have gone away: " + ex.getMessage() + " -> Trying to restore.");
+				log.warn("{+ " + i + "} Channel to + server seems to have gone away: " + ex.getMessage() + " -> Trying to restore.");
 
 				try {
 
-					this.endSessionAt(i);
-					this.beginSessionAt(null, i);
+					this.endSessionPlus(i);
+					this.beginSessionPlus(null, i);
 				} catch (Exception ex2) {
 
 					log.error(ex2.getMessage(), ex2);
-					throw new EppToolsException("{@ " + i + "} Cannot restore channel: " + ex.getMessage(), ex);
+					throw new EppToolsException("{+ " + i + "} Cannot restore channel: " + ex.getMessage(), ex);
 				}
 
-				log.info("{@ " + i + "} Successfully restored channel after: " + ex.getMessage());
+				log.info("{+ " + i + "} Successfully restored channel after: " + ex.getMessage());
 			}
 
-			return(this.eppChannelAt[i]);
+			return(this.eppChannelPlus[i]);
 		}
 	}
 
@@ -1216,7 +1216,7 @@ public class EppTools implements Serializable {
 	 */
 	private EppResponse send(char gcs, EppCommand eppCommand, int i) throws EppToolsException {
 
-		if (gcs != '=' && gcs != '@') throw new IllegalArgumentException("GCS must be = or @.");
+		if (gcs != '=' && gcs != '+') throw new IllegalArgumentException("GCS must be = or +.");
 
 		// timestamp
 
@@ -1238,14 +1238,14 @@ public class EppTools implements Serializable {
 				eppChannel = this.eppChannelEqual[i];
 			}
 
-			if (gcs == '@') {
+			if (gcs == '+') {
 
-				if (this.eppChannelAt == null || this.eppChannelAt.length <= i || this.eppChannelAt[i] == null) {
+				if (this.eppChannelPlus == null || this.eppChannelPlus.length <= i || this.eppChannelPlus[i] == null) {
 
-					this.beginSessionAt(null, i);
+					this.beginSessionPlus(null, i);
 				}
 
-				eppChannel = this.eppChannelAt[i];
+				eppChannel = this.eppChannelPlus[i];
 			}
 
 			if (eppChannel == null) throw new IOException("{" + gcs + " " + i + "} No channel.");
@@ -1266,7 +1266,7 @@ public class EppTools implements Serializable {
 
 			log.debug("{" + gcs + " " + i + "} Blocking channel.");
 			if (gcs == '=') this.eppBlockedEqual[i] = Boolean.TRUE;
-			if (gcs == '@') this.eppBlockedAt[i] = Boolean.TRUE;
+			if (gcs == '+') this.eppBlockedPlus[i] = Boolean.TRUE;
 
 			try {
 
@@ -1303,11 +1303,11 @@ public class EppTools implements Serializable {
 							eppChannel = this.eppChannelEqual[i];
 						}
 
-						if (gcs == '@') {
+						if (gcs == '+') {
 
-							this.endSessionAt(i);
-							this.beginSessionAt(null, i);
-							eppChannel = this.eppChannelAt[i];
+							this.endSessionPlus(i);
+							this.beginSessionPlus(null, i);
+							eppChannel = this.eppChannelPlus[i];
 						}
 
 						if (eppChannel == null) throw new IOException("{" + gcs + " " + i + "} Channel has gone away.");
@@ -1365,7 +1365,7 @@ public class EppTools implements Serializable {
 
 					log.debug("{" + gcs + " " + i + "} Unblocking channel.");
 					if (gcs == '=') this.eppBlockedEqual[i] = Boolean.FALSE;
-					if (gcs == '@') this.eppBlockedAt[i] = Boolean.FALSE;
+					if (gcs == '+') this.eppBlockedPlus[i] = Boolean.FALSE;
 
 					throw new EppToolsException("{" + gcs + " " + i + "} Cannot send transaction " + eppCommand.getClientTransactionId() + " to " + gcs + " server: " + ex.getMessage(), ex);
 				}
@@ -1373,7 +1373,7 @@ public class EppTools implements Serializable {
 
 			log.debug("{" + gcs + " " + i + "} Unblocking channel.");
 			if (gcs == '=') this.eppBlockedEqual[i] = Boolean.FALSE;
-			if (gcs == '@') this.eppBlockedAt[i] = Boolean.FALSE;
+			if (gcs == '+') this.eppBlockedPlus[i] = Boolean.FALSE;
 		}
 
 		// log the successful action
@@ -1415,7 +1415,7 @@ public class EppTools implements Serializable {
 		int i = 0;
 
 		if (gcs == '=') while (this.eppBlockedEqual[i] != null && this.eppBlockedEqual[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
-		if (gcs == '@') while (this.eppBlockedAt[i] != null && this.eppBlockedAt[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
+		if (gcs == '+') while (this.eppBlockedPlus[i] != null && this.eppBlockedPlus[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
 
 		if (i == this.numSessions) throw new EppToolsException("All channels to " + gcs + " registry are blocked. Please try again later.");
 
