@@ -33,21 +33,6 @@ public class EppToolsOpenxriUtil {
 	 * Methods for authority data
 	 */
 
-/*	public static void initAuthorityFromXrd(char gcs, String authId, String password, XRD xrd) throws EppToolsException {
-
-		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
-
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, eppTools.generateTransactionId());
-		eppCommandUpdate.setCanonicalEquivID(xrd.getCanonicalEquivID().getValue());
-		for (int i=0; i<xrd.getNumEquivIDs(); i++) eppCommandUpdate.addEquivID(makeEppXriSynonym(xrd.getEquivIDAt(i)));
-		for (int i=0; i<xrd.getNumRefs(); i++) eppCommandUpdate.addRef(makeEppXriRef(xrd.getRefAt(i)));
-		for (int i=0; i<xrd.getNumRedirects(); i++) eppCommandUpdate.addRedirect(makeEppXriURI(xrd.getRedirectAt(i)));
-		for (int i=0; i<xrd.getNumServices(); i++) eppCommandUpdate.addServiceEndpoint(makeEppXriServiceEndpoint(xrd.getServiceAt(i)));
-		eppCommandUpdate.setAuthInfo(eppAuthInfo);
-
-		eppTools.send(gcs, eppCommandUpdate);
-	}*/
-
 	public static EppXriSynonym[] makeEppXriSynonyms(EquivID[] openxriEquivIDs) throws EppToolsException {
 
 		EppXriSynonym[] eppXriSynonyms = new EppXriSynonym[openxriEquivIDs.length];
