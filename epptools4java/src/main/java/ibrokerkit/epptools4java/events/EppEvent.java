@@ -1,4 +1,6 @@
-package ibrokerkit.epptools4java;
+package ibrokerkit.epptools4java.events;
+
+import ibrokerkit.epptools4java.EppTools;
 
 import java.util.Date;
 import java.util.EventObject;

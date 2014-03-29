@@ -1,17 +1,15 @@
 package ibrokerkit.epptools4java;
 
+import ibrokerkit.epptools4java.events.EppEvents;
 import ibrokerkit.epptools4java.store.Store;
 import ibrokerkit.epptools4java.store.StoreException;
 import ibrokerkit.epptools4java.store.impl.db.DatabaseStore;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.security.Security;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -26,7 +24,6 @@ import com.neulevel.epp.core.EppAuthInfo;
 import com.neulevel.epp.core.EppContactData;
 import com.neulevel.epp.core.EppError;
 import com.neulevel.epp.core.EppGenericNVPairs;
-import com.neulevel.epp.core.EppGreeting;
 import com.neulevel.epp.core.EppObject;
 import com.neulevel.epp.core.EppPeriod;
 import com.neulevel.epp.core.EppUnspec;
@@ -34,17 +31,11 @@ import com.neulevel.epp.core.command.EppCommand;
 import com.neulevel.epp.core.command.EppCommandCheck;
 import com.neulevel.epp.core.command.EppCommandCreate;
 import com.neulevel.epp.core.command.EppCommandDelete;
-import com.neulevel.epp.core.command.EppCommandLogin;
 import com.neulevel.epp.core.command.EppCommandPoll;
 import com.neulevel.epp.core.command.EppCommandTransfer;
-import com.neulevel.epp.core.command.EppCreds;
 import com.neulevel.epp.core.response.EppResponse;
 import com.neulevel.epp.core.response.EppResponseData;
 import com.neulevel.epp.core.response.EppResponseDataInfo;
-import com.neulevel.epp.core.response.EppResult;
-import com.neulevel.epp.transport.EppChannel;
-import com.neulevel.epp.transport.EppSession;
-import com.neulevel.epp.transport.tcp.EppSessionTcp;
 import com.neulevel.epp.xri.EppXriAuthority;
 import com.neulevel.epp.xri.EppXriName;
 import com.neulevel.epp.xri.EppXriNumber;
@@ -79,22 +70,18 @@ public class EppTools implements Serializable {
 
 	private static final Logger log = LoggerFactory.getLogger(EppTools.class.getName());
 
-	private static final String DEFAULT_NUM_SESSIONS = "5";
-
 	public static SimpleDateFormat xmlDateFormat;
 	public static SimpleDateFormat xmlShortDateFormat;
 
 	private static Random random;
 
 	private Properties properties;
-	private int numSessions;
-	private transient Store store;
 
-	private transient EppSession[] eppSessionEqual, eppSessionAt;
-	private transient EppChannel[] eppChannelEqual, eppChannelAt;
-	private Boolean[] eppBlockedEqual, eppBlockedAt;
+	private Store store;
+	private EppTransactionIdGenerator eppTransactionIdGenerator;
+	private EppEvents eppEvents;
 
-	private final List<EppListener> eppListeners;
+	private final Map<Character, EppConnection> eppConnections;
 
 	static {
 
@@ -108,16 +95,12 @@ public class EppTools implements Serializable {
 	public EppTools(Properties properties) {
 
 		this.properties = properties;
-		this.numSessions = Integer.parseInt(properties.getProperty("num-sessions", DEFAULT_NUM_SESSIONS));
 
-		this.eppSessionEqual = new EppSession[this.numSessions];
-		this.eppSessionAt = new EppSession[this.numSessions];
-		this.eppChannelEqual = new EppChannel[this.numSessions];
-		this.eppChannelAt = new EppChannel[this.numSessions];
-		this.eppBlockedEqual = new Boolean[this.numSessions];
-		this.eppBlockedAt = new Boolean[this.numSessions];
+		this.store = new DatabaseStore(this.properties);
+		this.eppTransactionIdGenerator = new EppTransactionIdGenerator(this.properties);
+		this.eppEvents = new EppEvents();
 
-		this.eppListeners = new ArrayList<EppListener> ();
+		this.eppConnections = new HashMap<Character, EppConnection> ();
 	}
 
 	/**
@@ -130,31 +113,32 @@ public class EppTools implements Serializable {
 
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 
-		// init the first EPP session. additional sessions can be opened later.
+		// create EPP connections
 
-		try {
+		String eppHostEqual = this.properties.getProperty("epp-host-equal");
+		Integer eppPortEqual = Integer.valueOf(this.properties.getProperty("epp-port-equal"));
 
-			this.beginSessionEqual(null, 0);
-		} catch (Exception ex) {
+		String eppHostPlus = this.properties.getProperty("epp-host-plus");
+		Integer eppPortPlus = Integer.valueOf(this.properties.getProperty("epp-port-plus"));
 
-			log.warn("Cannot initialize = session 0.");
-		}
+		EppConnection eppConnectionEqual = new EppConnection('=', eppHostEqual, eppPortEqual, this.properties, this.store, this.eppTransactionIdGenerator, this.eppEvents);
+		EppConnection eppConnectionPlus = new EppConnection('+', eppHostPlus, eppPortPlus, this.properties, this.store, this.eppTransactionIdGenerator, this.eppEvents);
 
-		try {
+		this.eppConnections.put(Character.valueOf('='), eppConnectionEqual);
+		this.eppConnections.put(Character.valueOf('+'), eppConnectionPlus);
 
-			this.beginSessionAt(null, 0);
-		} catch (Exception ex) {
+		// init EPP connections
 
-			log.warn("Cannot initialize @ session 0.");
+		for (EppConnection eppConnection : this.eppConnections.values()) {
+
+			eppConnection.init();
 		}
 
 		// init store
 
-		if (this.store == null) {
+		this.store.init();
 
-			this.store = new DatabaseStore(this.properties);
-			this.store.init();
-		}
+		// done
 
 		log.debug("Done.");
 	}
@@ -164,10 +148,12 @@ public class EppTools implements Serializable {
 	 */
 	public void close() {
 
-		// close EPP session
+		// close EPP connections
 
-		for (int i=0; i<this.eppSessionEqual.length; i++) this.endSessionEqual(i);
-		for (int i=0; i<this.eppSessionAt.length; i++) this.endSessionAt(i);
+		for (EppConnection eppConnection : this.eppConnections.values()) {
+
+			eppConnection.close();
+		}
 
 		// close store
 
@@ -180,22 +166,15 @@ public class EppTools implements Serializable {
 	 */
 	public synchronized void changePassword(String newPassword) throws EppToolsException {
 
-		try {
+		for (EppConnection eppConnection : this.eppConnections.values()) {
 
-			this.endSessionEqual(0);
-			this.beginSessionEqual(newPassword, 0);
-
-			this.endSessionAt(0);
-			this.beginSessionAt(newPassword, 0);
-		} catch (Exception ex) {
-
-			throw new EppToolsException(ex.getMessage(), ex);
+			eppConnection.changePassword(newPassword);
 		}
 	}
 
 	public boolean isOwnClientId(String clientId) {
 
-		return(clientId.equals(this.properties.getProperty("epp-clientid")));
+		return clientId.equals(this.properties.getProperty("epp-clientid"));
 	}
 
 	/*
@@ -298,7 +277,7 @@ public class EppTools implements Serializable {
 
 		log.debug("poll(gcs=" + gcs + ", ack=" + ack + ")");
 
-		EppCommandPoll eppCommandPoll = new EppCommandPoll(this.generateTransactionId());
+		EppCommandPoll eppCommandPoll = new EppCommandPoll(this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandPoll.setOperation(EppCommandPoll.OPTYPE_REQ);
 
 		EppResponse eppResponse = this.send(gcs, eppCommandPoll);
@@ -325,7 +304,7 @@ public class EppTools implements Serializable {
 
 			// ack the poll
 
-			eppCommandPoll = new EppCommandPoll(this.generateTransactionId());
+			eppCommandPoll = new EppCommandPoll(this.eppTransactionIdGenerator.generateTransactionId());
 			eppCommandPoll.setOperation(EppCommandPoll.OPTYPE_ACK);
 			eppCommandPoll.setMessageId(messageId);
 
@@ -359,7 +338,7 @@ public class EppTools implements Serializable {
 		if (inumber != null) eppXriAuthority.addINumber(inumber);
 		if (iname != null) eppXriAuthority.addIName(iname);
 
-		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriAuthority, this.generateTransactionId());
+		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriAuthority, this.eppTransactionIdGenerator.generateTransactionId());
 
 		if (extension != null) {
 
@@ -407,14 +386,14 @@ public class EppTools implements Serializable {
 
 	public void deleteAuthority(char gcs, String authId) throws EppToolsException {
 
-		EppCommandDelete eppCommandDelete = EppCommand.delete(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandDelete eppCommandDelete = EppCommand.delete(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 
 		this.send(gcs, eppCommandDelete);
 	}
 
 	public boolean checkAuthority(char gcs, String authId) throws EppToolsException {
 
-		EppCommandCheck eppCommandCheck = EppCommand.check(EppObject.XRI_AUTHORITY, this.generateTransactionId());
+		EppCommandCheck eppCommandCheck = EppCommand.check(EppObject.XRI_AUTHORITY, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandCheck.add(authId);
 
 		EppResponse eppResponse = this.send(gcs, eppCommandCheck);
@@ -427,7 +406,7 @@ public class EppTools implements Serializable {
 
 	public EppXriAuthority infoAuthority(char gcs, String authId, boolean all) throws EppToolsException {
 
-		EppCommandInfoXriAuthority eppCommandInfo = (EppCommandInfoXriAuthority) EppCommand.info(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandInfoXriAuthority eppCommandInfo = (EppCommandInfoXriAuthority) EppCommand.info(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		if (all) eppCommandInfo.setControl(EppCommandInfoXriAuthority.CONTROL_ALL);
 
 		EppResponse eppResponse;
@@ -450,7 +429,7 @@ public class EppTools implements Serializable {
 
 	public String transferRequestAuthority(char gcs, String authId) throws EppToolsException {
 
-		EppCommandTransferXriAuthority eppCommandTransfer = (EppCommandTransferXriAuthority) EppCommand.transfer(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandTransferXriAuthority eppCommandTransfer = (EppCommandTransferXriAuthority) EppCommand.transfer(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandTransfer.setOperation(EppCommandTransfer.OPTYPE_REQUEST);
 
 		EppResponse eppResponse = this.send(gcs, eppCommandTransfer);
@@ -466,7 +445,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandTransferXriAuthority eppCommandTransfer = (EppCommandTransferXriAuthority) EppCommand.transfer(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandTransferXriAuthority eppCommandTransfer = (EppCommandTransferXriAuthority) EppCommand.transfer(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandTransfer.setOperation(EppCommandTransfer.OPTYPE_APPROVE);
 		eppCommandTransfer.setAuthInfo(eppAuthInfo);
 		eppCommandTransfer.setTransferToken(transferToken);
@@ -478,7 +457,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandTransferXriAuthority eppCommandTransfer = (EppCommandTransferXriAuthority) EppCommand.transfer(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandTransferXriAuthority eppCommandTransfer = (EppCommandTransferXriAuthority) EppCommand.transfer(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandTransfer.setOperation(EppCommandTransfer.OPTYPE_REJECT);
 		eppCommandTransfer.setAuthInfo(eppAuthInfo);
 		eppCommandTransfer.setTransferToken(transferToken);
@@ -490,7 +469,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandTransfer eppCommandTransfer = EppCommand.transfer(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandTransfer eppCommandTransfer = EppCommand.transfer(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandTransfer.setOperation(EppCommandTransfer.OPTYPE_QUERY);
 		eppCommandTransfer.setAuthInfo(eppAuthInfo);
 
@@ -510,7 +489,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandUpdate.setCanonicalEquivID(xrd.getCanonicalEquivID().getValue());
 		for (int i=0; i<xrd.getNumEquivIDs(); i++) eppCommandUpdate.addEquivID(makeEppXriSynonym(xrd.getEquivIDAt(i)));
 		for (int i=0; i<xrd.getNumRefs(); i++) eppCommandUpdate.addRef(makeEppXriRef(xrd.getRefAt(i)));
@@ -525,7 +504,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandUpdate.setNewSocialData(eppXriSocialData);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -543,7 +522,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandUpdate.setCanonicalEquivID(canonicalEquivIDString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -554,7 +533,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandUpdate.setNewExtension(extension);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -565,7 +544,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (EppXriSynonym equivID : eppXriSynonyms) eppCommandUpdate.addEquivID(equivID);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -576,7 +555,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (EppXriRef eppXriRef : eppXriRefs) eppCommandUpdate.addRef(eppXriRef);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -587,7 +566,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (EppXriURI eppXriURI : eppXriURIs) eppCommandUpdate.addRedirect(eppXriURI);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -600,7 +579,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (EppXriServiceEndpoint eppXriServiceEndpoint : eppXriServiceEndpoints) eppCommandUpdate.addServiceEndpoint(eppXriServiceEndpoint);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -611,7 +590,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (String key : keys) eppCommandUpdate.addDiscoverykey(key);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -622,7 +601,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandUpdate.removeCanonicalEquivID(canonicalEquivIDString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -633,7 +612,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (String equivIDString : equivIDStrings) eppCommandUpdate.removeEquivID(equivIDString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -644,7 +623,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (String refString : refStrings) eppCommandUpdate.removeRef(refString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -655,7 +634,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (String redirectString : redirectStrings) eppCommandUpdate.removeRedirect(redirectString);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -666,7 +645,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (String service : serviceIds) eppCommandUpdate.removeServiceEndpoint(service);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -677,7 +656,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.generateTransactionId());
+		EppCommandUpdateXriAuthority eppCommandUpdate = (EppCommandUpdateXriAuthority) EppCommand.update(EppObject.XRI_AUTHORITY, authId, this.eppTransactionIdGenerator.generateTransactionId());
 		for (String key : keys) eppCommandUpdate.removeDiscoverykey(key);
 		eppCommandUpdate.setAuthInfo(eppAuthInfo);
 
@@ -697,7 +676,7 @@ public class EppTools implements Serializable {
 		eppXriNumber.setAuthorityId(authId);
 		eppXriNumber.setPeriod(eppPeriod);
 
-		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriNumber, this.generateTransactionId());
+		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriNumber, this.eppTransactionIdGenerator.generateTransactionId());
 
 		if (extension != null) {
 
@@ -733,14 +712,14 @@ public class EppTools implements Serializable {
 
 	public void deleteInumber(char gcs, String inumber) throws EppToolsException {
 
-		EppCommandDelete eppCommandDelete = EppCommand.delete(EppObject.XRI_INUMBER, inumber, this.generateTransactionId());
+		EppCommandDelete eppCommandDelete = EppCommand.delete(EppObject.XRI_INUMBER, inumber, this.eppTransactionIdGenerator.generateTransactionId());
 
 		this.send(gcs, eppCommandDelete);
 	}
 
 	public boolean checkInumber(char gcs, String inumber) throws EppToolsException {
 
-		EppCommandCheck eppCommandCheck = EppCommand.check(EppObject.XRI_INUMBER, this.generateTransactionId());
+		EppCommandCheck eppCommandCheck = EppCommand.check(EppObject.XRI_INUMBER, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandCheck.add(inumber);
 
 		EppResponse eppResponse = this.send(gcs, eppCommandCheck);
@@ -753,7 +732,7 @@ public class EppTools implements Serializable {
 
 	public EppXriNumber infoInumber(char gcs, String inumber) throws EppToolsException {
 
-		EppCommandInfoXriNumber eppCommandInfo = (EppCommandInfoXriNumber) EppCommand.info(EppObject.XRI_INUMBER, inumber, this.generateTransactionId());
+		EppCommandInfoXriNumber eppCommandInfo = (EppCommandInfoXriNumber) EppCommand.info(EppObject.XRI_INUMBER, inumber, this.eppTransactionIdGenerator.generateTransactionId());
 
 		EppResponse eppResponse;
 
@@ -777,7 +756,7 @@ public class EppTools implements Serializable {
 
 		EppPeriod eppPeriod = new EppPeriod(years, EppPeriod.UNIT_YEAR);
 
-		EppCommandRenewXriNumber eppCommandRenew = (EppCommandRenewXriNumber) EppCommand.renew(EppObject.XRI_INUMBER, inumber, this.generateTransactionId());
+		EppCommandRenewXriNumber eppCommandRenew = (EppCommandRenewXriNumber) EppCommand.renew(EppObject.XRI_INUMBER, inumber, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandRenew.setPeriod(eppPeriod);
 		eppCommandRenew.setCurrentExpireDate(curExpDate);
 
@@ -801,7 +780,7 @@ public class EppTools implements Serializable {
 		eppXriName.setAuthorityId(authId);
 		eppXriName.setPeriod(eppPeriod);
 
-		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriName, this.generateTransactionId());
+		EppCommandCreate eppCommandCreate = EppCommand.create(eppXriName, this.eppTransactionIdGenerator.generateTransactionId());
 
 		if (extension != null) {
 
@@ -827,14 +806,14 @@ public class EppTools implements Serializable {
 
 	public void deleteIname(char gcs, String iname) throws EppToolsException {
 
-		EppCommandDelete eppCommandDelete = EppCommand.delete(EppObject.XRI_INAME, iname, this.generateTransactionId());
+		EppCommandDelete eppCommandDelete = EppCommand.delete(EppObject.XRI_INAME, iname, this.eppTransactionIdGenerator.generateTransactionId());
 
 		this.send(gcs, eppCommandDelete);
 	}
 
 	public boolean checkIname(char gcs, String iname) throws EppToolsException {
 
-		EppCommandCheck eppCommandCheck = EppCommand.check(EppObject.XRI_INAME, this.generateTransactionId());
+		EppCommandCheck eppCommandCheck = EppCommand.check(EppObject.XRI_INAME, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandCheck.add(iname);
 
 		EppResponse eppResponse = this.send(gcs, eppCommandCheck);
@@ -847,7 +826,7 @@ public class EppTools implements Serializable {
 
 	public EppXriName infoIname(char gcs, String iname) throws EppToolsException {
 
-		EppCommandInfoXriName eppCommandInfo = (EppCommandInfoXriName) EppCommand.info(EppObject.XRI_INAME, iname, this.generateTransactionId());
+		EppCommandInfoXriName eppCommandInfo = (EppCommandInfoXriName) EppCommand.info(EppObject.XRI_INAME, iname, this.eppTransactionIdGenerator.generateTransactionId());
 
 		EppResponse eppResponse;
 
@@ -871,7 +850,7 @@ public class EppTools implements Serializable {
 
 		EppPeriod eppPeriod = new EppPeriod(years, EppPeriod.UNIT_YEAR);
 
-		EppCommandRenewXriName eppCommandRenew = (EppCommandRenewXriName) EppCommand.renew(EppObject.XRI_INAME, iname, this.generateTransactionId());
+		EppCommandRenewXriName eppCommandRenew = (EppCommandRenewXriName) EppCommand.renew(EppObject.XRI_INAME, iname, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandRenew.setPeriod(eppPeriod);
 		eppCommandRenew.setCurrentExpireDate(curExpDate);
 
@@ -887,7 +866,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandTransferXriName eppCommandTransfer = (EppCommandTransferXriName) EppCommand.transfer(EppObject.XRI_INAME, iname, this.generateTransactionId());
+		EppCommandTransferXriName eppCommandTransfer = (EppCommandTransferXriName) EppCommand.transfer(EppObject.XRI_INAME, iname, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandTransfer.setOperation(EppCommandTransfer.OPTYPE_REQUEST);
 		eppCommandTransfer.setTarget(authId, eppAuthInfo);
 
@@ -904,7 +883,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandTransferXriName eppCommandTransfer = (EppCommandTransferXriName) EppCommand.transfer(EppObject.XRI_INAME, iname, this.generateTransactionId());
+		EppCommandTransferXriName eppCommandTransfer = (EppCommandTransferXriName) EppCommand.transfer(EppObject.XRI_INAME, iname, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandTransfer.setOperation(EppCommandTransfer.OPTYPE_APPROVE);
 		eppCommandTransfer.setAuthInfo(eppAuthInfo);
 		eppCommandTransfer.setTransferToken(transferToken);
@@ -916,7 +895,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandTransferXriName eppCommandTransfer = (EppCommandTransferXriName) EppCommand.transfer(EppObject.XRI_INAME, iname, this.generateTransactionId());
+		EppCommandTransferXriName eppCommandTransfer = (EppCommandTransferXriName) EppCommand.transfer(EppObject.XRI_INAME, iname, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandTransfer.setOperation(EppCommandTransfer.OPTYPE_REJECT);
 		eppCommandTransfer.setAuthInfo(eppAuthInfo);
 		eppCommandTransfer.setTransferToken(transferToken);
@@ -928,7 +907,7 @@ public class EppTools implements Serializable {
 
 		EppAuthInfo eppAuthInfo = new EppAuthInfo(EppAuthInfo.TYPE_PW, password);
 
-		EppCommandTransfer eppCommandTransfer = EppCommand.transfer(EppObject.XRI_INAME, iname, this.generateTransactionId());
+		EppCommandTransfer eppCommandTransfer = EppCommand.transfer(EppObject.XRI_INAME, iname, this.eppTransactionIdGenerator.generateTransactionId());
 		eppCommandTransfer.setOperation(EppCommandTransfer.OPTYPE_QUERY);
 		eppCommandTransfer.setAuthInfo(eppAuthInfo);
 
@@ -941,573 +920,19 @@ public class EppTools implements Serializable {
 	}
 
 	/*
-	 * Helper methods for maintaining the session
+	 * Sending
 	 */
 
-	/**
-	 * Start the session and log in.
-	 */
-	private synchronized void beginSessionEqual(String newPassword, int i) throws Exception {
+	public EppResponse send(char gcs, EppCommand eppCommand) throws EppToolsException {
 
-		if (this.eppSessionEqual == null) this.eppSessionEqual = new EppSession[this.numSessions];
-		if (this.eppChannelEqual == null) this.eppChannelEqual = new EppChannel[this.numSessions];
+		EppConnection eppConnection = this.eppConnections.get(Character.valueOf(gcs));
 
-		// end session first if it's open
-
-		if (this.eppChannelEqual[i] != null || this.eppSessionEqual[i] != null) endSessionEqual(i);
-
-		// open session and channel
-
-		EppGreeting eppGreeting;
-
-		try {
-
-			if (Boolean.parseBoolean(this.properties.getProperty("epp-usetls"))) {
-
-				this.eppSessionEqual[i] = new EppSessionTcp();
-				this.eppSessionEqual[i].init(this.properties);
-			} else {
-
-				this.eppSessionEqual[i] = new EppSessionTcp(false);
-			}
-
-			String eppHost = this.properties.getProperty("epp-host-equal");
-			int eppPort = Integer.parseInt(this.properties.getProperty("epp-port-equal"));
-
-			log.info("{= " + i + "} Trying to connect to " + eppHost + ":" + Integer.toString(eppPort) + " for = services.");
-
-			eppGreeting = this.eppSessionEqual[i].connect(eppHost, eppPort);
-			if (eppGreeting == null) throw new EppToolsException("{= " + i + "} No greeting on connect: " + this.eppSessionEqual[i].getException().getMessage(), this.eppSessionEqual[i].getException());
-
-			this.eppChannelEqual[i] = this.eppSessionEqual[i].getChannel();
-		} catch (Exception ex) {
-
-			this.eppSessionEqual[i] = null;
-			this.eppChannelEqual[i] = null;
-			log.error(ex.getMessage(), ex);
-			throw ex;
-		}
-
-		// log in
-
-		try {
-
-			EppCommandLogin eppCommandLogin = new EppCommandLogin(eppGreeting.getServiceMenu());
-			eppCommandLogin.setClientTransactionId(this.generateTransactionId());
-			eppCommandLogin.setCreds(new EppCreds(this.properties.getProperty("epp-username"), this.properties.getProperty("epp-password")));
-			if (newPassword != null) eppCommandLogin.setNewPassword(newPassword);
-
-			EppResponse eppResponse = this.eppChannelEqual[i].start(eppCommandLogin);
-			EppResult eppResult = (EppResult) eppResponse.getResult().get(0);
-
-			if (eppResult == null) throw new EppToolsException("No result");
-			if (! (eppResponse.success())) throw makeEppToolsUnsuccessfulException(eppResult);
-			if (eppResponse.getTransactionId() == null || eppResponse.getTransactionId().getClientTransactionId() == null || ! (eppResponse.getTransactionId().getClientTransactionId().equals(this.getLastTransactionId()))) throw new EppToolsException("Unexpected clTRID: " + eppResponse.getTransactionId().getClientTransactionId());
-		} catch (Exception ex) {
-
-			this.eppSessionEqual = null;
-			this.eppChannelEqual = null;
-			log.error(ex.getMessage(), ex);
-			throw ex;
-		}
-	}
-
-	/**
-	 * Start the session and log in.
-	 */
-	private synchronized void beginSessionAt(String newPassword, int i) throws Exception {
-
-		if (this.eppSessionAt == null) this.eppSessionAt = new EppSession[this.numSessions];
-		if (this.eppChannelAt == null) this.eppChannelAt = new EppChannel[this.numSessions];
-
-		// end session first if it's open
-
-		if (this.eppChannelAt[i] != null || this.eppSessionAt[i] != null) endSessionAt(i);
-
-		// open session and channel
-
-		EppGreeting eppGreeting;
-
-		try {
-
-			if (Boolean.parseBoolean(this.properties.getProperty("epp-usetls"))) {
-
-				this.eppSessionAt[i] = new EppSessionTcp();
-				this.eppSessionAt[i].init(this.properties);
-			} else {
-
-				this.eppSessionAt[i] = new EppSessionTcp(false);
-			}
-
-			String eppHost = this.properties.getProperty("epp-host-at");
-			int eppPort = Integer.parseInt(this.properties.getProperty("epp-port-at"));
-
-			log.info("{@ " + i + "} Trying to connect to " + eppHost + ":" + Integer.toString(eppPort) + " for @ services.");
-
-			eppGreeting = this.eppSessionAt[i].connect(eppHost, eppPort);
-			if (eppGreeting == null) throw new EppToolsException("{@ " + i + "} No greeting on connect: " + this.eppSessionAt[i].getException().getMessage(), this.eppSessionAt[i].getException());
-
-			this.eppChannelAt[i] = this.eppSessionAt[i].getChannel();
-		} catch (Exception ex) {
-
-			this.eppSessionAt[i] = null;
-			this.eppChannelAt[i] = null;
-			log.error(ex.getMessage(), ex);
-			throw ex;
-		}
-
-		// log in
-
-		try {
-
-			EppCommandLogin eppCommandLogin = new EppCommandLogin(eppGreeting.getServiceMenu());
-			eppCommandLogin.setClientTransactionId(this.generateTransactionId());
-			eppCommandLogin.setCreds(new EppCreds(this.properties.getProperty("epp-username"), this.properties.getProperty("epp-password")));
-			if (newPassword != null) eppCommandLogin.setNewPassword(newPassword);
-
-			EppResponse eppResponse = this.eppChannelAt[i].start(eppCommandLogin);
-			EppResult eppResult = (EppResult) eppResponse.getResult().get(0);
-
-			if (eppResult == null) throw new EppToolsException("No result");
-			if (! (eppResponse.success())) throw makeEppToolsUnsuccessfulException(eppResult);
-			if (eppResponse.getTransactionId() == null || eppResponse.getTransactionId().getClientTransactionId() == null || ! (eppResponse.getTransactionId().getClientTransactionId().equals(this.getLastTransactionId()))) throw new EppToolsException("Unexpected clTRID: " + eppResponse.getTransactionId().getClientTransactionId());
-		} catch (Exception ex) {
-
-			this.eppSessionAt = null;
-			this.eppChannelAt = null;
-			log.error(ex.getMessage(), ex);
-			throw ex;
-		}
-	}
-
-	/**
-	 * End the session.
-	 */
-	private synchronized void endSessionEqual(int i) {
-
-		// shut down channel and session
-
-		/*		log.debug("{=" + " " + i + "} Terminating channel to = server.");
-
-		if (this.eppChannelEqual[i] != null) {
-
-			this.eppChannelEqual[i].terminate();
-		}*/
-
-		log.debug("{=" + " " + i + "} Closing session to = server.");
-
-		if (this.eppSessionEqual[i] != null) {
-
-			try {
-
-				if (((EppSessionTcp) this.eppSessionEqual[i]).getSocket() != null) ((EppSessionTcp) this.eppSessionEqual[i]).getSocket().close();
-			} catch (IOException ex) { }
-		}
-
-		this.eppSessionEqual[i] = null;
-		this.eppChannelEqual[i] = null;
-
-		log.debug("{=" + " " + i + "} Session ended to = server.");
-	}
-
-	/**
-	 * End the session.
-	 */
-	private synchronized void endSessionAt(int i) {
-
-		// shut down channel and session
-
-		/*		log.debug("{@" + " " + i + "} Terminating channel to @ server.");
-
-		if (this.eppChannelAt[i] != null) {
-
-			this.eppChannelAt[i].terminate();
-		}*/
-
-		log.debug("{@" + " " + i + "} Closing session to @ server.");
-
-		if (this.eppSessionAt[i] != null) {
-
-			try {
-
-				if (((EppSessionTcp) this.eppSessionAt[i]).getSocket() != null) ((EppSessionTcp) this.eppSessionAt[i]).getSocket().close();
-			} catch (IOException ex) { }
-		}
-
-		this.eppSessionAt[i] = null;
-		this.eppChannelAt[i] = null;
-
-		log.debug("{@" + " " + i + "} Session ended to @ server.");
-	}
-
-	/**
-	 * Check if the session and channel are alive.
-	 * If no, reconnect.
-	 */
-	public EppChannel checkChannelEqual(int i) throws EppToolsException {
-
-		synchronized (this.eppChannelEqual[i]) {
-
-			try {
-
-				EppGreeting eppGreeting = this.eppChannelEqual[i].hello();
-				if (eppGreeting == null) throw new NullPointerException();
-			} catch (Exception ex) {
-
-				log.warn("{= " + i + "} Channel to = server seems to have gone away: " + ex.getMessage() + " -> Trying to restore.");
-
-				try {
-
-					this.endSessionEqual(i);
-					this.beginSessionEqual(null, i);
-				} catch (Exception ex2) {
-
-					log.error(ex2.getMessage(), ex2);
-					throw new EppToolsException("{= " + i + "} Cannot restore channel: " + ex.getMessage(), ex);
-				}
-
-				log.info("{= " + i + "} Successfully restored channel after: " + ex.getMessage());
-			}
-
-			return(this.eppChannelEqual[i]);
-		}
-	}
-
-	/**
-	 * Check if the session and channel are alive.
-	 * If no, reconnect.
-	 */
-	public EppChannel checkChannelAt(int i) throws EppToolsException {
-
-		synchronized (this.eppChannelAt[i]) {
-
-			try {
-
-				EppGreeting eppGreeting = this.eppChannelAt[i].hello();
-				if (eppGreeting == null) throw new NullPointerException();
-			} catch (Exception ex) {
-
-				log.warn("{@ " + i + "} Channel to @ server seems to have gone away: " + ex.getMessage() + " -> Trying to restore.");
-
-				try {
-
-					this.endSessionAt(i);
-					this.beginSessionAt(null, i);
-				} catch (Exception ex2) {
-
-					log.error(ex2.getMessage(), ex2);
-					throw new EppToolsException("{@ " + i + "} Cannot restore channel: " + ex.getMessage(), ex);
-				}
-
-				log.info("{@ " + i + "} Successfully restored channel after: " + ex.getMessage());
-			}
-
-			return(this.eppChannelAt[i]);
-		}
-	}
-
-	/*
-	 * Helper methods for sending
-	 */
-
-	/**
-	 * Sends an EPP command and returns the EPP response.
-	 * Everything is logged to our action store.
-	 */
-	private EppResponse send(char gcs, EppCommand eppCommand, int i) throws EppToolsException {
-
-		if (gcs != '=' && gcs != '@') throw new IllegalArgumentException("GCS must be = or @.");
-
-		// timestamp
-
-		Date beginTimestamp = new Date();
-
-		// make sure our session and channel are still alive
-
-		EppChannel eppChannel = null;
-
-		try {
-
-			if (gcs == '=') {
-
-				if (this.eppChannelEqual == null || this.eppChannelEqual.length <= i || this.eppChannelEqual[i] == null) {
-
-					this.beginSessionEqual(null, i);
-				}
-
-				eppChannel = this.eppChannelEqual[i];
-			}
-
-			if (gcs == '@') {
-
-				if (this.eppChannelAt == null || this.eppChannelAt.length <= i || this.eppChannelAt[i] == null) {
-
-					this.beginSessionAt(null, i);
-				}
-
-				eppChannel = this.eppChannelAt[i];
-			}
-
-			if (eppChannel == null) throw new IOException("{" + gcs + " " + i + "} No channel.");
-		} catch (EppToolsException ex) {
-
-			throw ex;
-		} catch (Exception ex) {
-
-			throw new EppToolsException("Cannot initialize channel " + i + ": " + ex.getMessage(), ex);
-		}
-
-		// try to send the command and read the response
-
-		EppResponse eppResponse = null;
-		EppResult eppResult = null;
-
-		synchronized (eppChannel) {
-
-			log.debug("{" + gcs + " " + i + "} Blocking channel.");
-			if (gcs == '=') this.eppBlockedEqual[i] = Boolean.TRUE;
-			if (gcs == '@') this.eppBlockedAt[i] = Boolean.TRUE;
-
-			try {
-
-				log.debug("{" + gcs + " " + i + "} Attempting to send transaction " + eppCommand.getClientTransactionId() + " to " + gcs + " server.");
-
-				eppResponse = eppChannel.send(eppCommand);
-				if (eppChannel.getException() != null) throw eppChannel.getException();
-				if (eppResponse == null) throw new IOException("{" + gcs + " " + i + "} No response.");
-
-				eppResult = (EppResult) eppResponse.getResult().get(0);
-				if (eppResult == null) throw new IOException("{" + gcs + " " + i + "} No result.");
-
-				if (eppResult.getCode() == EppError.CODE_SESSION_LIMIT_EXCEEDED_SERVER_CLOSING_CONNECTION) throw new IOException("{" + gcs + " " + i + "} Session limit exceeded.");
-
-				log.debug("{" + gcs + " " + i + "} Transaction " + eppCommand.getClientTransactionId() + " sent to " + gcs + " server.");
-			} catch (Exception ex) {
-
-				log.warn("{" + gcs + " " + i + "} Channel to " + gcs + " server seems to have gone away: " + ex.getMessage(), ex);
-
-				// if there's just a problem with the socket, we try to restore and send the command again
-
-				if (ex instanceof IOException) {
-
-					log.debug("{" + gcs + " " + i + "} Trying to restore channel to " + gcs + " server.");
-
-					// try to restore the channel
-
-					try {
-
-						if (gcs == '=') {
-
-							this.endSessionEqual(i);
-							this.beginSessionEqual(null, i);
-							eppChannel = this.eppChannelEqual[i];
-						}
-
-						if (gcs == '@') {
-
-							this.endSessionAt(i);
-							this.beginSessionAt(null, i);
-							eppChannel = this.eppChannelAt[i];
-						}
-
-						if (eppChannel == null) throw new IOException("{" + gcs + " " + i + "} Channel has gone away.");
-					} catch (Exception ex2) {
-
-						log.error("{" + gcs + " " + i + "} Cannot restore channel: " + ex2.getMessage(), ex2);
-						ex = ex2;
-						eppChannel = null;
-					}
-
-					// after restoring the channel, try to re-send the command
-
-					if (eppChannel != null) {
-
-						try {
-
-							log.debug("{" + gcs + " " + i + "} Trying to re-send transaction " + eppCommand.getClientTransactionId() + " to " + gcs + " server."); 
-
-							eppResponse = eppChannel.send(eppCommand);
-							if (eppChannel.getException() != null) throw eppChannel.getException();
-							if (eppResponse == null) throw new IOException("{" + gcs + " " + i + "} No response.");
-
-							eppResult = (EppResult) eppResponse.getResult().get(0);
-							if (eppResult == null) throw new IOException("{" + gcs + " " + i + "} No result.");
-
-							if (eppResult.getCode() == EppError.CODE_SESSION_LIMIT_EXCEEDED_SERVER_CLOSING_CONNECTION) throw new IOException("{" + gcs + " " + i + "} Session limit exceeded.");
-
-							log.debug("{" + gcs + " " + i + "} Transaction " + eppCommand.getClientTransactionId() + " sent to " + gcs + " server.");
-
-							ex = null;
-						} catch (Exception ex2) {
-
-							log.warn("{" + gcs + " " + i + "} Still cannot send transaction " + eppCommand.getClientTransactionId() + " to " + gcs + " server: " + ex2.getMessage(), ex2);
-
-							ex = ex2;
-						}
-					}
-				}
-
-				// if we couldn't handle the exception, we log and throw it
-
-				if (ex != null)  {
-
-					log.error("{" + gcs + " " + i + "} Failed to send transaction " + eppCommand.getClientTransactionId() + " to " + gcs + " server: " + ex.getMessage(), ex);
-
-					// log the failed action
-
-					try {
-
-						this.store.createAction(new Character(gcs), eppCommand.getClientTransactionId(), eppCommand.toString(), ex.getMessage());
-					} catch (StoreException ex2) {
-
-						log.error("{" + gcs + " " + i + "} Cannot store failed EPP action: " + ex2.getMessage(), ex2);
-					}
-
-					log.debug("{" + gcs + " " + i + "} Unblocking channel.");
-					if (gcs == '=') this.eppBlockedEqual[i] = Boolean.FALSE;
-					if (gcs == '@') this.eppBlockedAt[i] = Boolean.FALSE;
-
-					throw new EppToolsException("{" + gcs + " " + i + "} Cannot send transaction " + eppCommand.getClientTransactionId() + " to " + gcs + " server: " + ex.getMessage(), ex);
-				}
-			}
-
-			log.debug("{" + gcs + " " + i + "} Unblocking channel.");
-			if (gcs == '=') this.eppBlockedEqual[i] = Boolean.FALSE;
-			if (gcs == '@') this.eppBlockedAt[i] = Boolean.FALSE;
-		}
-
-		// log the successful action
-
-		try {
-
-			this.store.createAction(Character.valueOf(gcs), eppCommand.getClientTransactionId(), eppCommand.toString(), eppResponse.toString());
-		} catch (StoreException ex) {
-
-			log.error("{" + gcs + " " + i + "} Cannot store successful EPP action:" + ex.getMessage(), ex);
-		}
-
-		// timestamp
-
-		Date endTimestamp = new Date();
-
-		// event
-
-		EppEvent eppEvent = new EppEvent(this, Character.valueOf(gcs), beginTimestamp, endTimestamp, eppChannel, eppCommand, eppResponse);
-
-		this.fireEppEvent(eppEvent);
-
-		// check the EPP response
-
-		if (! (eppResponse.success())) throw makeEppToolsUnsuccessfulException(eppResult);
-		if (eppResponse.getTransactionId() == null || eppResponse.getTransactionId().getClientTransactionId() == null || ! (eppResponse.getTransactionId().getClientTransactionId().equals(eppCommand.getClientTransactionId()))) throw new EppToolsException("Unexpected clTRID: " + eppResponse.getTransactionId().getClientTransactionId() + " (expected " + eppCommand.getClientTransactionId() + ")");
-
-		log.info("{" + gcs + " " + i + "} Successfully completed transaction " + eppCommand.getClientTransactionId() + " with " + gcs + " server.");
-
-		return(eppResponse);
-	}
-
-	/**
-	 * Sends an EPP command and returns the EPP response.
-	 * Everything is logged to our action store.
-	 */
-	private EppResponse send(char gcs, EppCommand eppCommand) throws EppToolsException {
-
-		int i = 0;
-
-		if (gcs == '=') while (this.eppBlockedEqual[i] != null && this.eppBlockedEqual[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
-		if (gcs == '@') while (this.eppBlockedAt[i] != null && this.eppBlockedAt[i].equals(Boolean.TRUE) && i < this.numSessions) i++;
-
-		if (i == this.numSessions) throw new EppToolsException("All channels to " + gcs + " registry are blocked. Please try again later.");
-
-		log.debug("Sending to " + gcs + " channel " + i);
-
-		return(this.send(gcs, eppCommand, i));
-	}
-
-	@SuppressWarnings("unchecked")
-	private static EppToolsUnsuccessfulException makeEppToolsUnsuccessfulException(EppResult eppResult) {
-
-		if (eppResult == null) return(new EppToolsUnsuccessfulException("Unsuccessful.", eppResult));
-
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("Unsuccessful: ");
-		if (eppResult.getMessage() != null) buffer.append(eppResult.getMessage().getMessage());
-		for (String value : (List<String>) eppResult.getValue()) buffer.append(" / " + value);
-
-		return(new EppToolsUnsuccessfulException(buffer.toString(), eppResult));
-	}
-
-	/*
-	 * Helper methods for transaction ids
-	 */
-
-	private int currentTransactionNumber = 0;
-	private String lastTransactionId;
-
-	/**
-	 * Generate and return a new client transaction ID, consisting of:
-	 * - our EPP client ID
-	 * - a sequential number
-	 * - our thread ID
-	 * - a timestamp
-	 */
-	String generateTransactionId() {
-
-		this.currentTransactionNumber++;
-
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("id-");
-		buffer.append(this.properties.getProperty("epp-username") + "-");
-		buffer.append(Long.toString(Thread.currentThread().getId()) + "-");
-		buffer.append(Integer.toString(this.currentTransactionNumber) + "-");
-		buffer.append(Long.toString(System.currentTimeMillis()));
-
-		this.lastTransactionId = buffer.toString();
-
-		return(this.lastTransactionId);
-	}
-
-	/**
-	 * Returns the last client transaction ID the we generated.
-	 */
-	public String getLastTransactionId() {
-
-		return(this.lastTransactionId);
-	}
-
-	/*
-	 * Events
-	 */
-
-	public void addEppListener(EppListener eppListener) {
-
-		if (this.eppListeners.contains(eppListener)) return;
-		this.eppListeners.add(eppListener);
-	}
-
-	public void removeEppListener(EppListener eppListener) {
-
-		this.eppListeners.remove(eppListener);
-	}
-
-	public void fireEppEvent(EppEvent eppEvent) {
-
-		for (EppListener eppListener : this.eppListeners) eppListener.onSend(eppEvent);
+		return eppConnection.send(eppCommand);
 	}
 
 	/*
 	 * Getters and Setters
 	 */
-
-	public int getNumSessions() {
-
-		return this.numSessions;
-	}
-
-	public void setNumSessions(int numSessions) {
-
-		this.numSessions = numSessions;
-	}
 
 	public Store getStore() {
 
@@ -1517,5 +942,25 @@ public class EppTools implements Serializable {
 	public void setStore(Store store) {
 
 		this.store = store;
+	}
+
+	public EppTransactionIdGenerator getEppTransactionIdGenerator() {
+
+		return eppTransactionIdGenerator;
+	}
+
+	public void setEppTransactionIdGenerator(EppTransactionIdGenerator eppTransactionIdGenerator) {
+
+		this.eppTransactionIdGenerator = eppTransactionIdGenerator;
+	}
+
+	public EppEvents getEppEvents() {
+
+		return this.eppEvents;
+	}
+
+	public void setEppEvents(EppEvents eppEvents) {
+
+		this.eppEvents = eppEvents;
 	}
 }

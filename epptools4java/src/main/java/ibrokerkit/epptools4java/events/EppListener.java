@@ -1,4 +1,4 @@
-package ibrokerkit.epptools4java;
+package ibrokerkit.epptools4java.events;
 
 
 public interface EppListener {
