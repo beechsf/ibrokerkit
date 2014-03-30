@@ -115,17 +115,34 @@ public class EppTools implements Serializable {
 
 		// create EPP connections
 
-		String eppHostEqual = this.properties.getProperty("epp-host-equal");
-		Integer eppPortEqual = Integer.valueOf(this.properties.getProperty("epp-port-equal"));
+		if (this.properties.containsKey("epp-host-equal")) {
 
-		String eppHostPlus = this.properties.getProperty("epp-host-plus");
-		Integer eppPortPlus = Integer.valueOf(this.properties.getProperty("epp-port-plus"));
+			String eppHostEqual = this.properties.getProperty("epp-host-equal");
+			Integer eppPortEqual = Integer.valueOf(this.properties.getProperty("epp-port-equal"));
+			EppConnection eppConnectionEqual = new EppConnection('=', eppHostEqual, eppPortEqual, this.properties, this.store, this.eppTransactionIdGenerator, this.eppEvents);
 
-		EppConnection eppConnectionEqual = new EppConnection('=', eppHostEqual, eppPortEqual, this.properties, this.store, this.eppTransactionIdGenerator, this.eppEvents);
-		EppConnection eppConnectionPlus = new EppConnection('+', eppHostPlus, eppPortPlus, this.properties, this.store, this.eppTransactionIdGenerator, this.eppEvents);
+			this.eppConnections.put(Character.valueOf('='), eppConnectionEqual);
+		}
 
-		this.eppConnections.put(Character.valueOf('='), eppConnectionEqual);
-		this.eppConnections.put(Character.valueOf('+'), eppConnectionPlus);
+		if (this.properties.containsKey("epp-host-at")) {
+
+			String eppHostAt = this.properties.getProperty("epp-host-at");
+			Integer eppPortAt = Integer.valueOf(this.properties.getProperty("epp-port-at"));
+			EppConnection eppConnectionAt = new EppConnection('@', eppHostAt, eppPortAt, this.properties, this.store, this.eppTransactionIdGenerator, this.eppEvents);
+
+			this.eppConnections.put(Character.valueOf('@'), eppConnectionAt);
+		}
+
+		if (this.properties.containsKey("epp-host-plus")) {
+
+			String eppHostPlus = this.properties.getProperty("epp-host-plus");
+			Integer eppPortPlus = Integer.valueOf(this.properties.getProperty("epp-port-plus"));
+			EppConnection eppConnectionPlus = new EppConnection('+', eppHostPlus, eppPortPlus, this.properties, this.store, this.eppTransactionIdGenerator, this.eppEvents);
+
+			this.eppConnections.put(Character.valueOf('+'), eppConnectionPlus);
+		}
+
+		log.debug("Loaded EPP connections: " + this.eppConnections.values());
 
 		// init EPP connections
 

@@ -75,7 +75,7 @@ public class EppConnection {
 			this.beginSession(null, 0);
 		} catch (Exception ex) {
 
-			log.warn("Cannot initialize = session 0.");
+			log.warn("Cannot initialize " + this.gcs + " session 0.");
 		}
 	}
 
@@ -416,5 +416,14 @@ public class EppConnection {
 		log.debug("Sending to " + this.gcs + " channel " + i);
 
 		return(this.send(eppCommand, i));
+	}
+
+	/*
+	 * Object methods
+	 */
+
+	public String toString() {
+
+		return "" + this.gcs + " " + this.eppHost + ":" + this.eppPort;
 	}
 }
