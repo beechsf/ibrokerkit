@@ -943,6 +943,7 @@ public class EppTools implements Serializable {
 	public EppResponse send(char gcs, EppCommand eppCommand) throws EppToolsException {
 
 		EppConnection eppConnection = this.eppConnections.get(Character.valueOf(gcs));
+		if (eppConnection == null) throw new EppToolsException("No EPP connection for " + gcs);
 
 		return eppConnection.send(eppCommand);
 	}
