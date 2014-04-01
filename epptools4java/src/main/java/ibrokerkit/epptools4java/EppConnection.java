@@ -159,14 +159,14 @@ public class EppConnection {
 
 		// shut down channel and session
 
-		/*		log.debug("{=" + " " + i + "} Terminating channel to = server.");
+		/*		log.debug("{" + this.gcs + " " + i + "} Terminating channel to = server.");
 
 		if (this.eppChannelEqual[i] != null) {
 
 			this.eppChannelEqual[i].terminate();
 		}*/
 
-		log.debug("{=" + " " + i + "} Closing session to = server.");
+		log.debug("{" + this.gcs + " " + i + "} Closing session to " + this.gcs + " server.");
 
 		if (this.eppSession[i] != null) {
 
@@ -179,7 +179,7 @@ public class EppConnection {
 		this.eppSession[i] = null;
 		this.eppChannel[i] = null;
 
-		log.debug("{=" + " " + i + "} Session ended to = server.");
+		log.debug("{" + this.gcs + " " + i + "} Session ended to " + this.gcs + " server.");
 	}
 
 	/**
@@ -214,7 +214,7 @@ public class EppConnection {
 				if (eppGreeting == null) throw new NullPointerException();
 			} catch (Exception ex) {
 
-				log.warn("{" + this.gcs + " " + i + "} Channel to = server seems to have gone away: " + ex.getMessage() + " -> Trying to restore.");
+				log.warn("{" + this.gcs + " " + i + "} Channel to " + this.gcs + " server seems to have gone away: " + ex.getMessage() + " -> Trying to restore.");
 
 				try {
 
