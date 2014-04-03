@@ -7,14 +7,12 @@ public class EppTransactionIdGenerator {
 	private Properties properties;
 
 	private int currentTransactionNumber;
-	private String lastTransactionId;
 
 	public EppTransactionIdGenerator(Properties properties) {
 
 		this.properties = properties;
 
 		this.currentTransactionNumber = 0;
-		this.lastTransactionId = null;
 	}
 
 	/**
@@ -24,7 +22,7 @@ public class EppTransactionIdGenerator {
 	 * - our thread ID
 	 * - a timestamp
 	 */
-	public String generateTransactionId() {
+	public synchronized String generateTransactionId() {
 
 		this.currentTransactionNumber++;
 
@@ -35,16 +33,6 @@ public class EppTransactionIdGenerator {
 		buffer.append(Integer.toString(this.currentTransactionNumber) + "-");
 		buffer.append(Long.toString(System.currentTimeMillis()));
 
-		this.lastTransactionId = buffer.toString();
-
-		return this.lastTransactionId;
-	}
-
-	/**
-	 * Returns the last client transaction ID the we generated.
-	 */
-	public String getLastTransactionId() {
-
-		return this.lastTransactionId;
+		return buffer.toString();
 	}
 }
