@@ -142,7 +142,7 @@ public class EppConnection {
 
 			if (eppResult == null) throw new EppToolsException("No result");
 			if (! (eppResponse.success())) throw EppToolsException.makeEppToolsUnsuccessfulException(eppResult);
-			if (eppResponse.getTransactionId() == null || eppResponse.getTransactionId().getClientTransactionId() == null || ! (eppResponse.getTransactionId().getClientTransactionId().equals(this.eppTransactionIdGenerator.getLastTransactionId()))) throw new EppToolsException("Unexpected clTRID: " + eppResponse.getTransactionId().getClientTransactionId());
+			if (eppResponse.getTransactionId() == null || eppResponse.getTransactionId().getClientTransactionId() == null || ! (eppResponse.getTransactionId().getClientTransactionId().equals(eppCommandLogin.getClientTransactionId()))) throw new EppToolsException("Unexpected clTRID: " + eppResponse.getTransactionId().getClientTransactionId());
 		} catch (Exception ex) {
 
 			this.eppSession = null;
