@@ -32,6 +32,8 @@ public class EppConnection {
 	private char gcs;
 	private String eppHost;
 	private Integer eppPort;
+	private String eppProxyHost;
+	private Integer eppProxyPort;
 	private Properties properties;
 	private Store store;
 	private EppTransactionIdGenerator eppTransactionIdGenerator;
@@ -41,6 +43,8 @@ public class EppConnection {
 	private String eppPassword;
 	private int numSessions;
 	private boolean useTls;
+        private boolean useProxy;
+        private String xsdFilesLocation;
 
 	private EppSession[] eppSession;
 	private EppChannel[] eppChannel;
@@ -64,6 +68,12 @@ public class EppConnection {
 		this.eppSession = new EppSession[this.numSessions];
 		this.eppChannel = new EppChannel[this.numSessions];
 		this.eppBlocked = new Boolean[this.numSessions];
+		
+		this.xsdFilesLocation = properties.getProperty("xsdFilesLocation", "./");
+                this.useProxy = Boolean.parseBoolean(this.properties.getProperty("epp-useproxy", "false"));
+		log.debug("epp-useproxy = {}", this.useProxy );
+		this.eppProxyHost = properties.getProperty("epp-proxyhost", "localhost");
+		this.eppProxyPort = Integer.parseInt(properties.getProperty("epp-proxyport", "8888"));
 	}
 
 	public synchronized void init() {
@@ -113,10 +123,21 @@ public class EppConnection {
 
 				this.eppSession[i] = new EppSessionTcp(false);
 			}
+			
+			this.eppSession[i].setXsdFilesLocation(this.xsdFilesLocation);
 
 			log.info("{" + this.gcs + " " + i + "} Trying to connect to " + this.eppHost + ":" + this.eppPort + " for " + this.gcs + " services.");
 
-			eppGreeting = this.eppSession[i].connect(this.eppHost, this.eppPort);
+			
+			if (this.useProxy) {
+				log.debug("Calling connectByProxy with  this.eppHost: {} , this.eppPort: {}, this.eppProxyHost: {} , this.eppProxyPort: {}",
+			        this.eppHost, this.eppPort, this.eppProxyHost, this.eppProxyPort);
+				eppGreeting = this.eppSession[i].connectByProxy(this.eppHost, this.eppPort, this.eppProxyHost, this.eppProxyPort);
+			} else {
+				eppGreeting = this.eppSession[i].connect(this.eppHost, this.eppPort);
+			}
+				
+				
 			if (eppGreeting == null) throw new EppToolsException("{" + this.gcs + " " + i + "} No greeting on connect: " + this.eppSession[i].getException().getMessage(), this.eppSession[i].getException());
 
 			this.eppChannel[i] = this.eppSession[i].getChannel();
